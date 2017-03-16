@@ -9,5 +9,8 @@ namespace AQM_Algo_Trading_Addin_CGR
     class RealtimePullObjectFactory
     {
         //test nils
+        //neue änderungen
+        //blabla
+        //blubb
     }
 }
