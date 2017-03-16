@@ -35,7 +35,7 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         }*/
 
-
+            //test123karle
         private void AlgoTradingRibbon_Load(object sender, RibbonUIEventArgs e)
         {
             //InitializeComponent();
