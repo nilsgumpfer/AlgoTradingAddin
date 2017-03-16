@@ -44,7 +44,25 @@ namespace AQM_Algo_Trading_Addin_CGR
             workerObjects = new List<BackgroundCrawler>();
             dbConnections = new List<MySQLStockDataConnector>();
             alteAktiensymbole = "";
+
+            //Checkboxen deaktivieren
+            CB_Quelle_Onvista.Enabled = false; 
+            CB_Quelle_Yahoo.Enabled = false;
+            CB_Quelle_Lokal.Enabled = false;
+            CB_Ziel_AktuellesTB.Enabled = false;
+            CB_Ziel_NeuesTB.Enabled = false;
+            CB_Ziel_Cursor.Enabled = false;
+            CB_Visualisierung_Diagramm.Enabled = false;
+            CB_Visualisierung_Tabelle.Enabled = false;
+            CB_Algo_Trend_Kurs.Enabled = false;
+            CB_Algo_Trend_Volumen.Enabled = false;
+
+            //Button deaktivieren
+            BTN_Aktionen_Ausfuehren.Enabled = false;
+
         }
+
+
 
         private void button1_Click(object sender, RibbonControlEventArgs e)
         {
@@ -56,6 +74,17 @@ namespace AQM_Algo_Trading_Addin_CGR
             erstelleWorkerThreads();
             starteWorkerThreads();
         }
+
+        //private void button1_Click(object sender, RibbonControlEventArgs e)
+        //{
+        //    String aktiensymbole_eingabe = Microsoft.VisualBasic.Interaction.InputBox("Bitte Aktienwerte mit Leerzeichen getrennt eingeben!", "Aktienwerte eingeben", "");
+
+        //    aktienSymbole = null;
+        //    aktienSymbole = aktiensymbole_eingabe.Split(' ');
+        //    generiereAktienwerte();
+        //    erstelleWorkerThreads();
+        //    starteWorkerThreads();
+        //}
 
         private void generiereAktienwerte()
         {
@@ -161,6 +190,7 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         private void button2_Click(object sender, RibbonControlEventArgs e)
         {
+            
             //wb = Globals.ThisAddIn.Application.ActiveWorkbook;
             ws = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet);
 
@@ -224,6 +254,175 @@ namespace AQM_Algo_Trading_Addin_CGR
         {
             string verbindungsParameter = "datasource=" + datasource + ";port=" + port + ";username=" + username + ";password=" + password;
             mySQLVerbindung = new MySqlConnection(verbindungsParameter);
+        }
+
+        private void CB_Typ_Live_Click(object sender, RibbonControlEventArgs e)
+        {
+            if (CB_Typ_Live.Checked == true)
+            {
+                CB_Typ_Historisch.Enabled = false;
+                CB_Quelle_Lokal.Enabled = false;
+                CB_Quelle_Onvista.Enabled = true;
+                CB_Quelle_Yahoo.Enabled = true;
+            }
+            else
+            {
+                CB_Typ_Historisch.Enabled = true;
+                CB_Quelle_Lokal.Enabled = false;
+                CB_Quelle_Onvista.Enabled = false;
+                CB_Quelle_Yahoo.Enabled = false;
+            }
+
+        }
+
+        private void CB_Ziel_NeuesTB_Click(object sender, RibbonControlEventArgs e)
+        {
+            if (CB_Ziel_NeuesTB.Checked == true)
+            {
+                CB_Ziel_AktuellesTB.Enabled = false;
+                CB_Ziel_Cursor.Enabled = false;
+            }
+            else
+            {
+                CB_Ziel_AktuellesTB.Enabled = true;
+                CB_Ziel_Cursor.Enabled = true;
+            }
+        }
+
+        private void CB_Ziel_AktuellesTB_Click(object sender, RibbonControlEventArgs e)
+        {
+            if (CB_Ziel_AktuellesTB.Checked == true)
+            {
+                CB_Ziel_NeuesTB.Enabled = false;
+                CB_Ziel_Cursor.Enabled = false;
+            }
+            else
+            {
+                CB_Ziel_NeuesTB.Enabled = true;
+                CB_Ziel_Cursor.Enabled = true;
+            }
+        }
+
+        private void CB_Typ_Historisch_Click(object sender, RibbonControlEventArgs e)
+        {
+            if (CB_Typ_Historisch.Checked == true)
+            {
+                CB_Typ_Live.Enabled = false;
+                CB_Quelle_Onvista.Enabled = false;
+                CB_Quelle_Lokal.Enabled = true;
+                CB_Quelle_Yahoo.Enabled = true;
+            }
+            else
+            {
+                CB_Typ_Live.Enabled = true;
+                CB_Quelle_Onvista.Enabled = false;
+                CB_Quelle_Lokal.Enabled = false;
+                CB_Quelle_Yahoo.Enabled = false;
+            }
+        }
+
+        private void CB_Quelle_Lokal_Click(object sender, RibbonControlEventArgs e)
+        {
+            if (CB_Quelle_Lokal.Checked == true)
+            {
+                CB_Quelle_Yahoo.Enabled = false;
+                CB_Quelle_Onvista.Enabled = false;
+            }
+            else
+            {
+                CB_Quelle_Yahoo.Enabled = true;
+                CB_Quelle_Onvista.Enabled = true;
+            }
+        }
+
+        private void CB_Quelle_Onvista_Click(object sender, RibbonControlEventArgs e)
+        {
+            if (CB_Quelle_Onvista.Checked == true)
+            {
+                CB_Quelle_Yahoo.Enabled = false;
+                CB_Quelle_Lokal.Enabled = false;
+            }
+            else
+            {
+                CB_Quelle_Yahoo.Enabled = true;
+                CB_Quelle_Lokal.Enabled = true;
+            }
+        }
+
+        private void CB_Quelle_Yahoo_Click(object sender, RibbonControlEventArgs e)
+        {
+            if (CB_Quelle_Yahoo.Checked == true)
+            {
+                CB_Quelle_Lokal.Enabled = false;
+                CB_Quelle_Onvista.Enabled = false;
+            }
+            else
+            {
+                CB_Quelle_Lokal.Enabled = true;
+                CB_Quelle_Onvista.Enabled = true;
+            }
+        }
+
+        private void CB_Ziel_Cursor_Click(object sender, RibbonControlEventArgs e)
+        {
+            if (CB_Ziel_Cursor.Checked == true)
+            {
+                CB_Ziel_AktuellesTB.Enabled = false;
+                CB_Ziel_NeuesTB.Enabled = false;
+            }
+            else
+            {
+                CB_Ziel_AktuellesTB.Enabled = true;
+                CB_Ziel_NeuesTB.Enabled = true;
+            }
+        }
+
+        private void CB_Visualisierung_Diagramm_Click(object sender, RibbonControlEventArgs e)
+        {
+            if (CB_Visualisierung_Diagramm.Checked == true)
+            {
+                CB_Visualisierung_Tabelle.Enabled = false;
+            }
+            else
+            {
+                CB_Visualisierung_Tabelle.Enabled = true;
+            }
+        }
+
+        private void CB_Visualisierung_Tabelle_Click(object sender, RibbonControlEventArgs e)
+        {
+            if (CB_Visualisierung_Tabelle.Checked == true)
+            {
+                CB_Visualisierung_Diagramm.Enabled = false;
+            }
+            else
+            {
+                CB_Visualisierung_Diagramm.Enabled = true;
+            }
+        }
+
+        private void CB_Algo_Trend_Kurs_Click(object sender, RibbonControlEventArgs e)
+        {
+            if (CB_Algo_Trend_Kurs.Checked == true)
+            {
+                CB_Algo_Trend_Volumen.Enabled = false;
+            }
+            else
+            {
+                CB_Algo_Trend_Volumen.Enabled = true;
+            }
+        }
+
+        private void CB_Algo_Trend_Volumen_Click(object sender, RibbonControlEventArgs e)
+        {
+            if (CB_Algo_Trend_Volumen.Checked == true)
+            {
+                CB_Algo_Trend_Kurs.Enabled = false;
+            }
+            else
+            {
+                CB_Algo_Trend_Kurs.Enabled = true;
+            }
         }
     }
 }

@@ -36,37 +36,177 @@
         {
             this.tab1 = this.Factory.CreateRibbonTab();
             this.group1 = this.Factory.CreateRibbonGroup();
-            this.button1 = this.Factory.CreateRibbonButton();
-            this.button2 = this.Factory.CreateRibbonButton();
+            this.CB_Typ_Historisch = this.Factory.CreateRibbonCheckBox();
+            this.CB_Typ_Live = this.Factory.CreateRibbonCheckBox();
+            this.group3 = this.Factory.CreateRibbonGroup();
+            this.CB_Quelle_Lokal = this.Factory.CreateRibbonCheckBox();
+            this.CB_Quelle_Onvista = this.Factory.CreateRibbonCheckBox();
+            this.CB_Quelle_Yahoo = this.Factory.CreateRibbonCheckBox();
+            this.group4 = this.Factory.CreateRibbonGroup();
+            this.CB_Ziel_NeuesTB = this.Factory.CreateRibbonCheckBox();
+            this.CB_Ziel_AktuellesTB = this.Factory.CreateRibbonCheckBox();
+            this.CB_Ziel_Cursor = this.Factory.CreateRibbonCheckBox();
+            this.group5 = this.Factory.CreateRibbonGroup();
+            this.CB_Visualisierung_Diagramm = this.Factory.CreateRibbonCheckBox();
+            this.CB_Visualisierung_Tabelle = this.Factory.CreateRibbonCheckBox();
+            this.group6 = this.Factory.CreateRibbonGroup();
+            this.CB_Algo_Trend_Kurs = this.Factory.CreateRibbonCheckBox();
+            this.CB_Algo_Trend_Volumen = this.Factory.CreateRibbonCheckBox();
+            this.group7 = this.Factory.CreateRibbonGroup();
+            this.BTN_Aktionen_Ausfuehren = this.Factory.CreateRibbonButton();
+            this.group2 = this.Factory.CreateRibbonGroup();
+            this.checkBox3 = this.Factory.CreateRibbonCheckBox();
             this.tab1.SuspendLayout();
             this.group1.SuspendLayout();
+            this.group3.SuspendLayout();
+            this.group4.SuspendLayout();
+            this.group5.SuspendLayout();
+            this.group6.SuspendLayout();
+            this.group7.SuspendLayout();
             this.SuspendLayout();
             // 
             // tab1
             // 
             this.tab1.ControlId.ControlIdType = Microsoft.Office.Tools.Ribbon.RibbonControlIdType.Office;
             this.tab1.Groups.Add(this.group1);
+            this.tab1.Groups.Add(this.group3);
+            this.tab1.Groups.Add(this.group4);
+            this.tab1.Groups.Add(this.group5);
+            this.tab1.Groups.Add(this.group6);
+            this.tab1.Groups.Add(this.group7);
             this.tab1.Label = "Test AlgoTrading";
             this.tab1.Name = "tab1";
             // 
             // group1
             // 
-            this.group1.Items.Add(this.button1);
-            this.group1.Items.Add(this.button2);
-            this.group1.Label = "group1";
+            this.group1.Items.Add(this.CB_Typ_Historisch);
+            this.group1.Items.Add(this.CB_Typ_Live);
+            this.group1.Label = "Datentyp";
             this.group1.Name = "group1";
             // 
-            // button1
+            // CB_Typ_Historisch
             // 
-            this.button1.Label = "Lade Daten";
-            this.button1.Name = "button1";
-            this.button1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button1_Click);
+            this.CB_Typ_Historisch.Label = "Historische Daten";
+            this.CB_Typ_Historisch.Name = "CB_Typ_Historisch";
+            this.CB_Typ_Historisch.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.CB_Typ_Historisch_Click);
             // 
-            // button2
+            // CB_Typ_Live
             // 
-            this.button2.Label = "Erstelle Grafik";
-            this.button2.Name = "button2";
-            this.button2.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button2_Click);
+            this.CB_Typ_Live.Label = "Live-Daten";
+            this.CB_Typ_Live.Name = "CB_Typ_Live";
+            this.CB_Typ_Live.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.CB_Typ_Live_Click);
+            // 
+            // group3
+            // 
+            this.group3.Items.Add(this.CB_Quelle_Lokal);
+            this.group3.Items.Add(this.CB_Quelle_Onvista);
+            this.group3.Items.Add(this.CB_Quelle_Yahoo);
+            this.group3.Label = "Datenquelle";
+            this.group3.Name = "group3";
+            // 
+            // CB_Quelle_Lokal
+            // 
+            this.CB_Quelle_Lokal.Label = "Lokal";
+            this.CB_Quelle_Lokal.Name = "CB_Quelle_Lokal";
+            this.CB_Quelle_Lokal.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.CB_Quelle_Lokal_Click);
+            // 
+            // CB_Quelle_Onvista
+            // 
+            this.CB_Quelle_Onvista.Label = "Onvista";
+            this.CB_Quelle_Onvista.Name = "CB_Quelle_Onvista";
+            this.CB_Quelle_Onvista.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.CB_Quelle_Onvista_Click);
+            // 
+            // CB_Quelle_Yahoo
+            // 
+            this.CB_Quelle_Yahoo.Label = "YahooFinance";
+            this.CB_Quelle_Yahoo.Name = "CB_Quelle_Yahoo";
+            this.CB_Quelle_Yahoo.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.CB_Quelle_Yahoo_Click);
+            // 
+            // group4
+            // 
+            this.group4.Items.Add(this.CB_Ziel_NeuesTB);
+            this.group4.Items.Add(this.CB_Ziel_AktuellesTB);
+            this.group4.Items.Add(this.CB_Ziel_Cursor);
+            this.group4.Label = "Datenziel";
+            this.group4.Name = "group4";
+            // 
+            // CB_Ziel_NeuesTB
+            // 
+            this.CB_Ziel_NeuesTB.Label = "Neues Tabellenblatt";
+            this.CB_Ziel_NeuesTB.Name = "CB_Ziel_NeuesTB";
+            this.CB_Ziel_NeuesTB.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.CB_Ziel_NeuesTB_Click);
+            // 
+            // CB_Ziel_AktuellesTB
+            // 
+            this.CB_Ziel_AktuellesTB.Label = "Aktuelles Tabellenblatt";
+            this.CB_Ziel_AktuellesTB.Name = "CB_Ziel_AktuellesTB";
+            this.CB_Ziel_AktuellesTB.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.CB_Ziel_AktuellesTB_Click);
+            // 
+            // CB_Ziel_Cursor
+            // 
+            this.CB_Ziel_Cursor.Label = "Cursorposition";
+            this.CB_Ziel_Cursor.Name = "CB_Ziel_Cursor";
+            this.CB_Ziel_Cursor.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.CB_Ziel_Cursor_Click);
+            // 
+            // group5
+            // 
+            this.group5.Items.Add(this.CB_Visualisierung_Diagramm);
+            this.group5.Items.Add(this.CB_Visualisierung_Tabelle);
+            this.group5.Label = "Visualisierung";
+            this.group5.Name = "group5";
+            // 
+            // CB_Visualisierung_Diagramm
+            // 
+            this.CB_Visualisierung_Diagramm.Label = "Diagramm";
+            this.CB_Visualisierung_Diagramm.Name = "CB_Visualisierung_Diagramm";
+            this.CB_Visualisierung_Diagramm.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.CB_Visualisierung_Diagramm_Click);
+            // 
+            // CB_Visualisierung_Tabelle
+            // 
+            this.CB_Visualisierung_Tabelle.Label = "Tabelle";
+            this.CB_Visualisierung_Tabelle.Name = "CB_Visualisierung_Tabelle";
+            this.CB_Visualisierung_Tabelle.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.CB_Visualisierung_Tabelle_Click);
+            // 
+            // group6
+            // 
+            this.group6.Items.Add(this.CB_Algo_Trend_Kurs);
+            this.group6.Items.Add(this.CB_Algo_Trend_Volumen);
+            this.group6.Label = "Algorithmus";
+            this.group6.Name = "group6";
+            // 
+            // CB_Algo_Trend_Kurs
+            // 
+            this.CB_Algo_Trend_Kurs.Label = "Trend (Kurs)";
+            this.CB_Algo_Trend_Kurs.Name = "CB_Algo_Trend_Kurs";
+            this.CB_Algo_Trend_Kurs.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.CB_Algo_Trend_Kurs_Click);
+            // 
+            // CB_Algo_Trend_Volumen
+            // 
+            this.CB_Algo_Trend_Volumen.Label = "Trend (Volumen)";
+            this.CB_Algo_Trend_Volumen.Name = "CB_Algo_Trend_Volumen";
+            this.CB_Algo_Trend_Volumen.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.CB_Algo_Trend_Volumen_Click);
+            // 
+            // group7
+            // 
+            this.group7.Items.Add(this.BTN_Aktionen_Ausfuehren);
+            this.group7.Label = "Aktionen";
+            this.group7.Name = "group7";
+            // 
+            // BTN_Aktionen_Ausfuehren
+            // 
+            this.BTN_Aktionen_Ausfuehren.Label = "Ausführen";
+            this.BTN_Aktionen_Ausfuehren.Name = "BTN_Aktionen_Ausfuehren";
+            this.BTN_Aktionen_Ausfuehren.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button2_Click);
+            // 
+            // group2
+            // 
+            this.group2.Label = "group2";
+            this.group2.Name = "group2";
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.Label = "checkBox3";
+            this.checkBox3.Name = "checkBox3";
             // 
             // AlgoTradingRibbon
             // 
@@ -78,6 +218,16 @@
             this.tab1.PerformLayout();
             this.group1.ResumeLayout(false);
             this.group1.PerformLayout();
+            this.group3.ResumeLayout(false);
+            this.group3.PerformLayout();
+            this.group4.ResumeLayout(false);
+            this.group4.PerformLayout();
+            this.group5.ResumeLayout(false);
+            this.group5.PerformLayout();
+            this.group6.ResumeLayout(false);
+            this.group6.PerformLayout();
+            this.group7.ResumeLayout(false);
+            this.group7.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -86,8 +236,26 @@
 
         internal Microsoft.Office.Tools.Ribbon.RibbonTab tab1;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group1;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton button1;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton button2;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton BTN_Aktionen_Ausfuehren;
+        internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox CB_Typ_Historisch;
+        internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox CB_Typ_Live;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup group3;
+        internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox CB_Quelle_Lokal;
+        internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox CB_Quelle_Onvista;
+        internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox CB_Quelle_Yahoo;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup group4;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup group5;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup group2;
+        internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox checkBox3;
+        internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox CB_Ziel_NeuesTB;
+        internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox CB_Ziel_AktuellesTB;
+        internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox CB_Ziel_Cursor;
+        internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox CB_Visualisierung_Diagramm;
+        internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox CB_Visualisierung_Tabelle;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup group6;
+        internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox CB_Algo_Trend_Kurs;
+        internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox CB_Algo_Trend_Volumen;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup group7;
     }
 
     partial class ThisRibbonCollection
