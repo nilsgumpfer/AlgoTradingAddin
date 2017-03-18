@@ -166,12 +166,16 @@
       <DependentUpon>AlgoTradingRibbon.cs</DependentUpon>
     </Compile>
     <Compile Include="BackgroundCrawler.cs" />
+    <Compile Include="DataManager.cs" />
     <Compile Include="MySQLConnectionObject.cs" />
+    <Compile Include="MySQLConnector.cs" />
     <Compile Include="Observable.cs" />
     <Compile Include="Observer.cs" />
+    <Compile Include="OnVistaConnector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="YahooFinanceAPIConnector.cs" />
     <EmbeddedResource Include="AlgoTradingRibbon.resx">
       <DependentUpon>AlgoTradingRibbon.cs</DependentUpon>
     </EmbeddedResource>
@@ -193,6 +197,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="PushConnector.cs" />
+    <Compile Include="PushWorker.cs" />
     <Compile Include="RealTimePullObject.cs" />
     <Compile Include="RealtimePullObjectFactory.cs" />
     <Compile Include="RealTimePullObject_BOERSE_DE.cs" />

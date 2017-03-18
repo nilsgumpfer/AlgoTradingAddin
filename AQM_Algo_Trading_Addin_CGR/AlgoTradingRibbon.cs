@@ -546,5 +546,65 @@ namespace AQM_Algo_Trading_Addin_CGR
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void BTN_Test3_Click(object sender, RibbonControlEventArgs e)
+        {
+            wb = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook);
+
+            String aktiensymbole_eingabe = Microsoft.VisualBasic.Interaction.InputBox("Bitte Tabellenblattnamen eingeben!", "Tabellenblattname eingeben", "");
+ 
+            foreach (Excel.Worksheet sheet in wb.Worksheets)
+            {
+                if (sheet.Name.ToString() == aktiensymbole_eingabe)
+                {
+                    MessageBox.Show("Tabellenblattname bereits vorhanden! Bitte erneut ausführen!");
+                    return;
+                }
+            }
+
+            ws = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook.Worksheets.Add());
+            ws.Name = aktiensymbole_eingabe;
+
+            string select_aktienwert_Query = "SELECT * FROM aqm.aktienwerte LIMIT 100";
+
+            try
+            {
+                verbindungAufbauen("localhost", "3306", "root", "");
+                mySQLVerbindung.Open();
+
+                mySQLCommand = new MySqlCommand(select_aktienwert_Query, mySQLVerbindung);
+
+                int i = 0;
+
+                using (MySqlDataReader reader = mySQLCommand.ExecuteReader())
+                {
+                    if (reader != null)
+                    {
+                        while (reader.Read())
+                        {
+                            i++;
+                            for (int j = 0; j < reader.FieldCount; j++)
+                            {
+                                if (i == 1) //Beim ersten Durchlauf Spaltenbezeichnungen setzen
+                                {
+                                    ws.Cells[i, j + 1] = reader.GetName(j);
+                                }
+                                else //bei den restlichen Durchläufen Datensätze spaltenweise ausgeben
+                                {
+                                    ws.Cells[i, j + 1] = reader[j].ToString();
+                                }
+                            }
+                        }
+                    }
+                }
+
+                mySQLVerbindung.Close();
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }
