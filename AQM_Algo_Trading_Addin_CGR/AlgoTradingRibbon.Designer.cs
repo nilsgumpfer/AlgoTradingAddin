@@ -56,6 +56,11 @@
             this.BTN_Aktionen_Ausfuehren = this.Factory.CreateRibbonButton();
             this.group2 = this.Factory.CreateRibbonGroup();
             this.checkBox3 = this.Factory.CreateRibbonCheckBox();
+            this.group8 = this.Factory.CreateRibbonGroup();
+            this.BTN_1 = this.Factory.CreateRibbonButton();
+            this.BTN_Test2 = this.Factory.CreateRibbonButton();
+            this.BTN_Test1 = this.Factory.CreateRibbonButton();
+            this.BTN_Test3 = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.group1.SuspendLayout();
             this.group3.SuspendLayout();
@@ -63,6 +68,7 @@
             this.group5.SuspendLayout();
             this.group6.SuspendLayout();
             this.group7.SuspendLayout();
+            this.group8.SuspendLayout();
             this.SuspendLayout();
             // 
             // tab1
@@ -74,6 +80,7 @@
             this.tab1.Groups.Add(this.group5);
             this.tab1.Groups.Add(this.group6);
             this.tab1.Groups.Add(this.group7);
+            this.tab1.Groups.Add(this.group8);
             this.tab1.Label = "Test AlgoTrading";
             this.tab1.Name = "tab1";
             // 
@@ -208,6 +215,37 @@
             this.checkBox3.Label = "checkBox3";
             this.checkBox3.Name = "checkBox3";
             // 
+            // group8
+            // 
+            this.group8.Items.Add(this.BTN_1);
+            this.group8.Items.Add(this.BTN_Test2);
+            this.group8.Items.Add(this.BTN_Test3);
+            this.group8.Label = "Test";
+            this.group8.Name = "group8";
+            // 
+            // BTN_1
+            // 
+            this.BTN_1.Label = "Tabelle bei aktiver Zelle einfügen";
+            this.BTN_1.Name = "BTN_1";
+            this.BTN_1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.BTN_Test_Click);
+            // 
+            // BTN_Test2
+            // 
+            this.BTN_Test2.Label = "Tabelle auf aktuellem Tabllenblatt einfügen";
+            this.BTN_Test2.Name = "BTN_Test2";
+            this.BTN_Test2.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.BTN_Test2_Click);
+            // 
+            // BTN_Test1
+            // 
+            this.BTN_Test1.Label = "Tabelle bei aktiver Zelle einfügen";
+            this.BTN_Test1.Name = "BTN_Test1";
+            this.BTN_Test1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.BTN_Test_Click);
+            // 
+            // BTN_Test3
+            // 
+            this.BTN_Test3.Label = "Tabelle auf neuem Tabllenblatt einfügen";
+            this.BTN_Test3.Name = "BTN_Test3";
+            // 
             // AlgoTradingRibbon
             // 
             this.Name = "AlgoTradingRibbon";
@@ -228,6 +266,8 @@
             this.group6.PerformLayout();
             this.group7.ResumeLayout(false);
             this.group7.PerformLayout();
+            this.group8.ResumeLayout(false);
+            this.group8.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -256,6 +296,11 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox CB_Algo_Trend_Kurs;
         internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox CB_Algo_Trend_Volumen;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group7;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup group8;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton BTN_1;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton BTN_Test2;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton BTN_Test1;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton BTN_Test3;
     }
 
     partial class ThisRibbonCollection

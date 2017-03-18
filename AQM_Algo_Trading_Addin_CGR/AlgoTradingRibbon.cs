@@ -188,67 +188,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             listView1.Update();*/
         }
 
-        private void button2_Click(object sender, RibbonControlEventArgs e)
-        {
-            
-            //wb = Globals.ThisAddIn.Application.ActiveWorkbook;
-            ws = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet);
-
-            range = Globals.ThisAddIn.Application.ActiveCell;
-
-
-            string select_aktienwert_Query = "SELECT * FROM aqm.aktienwerte LIMIT 100";
-
-            try
-            {
-                verbindungAufbauen("localhost", "3306", "root", "");
-                mySQLVerbindung.Open();
-
-                mySQLCommand = new MySqlCommand(select_aktienwert_Query, mySQLVerbindung);
-                //mySQLDataReader = mySQLCommand.ExecuteReader();
-
-                int i = 0;
-
-                using (MySqlDataReader reader = mySQLCommand.ExecuteReader())
-                {
-                    if (reader != null)
-                    {
-                        
-                        while (reader.Read())
-                        {
-                            i++;
-                            for (int j = 0; j < reader.FieldCount; j++)
-                            {
-                                if (i == 1) //Beim ersten Durchlauf Spaltenbezeichnungen setzen
-                                {
-                                    ws.Cells[i, j + 1] = reader.GetName(j);
-                                }
-                                else //bei den restlichen Durchläufen Datensätze spaltenweise ausgeben
-                                {
-                                    ws.Cells[i, j+1] = reader[j].ToString();
-                                }
-                            }
-                        }
-                    }
-                }
-
-                mySQLVerbindung.Close();
-            }
-
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
-
-            //ws = wb.ActiveSheet;
-            //ws.Cells[1,1] = "Test";
-            //ws.Cells[1,2] = "1234";
-            //Excel.Range cells = ws.Range["A1", "D8"];
-            //Chart chart = ws.Controls.AddChart(cells, "emplyees");
-            //chart.ChartType = Microsoft.Office.Interop.Excel.XlChartType.xlColumnClustered;
-            //chart.SetSourceData(cells);
-        }
+      
 
         private void verbindungAufbauen(string datasource, string port, string username, string password)
         {
@@ -422,6 +362,188 @@ namespace AQM_Algo_Trading_Addin_CGR
             else
             {
                 CB_Algo_Trend_Kurs.Enabled = true;
+            }
+        }
+
+        private void button2_Click(object sender, RibbonControlEventArgs e)
+        {
+
+            //wb = Globals.ThisAddIn.Application.ActiveWorkbook;
+            ws = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet);
+            range = Globals.ThisAddIn.Application.Cells[0, 0];
+            //range = Globals.ThisAddIn.Application.ActiveCell;
+
+
+            string select_aktienwert_Query = "SELECT * FROM aqm.aktienwerte LIMIT 100";
+
+            try
+            {
+                verbindungAufbauen("localhost", "3306", "root", "");
+                mySQLVerbindung.Open();
+
+                mySQLCommand = new MySqlCommand(select_aktienwert_Query, mySQLVerbindung);
+                //mySQLDataReader = mySQLCommand.ExecuteReader();
+
+                int i = 0;
+
+                using (MySqlDataReader reader = mySQLCommand.ExecuteReader())
+                {
+                    if (reader != null)
+                    {
+
+                        while (reader.Read())
+                        {
+                            i++;
+                            for (int j = 0; j < reader.FieldCount; j++)
+                            {
+                                if (i == 1) //Beim ersten Durchlauf Spaltenbezeichnungen setzen
+                                {
+                                    ws.Cells[i, j + 1] = reader.GetName(j);
+                                }
+                                else //bei den restlichen Durchläufen Datensätze spaltenweise ausgeben
+                                {
+                                    ws.Cells[i, j + 1] = reader[j].ToString();
+                                }
+                            }
+                        }
+                    }
+                }
+
+                mySQLVerbindung.Close();
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+
+            //ws = wb.ActiveSheet;
+            //ws.Cells[1,1] = "Test";
+            //ws.Cells[1,2] = "1234";
+            //Excel.Range cells = ws.Range["A1", "D8"];
+            //Chart chart = ws.Controls.AddChart(cells, "emplyees");
+            //chart.ChartType = Microsoft.Office.Interop.Excel.XlChartType.xlColumnClustered;
+            //chart.SetSourceData(cells);
+        }
+
+        //Aktives Tabellenblatt
+        private void BTN_Test_Click(object sender, RibbonControlEventArgs e)
+        {
+            ws = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet);
+            //range = Globals.ThisAddIn.Application.Cells[0, 0];
+            
+            int row = Globals.ThisAddIn.Application.ActiveCell.Row;
+            int column = Globals.ThisAddIn.Application.ActiveCell.Column;
+
+
+            ////Aktive Zelle
+            //ws = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet);
+            //range = Globals.ThisAddIn.Application.ActiveCell;
+
+            ////Neues Tabellenblatt
+            //ws = Globals.ThisAddIn.Application.ActiveWorkbook.Worksheets.Add();
+            //range = Globals.ThisAddIn.Application.Cells[0, 0];
+
+
+            //writeTable(ws, range);
+
+
+            //button2_Click(sender, e);
+
+            string select_aktienwert_Query = "SELECT * FROM aqm.aktienwerte LIMIT 100";
+
+            try
+            {
+                verbindungAufbauen("localhost", "3306", "root", "");
+                mySQLVerbindung.Open();
+
+                mySQLCommand = new MySqlCommand(select_aktienwert_Query, mySQLVerbindung);
+                //mySQLDataReader = mySQLCommand.ExecuteReader();
+
+                //int i = row  = 5;
+                //int j = column = 5;
+
+                int rowTemp = row; 
+
+                using (MySqlDataReader reader = mySQLCommand.ExecuteReader())
+                {
+                    if (reader != null)
+                    {
+
+                        while (reader.Read())
+                        {
+                            for (int i = 0;  i < reader.FieldCount; i++)
+                            {
+                                if (rowTemp == row) //Beim ersten Durchlauf Spaltenbezeichnungen setzen
+                                {
+                                    ws.Cells[row, column+i] = reader.GetName(i);
+                                }
+                                else //bei den restlichen Durchläufen Datensätze spaltenweise ausgeben
+                                {
+                                    ws.Cells[row, column+i] = reader[i].ToString();
+                                }
+                            }
+                            row++;
+                        }
+                    }
+                }
+
+                mySQLVerbindung.Close();
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+        }
+
+
+        private void BTN_Test2_Click(object sender, RibbonControlEventArgs e)
+        {
+            ws = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet);
+  
+            string select_aktienwert_Query = "SELECT * FROM aqm.aktienwerte LIMIT 100";
+
+            try
+            {
+                verbindungAufbauen("localhost", "3306", "root", "");
+                mySQLVerbindung.Open();
+
+                mySQLCommand = new MySqlCommand(select_aktienwert_Query, mySQLVerbindung);
+
+                int i = 0;
+
+                using (MySqlDataReader reader = mySQLCommand.ExecuteReader())
+                {
+                    if (reader != null)
+                    {
+
+                        while (reader.Read())
+                        {
+                            i++;
+                            for (int j = 0; j < reader.FieldCount; j++)
+                            {
+                                if (i == 1) //Beim ersten Durchlauf Spaltenbezeichnungen setzen
+                                {
+                                    ws.Cells[i, j + 1] = reader.GetName(j);
+                                }
+                                else //bei den restlichen Durchläufen Datensätze spaltenweise ausgeben
+                                {
+                                    ws.Cells[i, j + 1] = reader[j].ToString();
+                                }
+                            }
+                        }
+                    }
+                }
+
+                mySQLVerbindung.Close();
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }
