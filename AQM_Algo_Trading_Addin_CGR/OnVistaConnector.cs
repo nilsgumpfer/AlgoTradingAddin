@@ -8,5 +8,31 @@ namespace AQM_Algo_Trading_Addin_CGR
 {
     class OnVistaConnector : PushConnector
     {
+        private String wkn;
+        private String isin;
+        private String symbol;
+
+        private OnVistaConnector()
+        {
+
+        }
+
+        public OnVistaConnector(String symbol)
+        {
+            this.symbol = symbol;
+
+            if (init() == false)
+                return null;
+        }
+
+        private StockDataTransferObject getStockData()
+        {
+
+        }
+
+        private bool init()
+        {
+            //search for symbol in db, assign wkn and isin
+        }
     }
 }

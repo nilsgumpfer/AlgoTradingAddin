@@ -8,7 +8,6 @@ namespace AQM_Algo_Trading_Addin_CGR
 {
     interface PushConnector
     {
-        double getStockPrice();
-        double getStockVolume();
+        private StockDataTransferObject getStockData();
     }
 }
