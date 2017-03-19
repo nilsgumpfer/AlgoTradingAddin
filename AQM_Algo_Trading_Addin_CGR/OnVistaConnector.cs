@@ -27,7 +27,11 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         private StockDataTransferObject getStockData()
         {
+            StockDataTransferObject stdTransferObject = new StockDataTransferObject();
 
+
+
+            stdTransferObject.Isin = "";
         }
 
         private bool init()

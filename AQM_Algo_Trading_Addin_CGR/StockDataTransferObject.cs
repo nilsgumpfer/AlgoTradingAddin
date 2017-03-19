@@ -23,6 +23,7 @@ namespace AQM_Algo_Trading_Addin_CGR
         private String timestamp_volume;
         private String timestamp_metadata;
 
+      
         public string Isin
         {
             get
