@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace AQM_Algo_Trading_Addin_CGR
 {
-    interface PushConnector
+    class StockDataTransferObject
     {
-        double getStockPrice();
-        double getStockVolume();
+        private String isin;
+        private String wk
     }
 }
