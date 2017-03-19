@@ -175,12 +175,9 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-<<<<<<< Updated upstream
-=======
     <Compile Include="PushConnector.cs" />
     <Compile Include="PushWorker.cs" />
     <Compile Include="StockDataTransferObject.cs" />
->>>>>>> Stashed changes
     <Compile Include="YahooFinanceAPIConnector.cs" />
     <EmbeddedResource Include="AlgoTradingRibbon.resx">
       <DependentUpon>AlgoTradingRibbon.cs</DependentUpon>
