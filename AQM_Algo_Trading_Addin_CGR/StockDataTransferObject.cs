@@ -17,6 +17,9 @@ namespace AQM_Algo_Trading_Addin_CGR
         public double volume { get; set; }
         public double trend_abs { get; set; }
         public double trend_perc { get; set; }
+        public double day_open { get; set; }
+        public double day_close { get; set; }
+        public double day_adj_close { get; set; }
         public double day_high { get; set; }
         public double day_low { get; set; }
         public double preday_volume { get; set; }

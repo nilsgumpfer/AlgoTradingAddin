@@ -1,0 +1,1 @@
+﻿enum PushConnectors {OnVista}
