@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AQM_Algo_Trading_Addin_CGR
 {
-    public class DataManager
+    class DataManager
     {
     }
 }

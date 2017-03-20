@@ -7,21 +7,21 @@ using AQM_Algo_Trading_Addin_CGR;
 
 namespace AQM_Algo_Trading_Addin_CGR
 {
-    public class StockDataTransferObject
+    class StockDataTransferObject
     {
-        private String isin { get; set; }
-        private String wkn;
-        private String symbol;
-        private String sector;
-        private double price;
-        private double volume;
-        private double trend_abs;
-        private double trend_perc;
-        private double day_high;
-        private double day_low;
-        private double preday_volume;
-        private String timestamp_price;
-        private String timestamp_volume;
-        private String timestamp_metadata;
+        public string isin { get; set; }
+        public string wkn { get; set; }
+        public string symbol { get; set; }
+        public string sector { get; set; }
+        public double price { get; set; }
+        public double volume { get; set; }
+        public double trend_abs { get; set; }
+        public double trend_perc { get; set; }
+        public double day_high { get; set; }
+        public double day_low { get; set; }
+        public double preday_volume { get; set; }
+        public string timestamp_price { get; set; }
+        public string timestamp_volume { get; set; }
+        public string timestamp_otherdata { get; set; }
     }
 }

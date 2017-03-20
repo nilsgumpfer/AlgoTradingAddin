@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace AQM_Algo_Trading_Addin_CGR
 {
-    public interface PushConnector
+    interface PushConnector
     {
-        private StockDataTransferObject getStockData();
+        StockDataTransferObject getStockData();
     }
 }
