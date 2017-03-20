@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AQM_Algo_Trading_Addin_CGR
 {
-    class MySQLConnector
+    public class MySQLConnector
     {
     }
 }

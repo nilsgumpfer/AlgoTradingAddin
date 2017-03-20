@@ -200,8 +200,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="PushConnector.cs" />
-    <Compile Include="PushWorker.cs" />
     <Compile Include="RealTimePullObject.cs" />
     <Compile Include="RealtimePullObjectFactory.cs" />
     <Compile Include="RealTimePullObject_BOERSE_DE.cs" />

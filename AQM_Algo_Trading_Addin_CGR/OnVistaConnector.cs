@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AQM_Algo_Trading_Addin_CGR
 {
-    class OnVistaConnector : PushConnector
+    public class OnVistaConnector : PushConnector
     {
         private String wkn;
         private String isin;
@@ -29,9 +29,6 @@ namespace AQM_Algo_Trading_Addin_CGR
         {
             StockDataTransferObject stdTransferObject = new StockDataTransferObject();
 
-
-
-            stdTransferObject.Isin = "";
         }
 
         private bool init()
