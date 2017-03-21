@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AQM_Algo_Trading_Addin_CGR
 {
-    class DataManager
+    class DataManager 
     {
         private List<PushWorker> listOfPushWorkers = new List<PushWorker>();
 

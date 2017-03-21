@@ -38,6 +38,9 @@
             this.group1 = this.Factory.CreateRibbonGroup();
             this.CB_Typ_Historisch = this.Factory.CreateRibbonCheckBox();
             this.CB_Typ_Live = this.Factory.CreateRibbonCheckBox();
+            this.button1 = this.Factory.CreateRibbonButton();
+            this.button2 = this.Factory.CreateRibbonButton();
+            this.toggleButton1 = this.Factory.CreateRibbonToggleButton();
             this.group3 = this.Factory.CreateRibbonGroup();
             this.CB_Quelle_Lokal = this.Factory.CreateRibbonCheckBox();
             this.CB_Quelle_Onvista = this.Factory.CreateRibbonCheckBox();
@@ -88,7 +91,10 @@
             // 
             this.group1.Items.Add(this.CB_Typ_Historisch);
             this.group1.Items.Add(this.CB_Typ_Live);
-            this.group1.Label = "Datentyp";
+            this.group1.Items.Add(this.button1);
+            this.group1.Items.Add(this.button2);
+            this.group1.Items.Add(this.toggleButton1);
+            this.group1.Label = "group1";
             this.group1.Name = "group1";
             // 
             // CB_Typ_Historisch
@@ -102,6 +108,21 @@
             this.CB_Typ_Live.Label = "Live-Daten";
             this.CB_Typ_Live.Name = "CB_Typ_Live";
             this.CB_Typ_Live.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.CB_Typ_Live_Click);
+            // 
+            // button1
+            // 
+            this.button1.Label = "";
+            this.button1.Name = "button1";
+            // 
+            // button2
+            // 
+            this.button2.Label = "";
+            this.button2.Name = "button2";
+            // 
+            // toggleButton1
+            // 
+            this.toggleButton1.Label = "toggleButton1";
+            this.toggleButton1.Name = "toggleButton1";
             // 
             // group3
             // 
@@ -302,6 +323,9 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton BTN_Test2;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton BTN_Test1;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton BTN_Test3;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton button1;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton button2;
+        internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton toggleButton1;
     }
 
     partial class ThisRibbonCollection

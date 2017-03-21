@@ -168,6 +168,7 @@
     <Compile Include="BackgroundCrawler.cs" />
     <Compile Include="DataManager.cs" />
     <Compile Include="Enumerations.cs" />
+    <Compile Include="LiveConnectionSubscriber.cs" />
     <Compile Include="MySQLConnectionObject.cs" />
     <Compile Include="MySQLConnector.cs" />
     <Compile Include="Observable.cs" />
@@ -178,7 +179,6 @@
     </Compile>
     <Compile Include="PushConnector.cs" />
     <Compile Include="PushWorker.cs" />
-    <Compile Include="PushWorkerSubscriber.cs" />
     <Compile Include="StockDataTransferObject.cs" />
     <Compile Include="YahooFinanceAPIConnector.cs" />
     <EmbeddedResource Include="AlgoTradingRibbon.resx">
@@ -193,6 +193,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="AQM_Algo_Trading_Addin_CGR_1_TemporaryKey.pfx" />
     <None Include="AQM_Algo_Trading_Addin_CGR_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -226,10 +227,10 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>AQM_Algo_Trading_Addin_CGR_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>AQM_Algo_Trading_Addin_CGR_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>2EF4DB1D583B257310CDF94732513AFE6766FDD6</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>1A4B78A6FF37D1345167E133BA29E1A542F28E23</ManifestCertificateThumbprint>
   </PropertyGroup>
   <!-- Include the build rules for a C# project. -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

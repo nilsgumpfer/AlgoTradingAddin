@@ -15,6 +15,7 @@ namespace AQM_Algo_Trading_Addin_CGR
     public delegate void UpdateListViewItem(Aktienwert aktie);
     public partial class AlgoTradingRibbon : Observer<Aktienwert>
     {
+        public int selectedOptions = 0;
         private List<Aktienwert> aktuelleAktienwerte;
         private List<Thread> workerThreads;
         private List<BackgroundCrawler> workerObjects;
@@ -35,7 +36,7 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         }*/
 
-            //test123karle
+        //test123karle
         private void AlgoTradingRibbon_Load(object sender, RibbonUIEventArgs e)
         {
             //InitializeComponent();
@@ -46,7 +47,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             alteAktiensymbole = "";
 
             //Checkboxen deaktivieren
-            CB_Quelle_Onvista.Enabled = false; 
+            CB_Quelle_Onvista.Enabled = false;
             CB_Quelle_Yahoo.Enabled = false;
             CB_Quelle_Lokal.Enabled = false;
             CB_Ziel_AktuellesTB.Enabled = false;
@@ -188,7 +189,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             listView1.Update();*/
         }
 
-      
+
 
         private void verbindungAufbauen(string datasource, string port, string username, string password)
         {
@@ -198,19 +199,41 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         private void CB_Typ_Live_Click(object sender, RibbonControlEventArgs e)
         {
+            if (CB_Quelle_Lokal.Checked == true)
+            {
+                CB_Typ_Live.Checked = false;
+                return;
+            }
             if (CB_Typ_Live.Checked == true)
             {
                 CB_Typ_Historisch.Enabled = false;
                 CB_Quelle_Lokal.Enabled = false;
-                CB_Quelle_Onvista.Enabled = true;
-                CB_Quelle_Yahoo.Enabled = true;
+                if (CB_Quelle_Onvista.Checked == true)
+                {
+                    CB_Quelle_Yahoo.Enabled = false;
+                }
+                else
+                {
+                    CB_Quelle_Yahoo.Enabled = true;
+                }
+                if (CB_Quelle_Yahoo.Checked == true)
+                {
+                    CB_Quelle_Onvista.Enabled = false;
+                }
+                else
+                {
+                    CB_Quelle_Onvista.Enabled = true;
+                }
+                selectedOptions = selectedOptions + 1;
             }
+
             else
             {
                 CB_Typ_Historisch.Enabled = true;
                 CB_Quelle_Lokal.Enabled = false;
                 CB_Quelle_Onvista.Enabled = false;
                 CB_Quelle_Yahoo.Enabled = false;
+                selectedOptions = selectedOptions - 1;
             }
 
         }
@@ -221,11 +244,33 @@ namespace AQM_Algo_Trading_Addin_CGR
             {
                 CB_Ziel_AktuellesTB.Enabled = false;
                 CB_Ziel_Cursor.Enabled = false;
+                if(CB_Visualisierung_Diagramm.Checked == true)
+                {
+                    CB_Visualisierung_Diagramm.Enabled = true;
+                }
+                else if(CB_Visualisierung_Tabelle.Checked == true)
+                {
+                    CB_Visualisierung_Tabelle.Enabled = true;
+                }
+                else
+                {
+                    CB_Visualisierung_Tabelle.Enabled = true;
+                    CB_Visualisierung_Diagramm.Enabled = true;
+                }
+                
+                selectedOptions = selectedOptions + 1;
+
+
             }
             else
             {
                 CB_Ziel_AktuellesTB.Enabled = true;
                 CB_Ziel_Cursor.Enabled = true;
+                CB_Visualisierung_Tabelle.Enabled = false;
+                CB_Visualisierung_Diagramm.Enabled = false;
+                selectedOptions = selectedOptions - 1;
+
+
             }
         }
 
@@ -235,29 +280,74 @@ namespace AQM_Algo_Trading_Addin_CGR
             {
                 CB_Ziel_NeuesTB.Enabled = false;
                 CB_Ziel_Cursor.Enabled = false;
+                if (CB_Visualisierung_Diagramm.Checked == true)
+                {
+                    CB_Visualisierung_Diagramm.Enabled = true;
+                }
+                else if (CB_Visualisierung_Tabelle.Checked == true)
+                {
+                    CB_Visualisierung_Tabelle.Enabled = true;
+                }
+                else
+                {
+                    CB_Visualisierung_Tabelle.Enabled = true;
+                    CB_Visualisierung_Diagramm.Enabled = true;
+                }
+                selectedOptions = selectedOptions + 1;
+
+
             }
             else
             {
                 CB_Ziel_NeuesTB.Enabled = true;
                 CB_Ziel_Cursor.Enabled = true;
+                CB_Visualisierung_Tabelle.Enabled = false;
+                CB_Visualisierung_Diagramm.Enabled = false;
+                selectedOptions = selectedOptions - 1;
+
+
             }
         }
 
         private void CB_Typ_Historisch_Click(object sender, RibbonControlEventArgs e)
         {
+            if (CB_Quelle_Onvista.Checked == true)
+            {
+                CB_Typ_Historisch.Checked = false;
+                return;
+            }
             if (CB_Typ_Historisch.Checked == true)
             {
                 CB_Typ_Live.Enabled = false;
                 CB_Quelle_Onvista.Enabled = false;
-                CB_Quelle_Lokal.Enabled = true;
-                CB_Quelle_Yahoo.Enabled = true;
+
+                if (CB_Quelle_Lokal.Checked == true)
+                {
+                    CB_Quelle_Yahoo.Enabled = false;
+                }
+                else
+                {
+                    CB_Quelle_Yahoo.Enabled = true;
+                }
+
+                if (CB_Quelle_Yahoo.Checked == true)
+                {
+                    CB_Quelle_Lokal.Enabled = false;
+                }
+                else {
+                    CB_Quelle_Lokal.Enabled = true;
+                }
+
+                selectedOptions = selectedOptions + 1;
             }
+
             else
             {
                 CB_Typ_Live.Enabled = true;
                 CB_Quelle_Onvista.Enabled = false;
                 CB_Quelle_Lokal.Enabled = false;
                 CB_Quelle_Yahoo.Enabled = false;
+                selectedOptions = selectedOptions - 1;
             }
         }
 
@@ -267,11 +357,41 @@ namespace AQM_Algo_Trading_Addin_CGR
             {
                 CB_Quelle_Yahoo.Enabled = false;
                 CB_Quelle_Onvista.Enabled = false;
+                if (CB_Ziel_AktuellesTB.Checked == true)
+                {
+                    CB_Ziel_AktuellesTB.Enabled = true;
+                    CB_Ziel_NeuesTB.Enabled = false;
+                    CB_Ziel_Cursor.Enabled = false;
+                }
+                else if (CB_Ziel_NeuesTB.Checked == true)
+                {
+                    CB_Ziel_NeuesTB.Enabled = true;
+                    CB_Ziel_Cursor.Enabled = false;
+                    CB_Ziel_AktuellesTB.Enabled = false;
+                }
+                else if (CB_Ziel_Cursor.Checked == true)
+                {
+                    CB_Ziel_Cursor.Enabled = true;
+                    CB_Ziel_AktuellesTB.Enabled = false;
+                    CB_Ziel_NeuesTB.Enabled = false;
+                }
+                else {
+                    CB_Ziel_AktuellesTB.Enabled = true;
+                    CB_Ziel_NeuesTB.Enabled = true;
+                    CB_Ziel_Cursor.Enabled = true;
+                }
+                selectedOptions = selectedOptions + 1;
             }
+
             else
             {
+
                 CB_Quelle_Yahoo.Enabled = true;
-                CB_Quelle_Onvista.Enabled = true;
+                //CB_Quelle_Onvista.Enabled = true;
+                CB_Ziel_AktuellesTB.Enabled = false;
+                CB_Ziel_NeuesTB.Enabled = false;
+                CB_Ziel_Cursor.Enabled = false;
+                selectedOptions = selectedOptions - 1;
             }
         }
 
@@ -281,11 +401,43 @@ namespace AQM_Algo_Trading_Addin_CGR
             {
                 CB_Quelle_Yahoo.Enabled = false;
                 CB_Quelle_Lokal.Enabled = false;
+                if (CB_Ziel_AktuellesTB.Checked == true)
+                {
+                    CB_Ziel_AktuellesTB.Enabled = true;
+                    CB_Ziel_NeuesTB.Enabled = false;
+                    CB_Ziel_Cursor.Enabled = false;
+                }
+                else if (CB_Ziel_NeuesTB.Checked == true)
+                {
+                    CB_Ziel_NeuesTB.Enabled = true;
+                    CB_Ziel_Cursor.Enabled = false;
+                    CB_Ziel_AktuellesTB.Enabled = false;
+                }
+                else if (CB_Ziel_Cursor.Checked == true)
+                {
+                    CB_Ziel_Cursor.Enabled = true;
+                    CB_Ziel_AktuellesTB.Enabled = false;
+                    CB_Ziel_NeuesTB.Enabled = false;
+                }
+                else {
+                    CB_Ziel_AktuellesTB.Enabled = true;
+                    CB_Ziel_NeuesTB.Enabled = true;
+                    CB_Ziel_Cursor.Enabled = true;
+                }
+                selectedOptions = selectedOptions + 1;
             }
             else
             {
                 CB_Quelle_Yahoo.Enabled = true;
-                CB_Quelle_Lokal.Enabled = true;
+                if (CB_Typ_Historisch.Checked == true)
+                {
+                    CB_Quelle_Lokal.Enabled = true;
+                }
+                //CB_Quelle_Lokal.Enabled = true;
+                CB_Ziel_AktuellesTB.Enabled = false;
+                CB_Ziel_NeuesTB.Enabled = false;
+                CB_Ziel_Cursor.Enabled = false;
+                selectedOptions = selectedOptions - 1;
             }
         }
 
@@ -295,11 +447,46 @@ namespace AQM_Algo_Trading_Addin_CGR
             {
                 CB_Quelle_Lokal.Enabled = false;
                 CB_Quelle_Onvista.Enabled = false;
+                if (CB_Ziel_AktuellesTB.Checked == true)
+                {
+                    CB_Ziel_AktuellesTB.Enabled = true;
+                    CB_Ziel_NeuesTB.Enabled = false;
+                    CB_Ziel_Cursor.Enabled = false;
+                }
+                else if (CB_Ziel_NeuesTB.Checked == true)
+                {
+                    CB_Ziel_NeuesTB.Enabled = true;
+                    CB_Ziel_Cursor.Enabled = false;
+                    CB_Ziel_AktuellesTB.Enabled = false;
+                }
+                else if (CB_Ziel_Cursor.Checked == true)
+                {
+                    CB_Ziel_Cursor.Enabled = true;
+                    CB_Ziel_AktuellesTB.Enabled = false;
+                    CB_Ziel_NeuesTB.Enabled = false;
+                }
+                else {
+                    CB_Ziel_AktuellesTB.Enabled = true;
+                    CB_Ziel_NeuesTB.Enabled = true;
+                    CB_Ziel_Cursor.Enabled = true;
+                }
+                selectedOptions = selectedOptions + 1;
             }
             else
             {
-                CB_Quelle_Lokal.Enabled = true;
-                CB_Quelle_Onvista.Enabled = true;
+                
+                if(CB_Typ_Historisch.Checked == true)
+                {
+                    CB_Quelle_Lokal.Enabled = true;
+                }
+                else
+                {
+                    CB_Quelle_Onvista.Enabled = true;
+                }
+                CB_Ziel_AktuellesTB.Enabled = false;
+                CB_Ziel_NeuesTB.Enabled = false;
+                CB_Ziel_Cursor.Enabled = false;
+                selectedOptions = selectedOptions - 1;
             }
         }
 
@@ -309,11 +496,30 @@ namespace AQM_Algo_Trading_Addin_CGR
             {
                 CB_Ziel_AktuellesTB.Enabled = false;
                 CB_Ziel_NeuesTB.Enabled = false;
+                if (CB_Visualisierung_Diagramm.Checked == true)
+                {
+                    CB_Visualisierung_Diagramm.Enabled = true;
+                }
+                else if (CB_Visualisierung_Tabelle.Checked == true)
+                {
+                    CB_Visualisierung_Tabelle.Enabled = true;
+                }
+                else
+                {
+                    CB_Visualisierung_Tabelle.Enabled = true;
+                    CB_Visualisierung_Diagramm.Enabled = true;
+                }
+                selectedOptions = selectedOptions + 1;
+
+
             }
             else
             {
                 CB_Ziel_AktuellesTB.Enabled = true;
                 CB_Ziel_NeuesTB.Enabled = true;
+                CB_Visualisierung_Tabelle.Enabled = false;
+                CB_Visualisierung_Diagramm.Enabled = false;
+                selectedOptions = selectedOptions - 1;
             }
         }
 
@@ -322,10 +528,27 @@ namespace AQM_Algo_Trading_Addin_CGR
             if (CB_Visualisierung_Diagramm.Checked == true)
             {
                 CB_Visualisierung_Tabelle.Enabled = false;
+                if (CB_Algo_Trend_Kurs.Checked == true)
+                {
+                    CB_Algo_Trend_Kurs.Enabled = true;
+                }
+                else if (CB_Algo_Trend_Volumen.Checked == true)
+                {
+                    CB_Algo_Trend_Volumen.Enabled = true;
+                }
+                else
+                {
+                    CB_Algo_Trend_Kurs.Enabled = true;
+                    CB_Algo_Trend_Volumen.Enabled = true;
+                }
+                selectedOptions = selectedOptions + 1;
             }
             else
             {
                 CB_Visualisierung_Tabelle.Enabled = true;
+                CB_Algo_Trend_Kurs.Enabled = false;
+                CB_Algo_Trend_Volumen.Enabled = false;
+                selectedOptions = selectedOptions - 1;
             }
         }
 
@@ -334,10 +557,27 @@ namespace AQM_Algo_Trading_Addin_CGR
             if (CB_Visualisierung_Tabelle.Checked == true)
             {
                 CB_Visualisierung_Diagramm.Enabled = false;
+                if (CB_Algo_Trend_Kurs.Checked == true)
+                {
+                    CB_Algo_Trend_Kurs.Enabled = true;
+                }
+                else if (CB_Algo_Trend_Volumen.Checked == true)
+                {
+                    CB_Algo_Trend_Volumen.Enabled = true;
+                }
+                else
+                {
+                    CB_Algo_Trend_Kurs.Enabled = true;
+                    CB_Algo_Trend_Volumen.Enabled = true;
+                }
+                selectedOptions = selectedOptions + 1;
             }
             else
             {
                 CB_Visualisierung_Diagramm.Enabled = true;
+                CB_Algo_Trend_Kurs.Enabled = false;
+                CB_Algo_Trend_Volumen.Enabled = false;
+                selectedOptions = selectedOptions - 1;
             }
         }
 
@@ -346,10 +586,14 @@ namespace AQM_Algo_Trading_Addin_CGR
             if (CB_Algo_Trend_Kurs.Checked == true)
             {
                 CB_Algo_Trend_Volumen.Enabled = false;
+                BTN_Aktionen_Ausfuehren.Enabled = true;
+                selectedOptions = selectedOptions + 1;
             }
             else
             {
                 CB_Algo_Trend_Volumen.Enabled = true;
+                BTN_Aktionen_Ausfuehren.Enabled = false;
+                selectedOptions = selectedOptions - 1;
             }
         }
 
@@ -358,76 +602,92 @@ namespace AQM_Algo_Trading_Addin_CGR
             if (CB_Algo_Trend_Volumen.Checked == true)
             {
                 CB_Algo_Trend_Kurs.Enabled = false;
+                BTN_Aktionen_Ausfuehren.Enabled = true;
+                selectedOptions = selectedOptions + 1;
             }
             else
             {
                 CB_Algo_Trend_Kurs.Enabled = true;
+                BTN_Aktionen_Ausfuehren.Enabled = false;
+                selectedOptions = selectedOptions - 1;
             }
         }
 
         private void button2_Click(object sender, RibbonControlEventArgs e)
         {
-
-            //wb = Globals.ThisAddIn.Application.ActiveWorkbook;
-            ws = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet);
-            range = Globals.ThisAddIn.Application.Cells[0, 0];
-            //range = Globals.ThisAddIn.Application.ActiveCell;
-
-
-            string select_aktienwert_Query = "SELECT * FROM aqm.aktienwerte LIMIT 100";
-
-            try
+            if (CB_Algo_Trend_Kurs.Enabled == false & CB_Algo_Trend_Volumen.Enabled == false)
             {
-                verbindungAufbauen("localhost", "3306", "root", "");
-                mySQLVerbindung.Open();
+                BTN_Aktionen_Ausfuehren.Enabled = false;
+            }
+            if (selectedOptions == 5)
+            {
 
-                mySQLCommand = new MySqlCommand(select_aktienwert_Query, mySQLVerbindung);
-                //mySQLDataReader = mySQLCommand.ExecuteReader();
+                //wb = Globals.ThisAddIn.Application.ActiveWorkbook;
+                ws = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet);
+                range = Globals.ThisAddIn.Application.Cells[0, 0];
+                //range = Globals.ThisAddIn.Application.ActiveCell;
 
-                int i = 0;
 
-                using (MySqlDataReader reader = mySQLCommand.ExecuteReader())
+                string select_aktienwert_Query = "SELECT * FROM aqm.aktienwerte LIMIT 100";
+
+                try
                 {
-                    if (reader != null)
-                    {
+                    verbindungAufbauen("localhost", "3306", "root", "");
+                    mySQLVerbindung.Open();
 
-                        while (reader.Read())
+                    mySQLCommand = new MySqlCommand(select_aktienwert_Query, mySQLVerbindung);
+                    //mySQLDataReader = mySQLCommand.ExecuteReader();
+
+                    int i = 0;
+
+                    using (MySqlDataReader reader = mySQLCommand.ExecuteReader())
+                    {
+                        if (reader != null)
                         {
-                            i++;
-                            for (int j = 0; j < reader.FieldCount; j++)
+
+                            while (reader.Read())
                             {
-                                if (i == 1) //Beim ersten Durchlauf Spaltenbezeichnungen setzen
+                                i++;
+                                for (int j = 0; j < reader.FieldCount; j++)
                                 {
-                                    ws.Cells[i, j + 1] = reader.GetName(j);
-                                }
-                                else //bei den restlichen Durchläufen Datensätze spaltenweise ausgeben
-                                {
-                                    ws.Cells[i, j + 1] = reader[j].ToString();
+                                    if (i == 1) //Beim ersten Durchlauf Spaltenbezeichnungen setzen
+                                    {
+                                        ws.Cells[i, j + 1] = reader.GetName(j);
+                                    }
+                                    else //bei den restlichen Durchläufen Datensätze spaltenweise ausgeben
+                                    {
+                                        ws.Cells[i, j + 1] = reader[j].ToString();
+                                    }
                                 }
                             }
                         }
                     }
+
+                    mySQLVerbindung.Close();
                 }
 
-                mySQLVerbindung.Close();
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+
+                //ws = wb.ActiveSheet;
+                //ws.Cells[1,1] = "Test";
+                //ws.Cells[1,2] = "1234";
+                //Excel.Range cells = ws.Range["A1", "D8"];
+                //Chart chart = ws.Controls.AddChart(cells, "emplyees");
+                //chart.ChartType = Microsoft.Office.Interop.Excel.XlChartType.xlColumnClustered;
+                //chart.SetSourceData(cells);
             }
 
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
+            //Aktives Tabellenblatt}
+            else {
+                MessageBox.Show("Es sind nicht alle nötigen Optionen ausgefüllt! Bitte Auswahl überprüfen!");
+                return;
+
             }
-
-
-            //ws = wb.ActiveSheet;
-            //ws.Cells[1,1] = "Test";
-            //ws.Cells[1,2] = "1234";
-            //Excel.Range cells = ws.Range["A1", "D8"];
-            //Chart chart = ws.Controls.AddChart(cells, "emplyees");
-            //chart.ChartType = Microsoft.Office.Interop.Excel.XlChartType.xlColumnClustered;
-            //chart.SetSourceData(cells);
         }
-
-        //Aktives Tabellenblatt
         private void BTN_Test_Click(object sender, RibbonControlEventArgs e)
         {
             ws = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet);
