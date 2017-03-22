@@ -15,7 +15,7 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         }
 
-        public void findOrCreateWorker(String symbol, LiveConnectionSubscriber subscriber)
+        private void findOrCreateWorker(String symbol, LiveConnectionSubscriber subscriber)
         {
             Boolean found = false;
 

@@ -621,65 +621,29 @@ namespace AQM_Algo_Trading_Addin_CGR
             }
             if (selectedOptions == 5)
             {
-
-                //wb = Globals.ThisAddIn.Application.ActiveWorkbook;
-                ws = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet);
-                range = Globals.ThisAddIn.Application.Cells[0, 0];
-                //range = Globals.ThisAddIn.Application.ActiveCell;
+                //DataManager erzeugen
 
 
-                string select_aktienwert_Query = "SELECT * FROM aqm.aktienwerte LIMIT 100";
-
-                try
-                {
-                    verbindungAufbauen("localhost", "3306", "root", "");
-                    mySQLVerbindung.Open();
-
-                    mySQLCommand = new MySqlCommand(select_aktienwert_Query, mySQLVerbindung);
-                    //mySQLDataReader = mySQLCommand.ExecuteReader();
-
-                    int i = 0;
-
-                    using (MySqlDataReader reader = mySQLCommand.ExecuteReader())
-                    {
-                        if (reader != null)
-                        {
-
-                            while (reader.Read())
-                            {
-                                i++;
-                                for (int j = 0; j < reader.FieldCount; j++)
-                                {
-                                    if (i == 1) //Beim ersten Durchlauf Spaltenbezeichnungen setzen
-                                    {
-                                        ws.Cells[i, j + 1] = reader.GetName(j);
-                                    }
-                                    else //bei den restlichen Durchläufen Datensätze spaltenweise ausgeben
-                                    {
-                                        ws.Cells[i, j + 1] = reader[j].ToString();
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    mySQLVerbindung.Close();
-                }
-
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
 
 
-                //ws = wb.ActiveSheet;
-                //ws.Cells[1,1] = "Test";
-                //ws.Cells[1,2] = "1234";
-                //Excel.Range cells = ws.Range["A1", "D8"];
-                //Chart chart = ws.Controls.AddChart(cells, "emplyees");
-                //chart.ChartType = Microsoft.Office.Interop.Excel.XlChartType.xlColumnClustered;
-                //chart.SetSourceData(cells);
+
+
+
             }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             //Aktives Tabellenblatt}
             else {
@@ -688,6 +652,15 @@ namespace AQM_Algo_Trading_Addin_CGR
 
             }
         }
+
+
+
+
+
+
+
+
+
         private void BTN_Test_Click(object sender, RibbonControlEventArgs e)
         {
             ws = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet);
@@ -866,5 +839,21 @@ namespace AQM_Algo_Trading_Addin_CGR
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void TableObjektTest_Click(object sender, RibbonControlEventArgs e)
+        {
+            List<string> headline = new List<string>();
+            headline.Add("Wurscht");
+            headline.Add("Stulle");
+            List<List<string>> content = new List<List<string>>();
+            content.Add(headline);
+            content.Add(headline);
+            content.Add(headline);
+            content.Add(headline);
+
+            TableObject tableObject = new TableObject(Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet),
+                Globals.ThisAddIn.Application.ActiveCell, headline, content);
+            tableObject.draw();
+    }
     }
 }

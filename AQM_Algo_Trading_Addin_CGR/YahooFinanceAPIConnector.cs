@@ -10,7 +10,7 @@ namespace AQM_Algo_Trading_Addin_CGR
 {
     class YahooFinanceAPIConnector
     {
-        public List<StockDataTransferObject> parseHistoricData(string csvData)
+        private List<StockDataTransferObject> parseHistoricData(string csvData)
         {
             List<StockDataTransferObject> records = new List<StockDataTransferObject>();
             bool firstRow = true;

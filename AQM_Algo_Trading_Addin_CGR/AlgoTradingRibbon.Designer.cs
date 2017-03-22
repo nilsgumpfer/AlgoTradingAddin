@@ -40,7 +40,6 @@
             this.CB_Typ_Live = this.Factory.CreateRibbonCheckBox();
             this.button1 = this.Factory.CreateRibbonButton();
             this.button2 = this.Factory.CreateRibbonButton();
-            this.toggleButton1 = this.Factory.CreateRibbonToggleButton();
             this.group3 = this.Factory.CreateRibbonGroup();
             this.CB_Quelle_Lokal = this.Factory.CreateRibbonCheckBox();
             this.CB_Quelle_Onvista = this.Factory.CreateRibbonCheckBox();
@@ -64,6 +63,7 @@
             this.group2 = this.Factory.CreateRibbonGroup();
             this.checkBox3 = this.Factory.CreateRibbonCheckBox();
             this.BTN_Test1 = this.Factory.CreateRibbonButton();
+            this.TableObjektTest = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.group1.SuspendLayout();
             this.group3.SuspendLayout();
@@ -93,7 +93,6 @@
             this.group1.Items.Add(this.CB_Typ_Live);
             this.group1.Items.Add(this.button1);
             this.group1.Items.Add(this.button2);
-            this.group1.Items.Add(this.toggleButton1);
             this.group1.Label = "group1";
             this.group1.Name = "group1";
             // 
@@ -118,11 +117,6 @@
             // 
             this.button2.Label = "";
             this.button2.Name = "button2";
-            // 
-            // toggleButton1
-            // 
-            this.toggleButton1.Label = "toggleButton1";
-            this.toggleButton1.Name = "toggleButton1";
             // 
             // group3
             // 
@@ -231,6 +225,7 @@
             this.group8.Items.Add(this.BTN_1);
             this.group8.Items.Add(this.BTN_Test2);
             this.group8.Items.Add(this.BTN_Test3);
+            this.group8.Items.Add(this.TableObjektTest);
             this.group8.Label = "Test";
             this.group8.Name = "group8";
             // 
@@ -267,6 +262,12 @@
             this.BTN_Test1.Label = "Tabelle bei aktiver Zelle einfügen";
             this.BTN_Test1.Name = "BTN_Test1";
             this.BTN_Test1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.BTN_Test_Click);
+            // 
+            // TableObjektTest
+            // 
+            this.TableObjektTest.Label = "TableObjektTest";
+            this.TableObjektTest.Name = "TableObjektTest";
+            this.TableObjektTest.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.TableObjektTest_Click);
             // 
             // AlgoTradingRibbon
             // 
@@ -325,7 +326,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton BTN_Test3;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button1;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button2;
-        internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton toggleButton1;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton TableObjektTest;
     }
 
     partial class ThisRibbonCollection
