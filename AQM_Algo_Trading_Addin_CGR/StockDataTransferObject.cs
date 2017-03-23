@@ -26,5 +26,13 @@ namespace AQM_Algo_Trading_Addin_CGR
         public string timestamp_price { get; set; }
         public string timestamp_volume { get; set; }
         public string timestamp_otherdata { get; set; }
+        public List<string> getHeadlineAsList()
+        {
+            return null;
+        }
+        public List<string> getLineAsList()
+        {
+            return null;
+        }
     }
 }

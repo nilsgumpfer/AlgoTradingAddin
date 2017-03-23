@@ -168,6 +168,7 @@
     <Compile Include="BackgroundCrawler.cs" />
     <Compile Include="DataManager.cs" />
     <Compile Include="Enumerations.cs" />
+    <Compile Include="LiveConnectionSubscriber.cs" />
     <Compile Include="MySQLConnectionObject.cs" />
     <Compile Include="MySQLConnector.cs" />
     <Compile Include="Observable.cs" />
@@ -194,6 +195,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <None Include="AQM_Algo_Trading_Addin_CGR_1_TemporaryKey.pfx" />
+    <None Include="AQM_Algo_Trading_Addin_CGR_2_TemporaryKey.pfx" />
     <None Include="AQM_Algo_Trading_Addin_CGR_4_TemporaryKey.pfx" />
     <None Include="AQM_Algo_Trading_Addin_CGR_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
@@ -228,10 +230,10 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>AQM_Algo_Trading_Addin_CGR_4_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>AQM_Algo_Trading_Addin_CGR_2_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>89B8CE91A751FC056154899D9AF4C9B1AA1E3653</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>ABD45BFA93299669A69212DAE2246B0EFCC04600</ManifestCertificateThumbprint>
   </PropertyGroup>
   <!-- Include the build rules for a C# project. -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

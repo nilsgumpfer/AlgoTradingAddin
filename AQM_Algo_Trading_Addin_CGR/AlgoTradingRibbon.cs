@@ -26,6 +26,7 @@ namespace AQM_Algo_Trading_Addin_CGR
         private Workbook wb;
         private Worksheet ws;
         private Excel.Range range;
+        private TableObject tableObject;
 
         MySqlConnection mySQLVerbindung;
         MySqlCommand mySQLCommand;
@@ -846,14 +847,41 @@ namespace AQM_Algo_Trading_Addin_CGR
             headline.Add("Wurscht");
             headline.Add("Stulle");
             List<List<string>> content = new List<List<string>>();
-            content.Add(headline);
-            content.Add(headline);
-            content.Add(headline);
-            content.Add(headline);
+            List<string> line1 = new List<string>();
+            line1.Add("Mortadella");
+            line1.Add("Graubrot");
+            List<string> line2 = new List<string>();
+            line2.Add("Mettwurscht");
+            line2.Add("Saatenbrot");
+            content.Add(line1);
+            content.Add(line2);
+            List<int> columns = new List<int>();
+            columns.Add(1);
 
-            TableObject tableObject = new TableObject(Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet),
-                Globals.ThisAddIn.Application.ActiveCell, headline, content);
-            tableObject.draw();
-    }
+            tableObject = new TableObject(
+                                Globals.Factory.GetVstoObject(
+                                    Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet),
+                                Globals.ThisAddIn.Application.ActiveCell, 
+                                headline, 
+                                content,
+                                columns);
+            //tableObject.draw();
+            tableObject.drawOnlyRelevantColumns();
+            //tableObject.deleteDraw();
+            
+        }
+
+        private void button3_Click(object sender, RibbonControlEventArgs e)
+        {
+            //tableObject.deleteDraw();
+            /*tableObject.drawAtPosition(Globals.Factory.GetVstoObject(
+                                            Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet),
+                                       Globals.ThisAddIn.Application.ActiveCell);*/
+            tableObject.deleteOnlyRelevantColumns();
+            tableObject.drawRelevantColumnsAtPosition(Globals.Factory.GetVstoObject(
+                                                            Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet),
+                                                       Globals.ThisAddIn.Application.ActiveCell);
+        }
     }
 }
+ 
