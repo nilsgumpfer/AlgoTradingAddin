@@ -179,6 +179,7 @@
     </Compile>
     <Compile Include="PushConnector.cs" />
     <Compile Include="PushWorker.cs" />
+    <Compile Include="RealTimePullObject_ONVISTA_DE.cs" />
     <Compile Include="StockDataTransferObject.cs" />
     <Compile Include="TableObject.cs" />
     <Compile Include="YahooFinanceAPIConnector.cs" />
