@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Excel = Microsoft.Office.Interop.Excel;
 using Microsoft.Office.Tools.Excel;
+using System.Windows.Forms;
 
 namespace AQM_Algo_Trading_Addin_CGR
 {
@@ -16,7 +17,7 @@ namespace AQM_Algo_Trading_Addin_CGR
         private int startPositionColumn;
         private List<string> headline;
         private List<List<string>> content;
-        private int drawPosition = 0;
+        private int drawPosition = 1;
 
         public void drawHeaderline()
         {
@@ -52,6 +53,8 @@ namespace AQM_Algo_Trading_Addin_CGR
         {
             this.worksheet = worksheet;
             this.startPosition = startPosition;
+            startPositionRow = startPosition.Row;
+            startPositionColumn = startPosition.Column;
             this.headline = headline;
             this.content = content;
         }

@@ -168,7 +168,6 @@
     <Compile Include="BackgroundCrawler.cs" />
     <Compile Include="DataManager.cs" />
     <Compile Include="Enumerations.cs" />
-    <Compile Include="LiveConnectionSubscriber.cs" />
     <Compile Include="MySQLConnectionObject.cs" />
     <Compile Include="MySQLConnector.cs" />
     <Compile Include="Observable.cs" />
