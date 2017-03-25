@@ -41,22 +41,22 @@ namespace AQM_Algo_Trading_Addin_CGR
                     record.timestamp_otherdata = cols[i++];
 
                     temp = cols[i++].Replace('.', ',');
-                    record.day_open = Convert.ToDouble(temp);
+                    record.day_open = temp;
 
                     temp = cols[i++].Replace('.', ',');
-                    record.day_high = Convert.ToDouble(temp);
+                    record.day_high = temp;
 
                     temp = cols[i++].Replace('.', ',');
-                    record.day_low = Convert.ToDouble(temp);
+                    record.day_low = temp;
 
                     temp = cols[i++].Replace('.', ',');
-                    record.day_close = Convert.ToDouble(temp);
+                    record.day_close = temp;
 
                     temp = cols[i++].Replace('.', ',');
-                    record.volume = Convert.ToDouble(temp);
+                    record.volume = temp;
 
                     temp = cols[i++].Replace('.', ',');
-                    record.day_adj_close = Convert.ToDouble(temp);
+                    record.day_adj_close = temp;
 
                     records.Add(record);
                 }

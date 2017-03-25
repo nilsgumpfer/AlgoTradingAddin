@@ -11,6 +11,7 @@ namespace AQM_Algo_Trading_Addin_CGR
 {
     class TableObject : LiveConnectionSubscriber
     {
+        //TODO: Methoden sortieren, schön machen
         private Worksheet worksheet;
         private Excel.Range startPosition;
         private int startPositionRow;
@@ -191,7 +192,7 @@ namespace AQM_Algo_Trading_Addin_CGR
         {
             headline = newRecord.getHeadlineAsList();
             content.Add(newRecord.getLineAsList());
-            //@TODO: nicht alles neu zeichnen, sondern nur letzte Zeile!
+            //TODO: nicht alles neu zeichnen, sondern nur letzte Zeile!
             draw();
         }
     }
