@@ -846,17 +846,23 @@ namespace AQM_Algo_Trading_Addin_CGR
             List<string> headline = new List<string>();
             headline.Add("Wurscht");
             headline.Add("Stulle");
+
             List<List<string>> content = new List<List<string>>();
+
             List<string> line1 = new List<string>();
             line1.Add("Mortadella");
             line1.Add("Graubrot");
+
             List<string> line2 = new List<string>();
             line2.Add("Mettwurscht");
             line2.Add("Saatenbrot");
+
             content.Add(line1);
             content.Add(line2);
+
             List<int> columns = new List<int>();
             columns.Add(1);
+            columns.Add(2);
 
             tableObject = new TableObject(
                                 Globals.Factory.GetVstoObject(
@@ -881,6 +887,18 @@ namespace AQM_Algo_Trading_Addin_CGR
             tableObject.drawRelevantColumnsAtPosition(Globals.Factory.GetVstoObject(
                                                             Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet),
                                                        Globals.ThisAddIn.Application.ActiveCell);
+        }
+
+        private void button4_Click(object sender, RibbonControlEventArgs e)
+        {
+            DataManager dataManager = DataManager.getInstance();
+
+            TableObject myTable = new TableObject(
+                                Globals.Factory.GetVstoObject(
+                                    Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet),
+                                Globals.ThisAddIn.Application.ActiveCell);
+
+            dataManager.subscribeForLiveConnection("",myTable);
         }
     }
 }

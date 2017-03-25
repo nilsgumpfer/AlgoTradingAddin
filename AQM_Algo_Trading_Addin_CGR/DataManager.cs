@@ -10,9 +10,9 @@ namespace AQM_Algo_Trading_Addin_CGR
     {
         private List<PushWorker> listOfPushWorkers = new List<PushWorker>();
         private List<MySQLConnector> listOfMySQLConnectors = new List<MySQLConnector>();
-        private DataManager instance;
+        private static DataManager instance;
 
-        public DataManager getInstance()
+        public static DataManager getInstance()
         {
             //implements singleton
             if (instance == null)

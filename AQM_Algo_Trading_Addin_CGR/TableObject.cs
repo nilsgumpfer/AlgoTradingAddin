@@ -170,6 +170,37 @@ namespace AQM_Algo_Trading_Addin_CGR
             this.content = content;
         }
 
+        public TableObject(Worksheet worksheet, Excel.Range startPosition, List<string> headline, List<List<string>> content)
+        {
+            this.worksheet = worksheet;
+            this.startPosition = startPosition;
+            startPositionRow = startPosition.Row;
+            startPositionColumn = startPosition.Column;
+            this.headline = headline;
+            this.content = content;
+        }
+
+        public TableObject(Worksheet worksheet, Excel.Range startPosition, List<string> headline, List<string> firstLine)
+        {
+            this.worksheet = worksheet;
+            this.startPosition = startPosition;
+            startPositionRow = startPosition.Row;
+            startPositionColumn = startPosition.Column;
+            this.headline = headline;
+            this.content = new List<List<string>>();
+            content.Add(firstLine);
+        }
+
+        public TableObject(Worksheet worksheet, Excel.Range startPosition)
+        {
+            this.worksheet = worksheet;
+            this.startPosition = startPosition;
+            startPositionRow = startPosition.Row;
+            startPositionColumn = startPosition.Column;
+            this.headline = new List<string>();
+            this.content = new List<List<string>>();
+        }
+
         public void drawAtPosition(Worksheet worksheet, Excel.Range startPosition)
         {
             this.worksheet = worksheet;

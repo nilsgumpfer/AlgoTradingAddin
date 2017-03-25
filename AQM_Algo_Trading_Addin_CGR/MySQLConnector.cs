@@ -11,7 +11,7 @@ namespace AQM_Algo_Trading_Addin_CGR
         public void updateMeWithNewData(StockDataTransferObject newRecord)
         {
             //TODO: implement interface!
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

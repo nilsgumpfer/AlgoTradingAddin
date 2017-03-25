@@ -7,34 +7,37 @@ using System.Web;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace AQM_Algo_Trading_Addin_CGR
+namespace Test_Onvista
 {
-    class RealTimePullObject_ONVISTA_DE : RealTimePullObject
+    class RealTimePullObject_ONVISTA_DE
     {
         WebClient webClient;
         private string aktienSymbol;
         private string stockid;
-        private string url = "http://www.onvista.de/aktien/";
+        //private string url = "http://www.onvista.de/aktien/";
+        private string url;
         private string sourceHTML;
         private DateTime timestamp_geladen;
 
-        public RealTimePullObject_ONVISTA_DE(string aktienSymbol)
+        public RealTimePullObject_ONVISTA_DE(string url)
         {
             this.aktienSymbol   = aktienSymbol;
             this.webClient      = new WebClient();
-            this.url            += aktienSymbol;
-            webClient.Headers.Add("user-agent", "AGENT");
+            this.url            = url;
+            
         }
 
-        public void getStockID(bool updateRelevant)
+        public string getStockID(bool updateRelevant)
         {
-            string startTag = "<meta name=\"og: image\" content=\"http://chartdata.onvista.de/image?granularity=year&type=Stock&id=";
-            string endTag = "&exchange=GAT\" > ";
+            string startTag = "<meta name=\"og:image\" content=\"http://chartdata.onvista.de/image?granularity=year&type=Stock&id=";
+            string endTag = "&";
 
             string tmp = getItemAusSourceCode(startTag, endTag, updateRelevant);
             tmp = tmp.Replace('\n', ' ');
             tmp = tmp.Replace(" ", "");
             stockid = tmp;
+
+            return stockid;
         }
 
         public string getAktienName(bool updateRelevant)
@@ -44,15 +47,16 @@ namespace AQM_Algo_Trading_Addin_CGR
 
             string tmp = getItemAusSourceCode(startTag, endTag, updateRelevant);
             tmp = tmp.Replace('\n', ' ');
-            tmp = tmp.Replace(" ", "");
+            //tmp = tmp.Replace(" ", "");
 
             return tmp;
         }
 
         public string getAktienKurs(bool updateRelevant)
         {
-            getStockID(false);
-            string startTag = "<span class=\"\" data-push=\"" + stockid + ":last:1:1:Stock\" style = \"\">";
+            getStockID(true);
+            //string startTag = "<span data-push=\"" + stockid + "\:last:1:1:Stock\">";
+            string startTag = "<span data-push="+stockid+":last:1:1:Stock>";
             string endTag   = "</span>";
             string tmp = getItemAusSourceCode(startTag, endTag, updateRelevant);
             tmp = tmp.Replace('\n', ' ');
@@ -65,7 +69,7 @@ namespace AQM_Algo_Trading_Addin_CGR
         public string getAktienVolumen(bool updateRelevant)
         {
             getStockID(false);
-            string startTag = "<span data-push=" + stockid + ":totalVolume:1:1:Stock\" > ";
+            string startTag = "<span data-push=" + stockid + ":totalVolume:1:1:Stock>";
             string endTag = " Stk.</span>";
 
             string tmp = getItemAusSourceCode(startTag, endTag, updateRelevant);
@@ -108,14 +112,15 @@ namespace AQM_Algo_Trading_Addin_CGR
             return getItemAusSourceCode(startTag, endTag, false);
         }
 
-        /*public string getUhrzeitVolumen()
-        {
+        public string getUhrzeitVolumen()
+        {/*
             string startTag = "<td>Zeit<br>Kursdaten</td>";
             string endTag = "<br>";
             string uhrzeit = getItemAusSourceCode(startTag, endTag, false);
 
-            return uhrzeit.Substring(uhrzeit.IndexOf("<td>") + 4);
-        }*/
+            return uhrzeit.Substring(uhrzeit.IndexOf("<td>") + 4);*/
+            return "";
+        }
 
         public string getDatumGehandelt()
         {
@@ -138,7 +143,7 @@ namespace AQM_Algo_Trading_Addin_CGR
         }
 
         public string getTimestampVolumen()
-        {
+        {/*
             //   string timestamp = getDatumGehandelt() + " " + getUhrzeitVolumen();
 
             string timestamp = null;
@@ -146,7 +151,8 @@ namespace AQM_Algo_Trading_Addin_CGR
                 timestamp,
                 "dd.MM.yy HH:mm:ss",
                 System.Globalization.CultureInfo.InvariantCulture).ToString("yyyy-MM-dd HH:mm:ss"
-                );
+                );*/
+            return "";
         }
 
         private string getItemAusSourceCode(string startTag, string endTag, bool updateRelevant)
@@ -154,7 +160,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             int start   = 0;
             int end     = 0;
 
-            updateSourceHTML(updateRelevant);
+            updateSourceHTML(true);
             start = sourceHTML.IndexOf(startTag, 0);
 
             if (start < 0)
@@ -185,11 +191,18 @@ namespace AQM_Algo_Trading_Addin_CGR
         {
             if (updateRelevant)
             {
+                webClient.Headers.Add("user-agent", "AGENT");
                 sourceHTML = webClient.DownloadString(url);
                 sourceHTML = HttpUtility.HtmlDecode(sourceHTML);
 
                 timestamp_geladen = DateTime.Now;
             }
+        }
+
+        public String getHTMLSource()
+        {
+            updateSourceHTML(true);
+            return sourceHTML;
         }
     }
 }

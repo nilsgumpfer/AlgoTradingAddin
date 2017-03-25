@@ -31,6 +31,9 @@ namespace AQM_Algo_Trading_Addin_CGR
             headline.Add("Timestamp Kurs");
             headline.Add("Timestamp Volumen");
             headline.Add("Timestamp");
+            headline.Add("Provider");
+            headline.Add("Handelsplatz");
+            headline.Add("Name");
         }
         public string isin { get; set; }
         public string wkn { get; set; }
@@ -49,10 +52,15 @@ namespace AQM_Algo_Trading_Addin_CGR
         public string timestamp_price { get; set; }
         public string timestamp_volume { get; set; }
         public string timestamp_otherdata { get; set; }
+        public string provider { get; set; }
+        public string trading_floor { get; set; }
+        public string name { get; set; }
+
         public List<string> getHeadlineAsList()
         {
            return headline;
         }
+
         public List<string> getLineAsList()
         {
             List<string> line = new List<string>();
@@ -75,6 +83,9 @@ namespace AQM_Algo_Trading_Addin_CGR
             line.Add(timestamp_price);
             line.Add(timestamp_volume);
             line.Add(timestamp_otherdata);
+            line.Add(provider);
+            line.Add(trading_floor);
+            line.Add(name);
 
             return line;
         }
