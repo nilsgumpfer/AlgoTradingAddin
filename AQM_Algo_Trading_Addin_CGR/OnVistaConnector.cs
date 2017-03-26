@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Net;
+using System.Windows.Forms;
+
 
 namespace AQM_Algo_Trading_Addin_CGR
 {
@@ -52,11 +54,11 @@ namespace AQM_Algo_Trading_Addin_CGR
 
             StockDataTransferObject stdTransferObject = new StockDataTransferObject();
 
-            stdTransferObject.isin                  = isin;
-            stdTransferObject.wkn                   = wkn;
-            stdTransferObject.symbol                = symbol;
-            stdTransferObject.name                  = name;
-            stdTransferObject.sector                = sector;
+            stdTransferObject.isin                  = extractIsin();
+            stdTransferObject.wkn                   = extractWkn();
+            stdTransferObject.symbol                = extractSymbol();
+            stdTransferObject.name                  = extractName();
+            stdTransferObject.sector                = extractSector();
 
             stdTransferObject.price                 = extractPrice();
             stdTransferObject.timestamp_price       = extractTimestampPrice();
@@ -67,9 +69,9 @@ namespace AQM_Algo_Trading_Addin_CGR
             stdTransferObject.day_high              = extractDayHigh();
             stdTransferObject.day_low               = extractDayLow();
             stdTransferObject.day_open              = extractDayOpen();
-            stdTransferObject.day_close             = extractDayClose();
 
-            stdTransferObject.preday_volume         = extractPredayVolume();
+            stdTransferObject.preday_close          = extractPredayClose();
+            stdTransferObject.day_volume            = extractDayVolume();
             
             stdTransferObject.trend_abs             = extractTrendAbs();
             stdTransferObject.trend_perc            = extractTrendPerc();
@@ -77,6 +79,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             stdTransferObject.timestamp_otherdata   = extractTimestampOtherData();
 
             stdTransferObject.trading_floor         = extractTradingFloor();
+            stdTransferObject.currency              = extractCurrency();
             stdTransferObject.provider              = "OnVista.de";
 
             return stdTransferObject;
@@ -124,29 +127,27 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         private string extractIsin()
         {
-            //TODO: Extract Data from HTML Stream
-            return "ISIN";
+            return getItemBetweenTags("<dt>ISIN</dt><dd property=\"schema:productID\">", "<");
         }
 
         private string extractWkn()
         {
-            //TODO: Extract Data from HTML Stream
-            return "WKN";
+            return getItemBetweenTags("<dt>WKN</dt><dd>", "<");
+        }
+
+        private string extractSymbol()
+        {
+            return getItemBetweenTags("<dt>Symbol</dt><dd>", "<");
         }
 
         private string extractName()
         {
-            string startTag = "<h1 property=\"v:title\">";
-            string endTag = "</h1>";
-
-            return getItemBetweenTags(startTag, endTag)
-                   .Replace('\n', ' ');
+            return getItemBetweenTags("<h1 property=\"v:title\">", "<");
         }
 
         private string extractSector()
         {
-            //TODO: Extract Data from HTML Stream
-            return "SECTOR";
+            return getItemBetweenTags("title=\"Branche: ", "\"");
         }
 
         private string extractUrlSuffix()
@@ -156,12 +157,17 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         private string extractPrice()
         {
-            return useExtractionVariant1("<span data-push=", ":last:1:1:Stock>", "</span>");
+            return useExtractionVariant1("<span data-push=", ":last:1:1:Stock>", "<");
         }
 
         private string extractVolume()
         {
-            return useExtractionVariant1("<span data-push=", ":totalVolume:1:1:Stock>", " Stk.</span>");
+            return "VOLUME";
+        }
+
+        private string extractDayVolume()
+        {
+            return useExtractionVariant1("<span data-push=", ":totalVolume:1:1:Stock>", " ");
         }
 
         private string useExtractionVariant1(string startTag_part1, string startTag_part2, string endTag)
@@ -170,33 +176,27 @@ namespace AQM_Algo_Trading_Addin_CGR
 
             string startTag = startTag_part1 + onVista_stockID + startTag_part2;
 
-            return getItemBetweenTags(startTag, endTag)
-                   .Replace('\n', ' ')
-                   .Replace(" ", "");
+            return getItemBetweenTags(startTag, endTag);
         }
 
         private string extractDayHigh()
         {
-            //TODO: Extract Data from HTML Stream
-            return "HIGH";
+            return useExtractionVariant1("data-push=", ":high:1:1:Stock> ", " /");
         }
 
         private string extractDayLow()
         {
-            //TODO: Extract Data from HTML Stream
-            return "LOW";
+            return useExtractionVariant1("data-push=", ":high:1:1:Stock> " + extractDayHigh() + " /", " <");
         }
 
         private string extractDayOpen()
         {
-            //TODO: Extract Data from HTML Stream
-            return "OPEN";
+            return getItemBetweenTags("<td headers=\"dataOpen\">", "<");
         }
 
-        private string extractDayClose()
+        private string extractPredayClose()
         {
-            //TODO: Extract Data from HTML Stream
-            return "CLOSE";
+            return getItemBetweenTags("<td headers=\"dataClose\">", "<");
         }
 
         private string extractPredayVolume()
@@ -207,50 +207,56 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         private string extractTrendAbs()
         {
-            //TODO: Extract Data from HTML Stream
-            return "TRENDABS";
+            return getItemBetweenTags("performanceAbsolute:1:1:Stock> ", " <");
         }
 
         private string extractTrendPerc()
         {
-            //TODO: Extract Data from HTML Stream
-            return "TRENDPERC";
+            return getItemBetweenTags("performanceRelative:1:1:Stock>XYZ ", " <");
         }
 
         private string extractTimestampPrice()
         {
-            //TODO: Extract Data from HTML Stream
-            return "2017-03-20 14:14:14";
+            return parseDateTimeToTimestamp(extractDataAndTimeGeneral());
+        }
+
+        private string parseDateTimeToTimestamp(string dateTime)
+        {
+            return DateTime.ParseExact(
+                dateTime,
+                "dd.MM.yyyy, HH:mm:ss",
+                System.Globalization.CultureInfo.InvariantCulture).ToString("yyyy-MM-dd HH:mm:ss"
+                );
+        }
+
+        private string extractDataAndTimeGeneral()
+        {
+            return getItemBetweenTags("lastTime:1:1:Stock> ", " <");
         }
 
         private string extractTimestampVolume()
         {
-            //TODO: Extract Data from HTML Stream
-            return "2017-03-20 14:14:14";
+            return parseDateTimeToTimestamp(extractDataAndTimeGeneral());
         }
 
         private string extractTimestampOtherData()
         {
-            //TODO: Extract Data from HTML Stream
-            return "2017-03-20 14:14:14";
+            return parseDateTimeToTimestamp(extractDataAndTimeGeneral());
         }
 
         private string extractTradingFloor()
-        {/*
-            return getItemBetweenTags("<span class=\"ICON icon-realtime\" title=\"Realtime\"><span>Realtime:</span></span>", 
-                                      "<span class=\"SELEKTOR\">Börsenplatz auswählen</span>");*/
-         //TODO: Repair loading of trading-floor
-            return "TRADINGFLOOR";
+        {
+            return getItemBetweenTags("<meta property=\"schema:seller\" content=\"", "\"");
+        }
+
+        private string extractCurrency()
+        {
+            return getItemBetweenTags("<span property=\"schema:priceCurrency\">", "<");
         }
 
         private void loadOnVistaStockID()
         {
-            string startTag = "<meta name=\"og:image\" content=\"http://chartdata.onvista.de/image?granularity=year&type=Stock&id=";
-            string endTag = "&";
-
-            onVista_stockID = getItemBetweenTags(startTag, endTag)
-                              .Replace('\n', ' ')
-                              .Replace(" ", "");
+            onVista_stockID = getItemBetweenTags("<meta name=\"og:image\" content=\"http://chartdata.onvista.de/image?granularity=year&type=Stock&id=", "&");
         }
 
         private string getItemBetweenTags(string startTag, string endTag)
@@ -261,15 +267,21 @@ namespace AQM_Algo_Trading_Addin_CGR
             start = sourceHTML.IndexOf(startTag, 0);
 
             if (start < 0)
-                throw new Exception("Tag not contained in HTML-source: \"" + startTag);
+            {
+                MessageBox.Show("Tag cannot be found in HTML-source: \"" + startTag);
+                return "N/A";
+            }
 
             start += startTag.Length;
             end = sourceHTML.IndexOf(endTag, start);
 
             if (end < 0)
-                throw new Exception("Tag not contained in HTML-source: \"" + endTag);
+            {
+                MessageBox.Show("Tag cannot be found in HTML-source: \"" + endTag);
+                return "N/A";
+            }
 
-            return sourceHTML.Substring(start, end - start);
+            return sourceHTML.Substring(start, end - start).Replace('\n', ' ');
         }
 
         public void grabMetaDataAndFillDatabase(string url)

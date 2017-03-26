@@ -7,7 +7,7 @@ using System.Web;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace RealtimeStockDataCr4wl3r
+namespace AQM_Algo_Trading_Addin_CGR
 {
     class RealTimePullObject_BOERSE_DE : RealTimePullObject
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RealtimeStockDataCr4wl3r
+namespace AQM_Algo_Trading_Addin_CGR
 {
     interface RealTimePullObject
     {

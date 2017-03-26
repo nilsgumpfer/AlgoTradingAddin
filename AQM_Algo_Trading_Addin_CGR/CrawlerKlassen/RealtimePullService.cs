@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Aktien_Kurs_auslesen
+namespace AQM_Algo_Trading_Addin_CGR
 {
     interface RealtimePullService
     {

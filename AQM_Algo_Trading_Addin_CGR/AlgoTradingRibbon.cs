@@ -12,16 +12,16 @@ using MySql.Data.MySqlClient;
 
 namespace AQM_Algo_Trading_Addin_CGR
 {
-    public delegate void UpdateListViewItem(Aktienwert aktie);
-    public partial class AlgoTradingRibbon : Observer<Aktienwert>
+    //public delegate void UpdateListViewItem(Aktienwert aktie);
+    public partial class AlgoTradingRibbon //: Observer<Aktienwert>
     {
         public int selectedOptions = 0;
-        private List<Aktienwert> aktuelleAktienwerte;
-        private List<Thread> workerThreads;
-        private List<BackgroundCrawler> workerObjects;
-        private List<MySQLStockDataConnector> dbConnections;
-        private string alteAktiensymbole;
-        private string[] aktienSymbole = { "" };
+        //private List<Aktienwert> aktuelleAktienwerte;
+        //private List<Thread> workerThreads;
+        //private List<BackgroundCrawler> workerObjects;
+        //private List<MySQLStockDataConnector> dbConnections;
+        //private string alteAktiensymbole;
+        //private string[] aktienSymbole = { "" };
 
         private Workbook wb;
         private Worksheet ws;
@@ -40,12 +40,12 @@ namespace AQM_Algo_Trading_Addin_CGR
         //test123karle
         private void AlgoTradingRibbon_Load(object sender, RibbonUIEventArgs e)
         {
-            //InitializeComponent();
-            aktuelleAktienwerte = new List<Aktienwert>();
-            workerThreads = new List<Thread>();
-            workerObjects = new List<BackgroundCrawler>();
-            dbConnections = new List<MySQLStockDataConnector>();
-            alteAktiensymbole = "";
+            ////InitializeComponent();
+            //aktuelleAktienwerte = new List<Aktienwert>();
+            //workerThreads = new List<Thread>();
+            //workerObjects = new List<BackgroundCrawler>();
+            //dbConnections = new List<MySQLStockDataConnector>();
+            //alteAktiensymbole = "";
 
             //Checkboxen deaktivieren
             CB_Quelle_Onvista.Enabled = false;
@@ -66,17 +66,6 @@ namespace AQM_Algo_Trading_Addin_CGR
 
 
 
-        private void button1_Click(object sender, RibbonControlEventArgs e)
-        {
-            String aktiensymbole_eingabe = Microsoft.VisualBasic.Interaction.InputBox("Bitte Aktienwerte mit Leerzeichen getrennt eingeben!", "Aktienwerte eingeben", "");
-
-            aktienSymbole = null;
-            aktienSymbole = aktiensymbole_eingabe.Split(' ');
-            generiereAktienwerte();
-            erstelleWorkerThreads();
-            starteWorkerThreads();
-        }
-
         //private void button1_Click(object sender, RibbonControlEventArgs e)
         //{
         //    String aktiensymbole_eingabe = Microsoft.VisualBasic.Interaction.InputBox("Bitte Aktienwerte mit Leerzeichen getrennt eingeben!", "Aktienwerte eingeben", "");
@@ -88,107 +77,118 @@ namespace AQM_Algo_Trading_Addin_CGR
         //    starteWorkerThreads();
         //}
 
-        private void generiereAktienwerte()
-        {
-            aktuelleAktienwerte.Clear();
+        ////private void button1_Click(object sender, RibbonControlEventArgs e)
+        ////{
+        ////    String aktiensymbole_eingabe = Microsoft.VisualBasic.Interaction.InputBox("Bitte Aktienwerte mit Leerzeichen getrennt eingeben!", "Aktienwerte eingeben", "");
 
-            foreach (var item in aktienSymbole)
-            {
-                Aktienwert aktienwert = new Aktienwert(item, false);
-                aktuelleAktienwerte.Add(aktienwert);
-            }
-        }
+        ////    aktienSymbole = null;
+        ////    aktienSymbole = aktiensymbole_eingabe.Split(' ');
+        ////    generiereAktienwerte();
+        ////    erstelleWorkerThreads();
+        ////    starteWorkerThreads();
+        ////}
 
-        private void erstelleWorkerThreads()
-        {
-            workerObjects.Clear();
-            workerThreads.Clear();
+        //private void generiereAktienwerte()
+        //{
+        //    aktuelleAktienwerte.Clear();
 
-            foreach (var item in aktuelleAktienwerte)
-            {
-                MySQLStockDataConnector dbConnection = new MySQLStockDataConnector();
-                BackgroundCrawler worker = new BackgroundCrawler(item);
-                Thread thread = new Thread(worker.loadStockData);
-                thread.Name = item.getAktienSymbol();
-                dbConnections.Add(dbConnection);
-                workerObjects.Add(worker);
-                workerThreads.Add(thread);
-                //worker.subscribe(this);
-                worker.subscribe(dbConnection);
-            }
-        }
+        //    foreach (var item in aktienSymbole)
+        //    {
+        //        Aktienwert aktienwert = new Aktienwert(item, false);
+        //        aktuelleAktienwerte.Add(aktienwert);
+        //    }
+        //}
 
-        private void starteWorkerThreads()
-        {
-            foreach (var item in workerThreads)
-            {
-                item.Start();
-            }
-        }
+        //private void erstelleWorkerThreads()
+        //{
+        //    workerObjects.Clear();
+        //    workerThreads.Clear();
 
-        private void stoppeWorkerThreads()
-        {
-            foreach (var item in workerObjects)
-            {
-                item.stopWork();
-            }
-        }
-        public void notify(Observable<Aktienwert> caller)
-        {
-            Aktienwert aktie = caller.getMessage();
+        //    foreach (var item in aktuelleAktienwerte)
+        //    {
+        //        MySQLStockDataConnector dbConnection = new MySQLStockDataConnector();
+        //        BackgroundCrawler worker = new BackgroundCrawler(item);
+        //        Thread thread = new Thread(worker.loadStockData);
+        //        thread.Name = item.getAktienSymbol();
+        //        dbConnections.Add(dbConnection);
+        //        workerObjects.Add(worker);
+        //        workerThreads.Add(thread);
+        //        //worker.subscribe(this);
+        //        worker.subscribe(dbConnection);
+        //    }
+        //}
 
-            foreach (var item in aktuelleAktienwerte)
-            {
-                if (item.getAktienSymbol() == aktie.getAktienSymbol())
-                {
-                    item.setAktienKurs(aktie.getAktienKurs());
-                    //Control.Invoke(new UpdateListViewItem(updateListViewItem), new object[] { aktie });
-                    break;
-                }
-            }
-        }
+        //private void starteWorkerThreads()
+        //{
+        //    foreach (var item in workerThreads)
+        //    {
+        //        item.Start();
+        //    }
+        //}
 
-        private void updateListViewItem(Aktienwert aktie)
-        {
-            bool found = false;
-            int iAktienSymbol = 0;
-            int iAktienName = 1;
-            int iAktienKurs = 2;
-            int iVolumen = 3;
-            int iTimestampGehandelt = 4;
-            int iHandelsPlatz = 5;
-            int iProvider = 6;
-            /*
-            foreach (ListViewItem item in listView1.Items)
-            {
-                if (item.SubItems[iAktienSymbol].Text == aktie.getAktienSymbol())
-                {
-                    found = true;
-                    item.SubItems[iAktienSymbol].Text = aktie.getAktienSymbol();
-                    item.SubItems[iAktienName].Text = aktie.getAktienName();
-                    item.SubItems[iAktienKurs].Text = aktie.getAktienKurs();
-                    item.SubItems[iVolumen].Text = aktie.getAktienVolumen();
-                    item.SubItems[iTimestampGehandelt].Text = aktie.getTimestampGehandelt();
-                    item.SubItems[iHandelsPlatz].Text = aktie.getHandelsPlatz();
-                    item.SubItems[iProvider].Text = aktie.getProvider();
-                    break;
-                }
-            }
+        //private void stoppeWorkerThreads()
+        //{
+        //    foreach (var item in workerObjects)
+        //    {
+        //        item.stopWork();
+        //    }
+        //}
+        //public void notify(Observable<Aktienwert> caller)
+        //{
+        //    Aktienwert aktie = caller.getMessage();
 
-            if (found == false)
-                listView1.Items.Add(new ListViewItem(new string[]
-                {
-                    aktie.getAktienSymbol(),
-                    aktie.getAktienName(),
-                    aktie.getAktienKurs(),
-                    aktie.getAktienVolumen(),
-                    aktie.getTimestampGehandelt(),
-                    aktie.getHandelsPlatz(),
-                    aktie.getProvider()
-                }));
+        //    foreach (var item in aktuelleAktienwerte)
+        //    {
+        //        if (item.getAktienSymbol() == aktie.getAktienSymbol())
+        //        {
+        //            item.setAktienKurs(aktie.getAktienKurs());
+        //            //Control.Invoke(new UpdateListViewItem(updateListViewItem), new object[] { aktie });
+        //            break;
+        //        }
+        //    }
+        //}
 
-            listView1.Update();*/
-        }
+        //private void updateListViewItem(Aktienwert aktie)
+        //{
+        //    bool found = false;
+        //    int iAktienSymbol = 0;
+        //    int iAktienName = 1;
+        //    int iAktienKurs = 2;
+        //    int iVolumen = 3;
+        //    int iTimestampGehandelt = 4;
+        //    int iHandelsPlatz = 5;
+        //    int iProvider = 6;
+        //    /*
+        //    foreach (ListViewItem item in listView1.Items)
+        //    {
+        //        if (item.SubItems[iAktienSymbol].Text == aktie.getAktienSymbol())
+        //        {
+        //            found = true;
+        //            item.SubItems[iAktienSymbol].Text = aktie.getAktienSymbol();
+        //            item.SubItems[iAktienName].Text = aktie.getAktienName();
+        //            item.SubItems[iAktienKurs].Text = aktie.getAktienKurs();
+        //            item.SubItems[iVolumen].Text = aktie.getAktienVolumen();
+        //            item.SubItems[iTimestampGehandelt].Text = aktie.getTimestampGehandelt();
+        //            item.SubItems[iHandelsPlatz].Text = aktie.getHandelsPlatz();
+        //            item.SubItems[iProvider].Text = aktie.getProvider();
+        //            break;
+        //        }
+        //    }
+
+        //    if (found == false)
+        //        listView1.Items.Add(new ListViewItem(new string[]
+        //        {
+        //            aktie.getAktienSymbol(),
+        //            aktie.getAktienName(),
+        //            aktie.getAktienKurs(),
+        //            aktie.getAktienVolumen(),
+        //            aktie.getTimestampGehandelt(),
+        //            aktie.getHandelsPlatz(),
+        //            aktie.getProvider()
+        //        }));
+
+        //    listView1.Update();*/
+        //}
 
 
 

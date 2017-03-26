@@ -50,7 +50,7 @@ namespace AQM_Algo_Trading_Addin_CGR
                     record.day_low = temp;
 
                     temp = cols[i++].Replace('.', ',');
-                    record.day_close = temp;
+                    record.preday_close = temp;
 
                     temp = cols[i++].Replace('.', ',');
                     record.volume = temp;

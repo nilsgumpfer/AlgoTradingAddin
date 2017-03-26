@@ -2,7 +2,8 @@
 using System;
 using System.Windows.Forms;
 
-namespace RealtimeStockDataCr4wl3r
+namespace AQM_Algo_Trading_Addin_CGR
+
 {
     class MySQLStockDataConnector : Observer<Aktienwert>
     {

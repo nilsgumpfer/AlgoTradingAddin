@@ -3,7 +3,8 @@ using System.Windows.Forms;
 using System.Threading;
 using System.Collections.Generic;
 
-namespace RealtimeStockDataCr4wl3r
+namespace AQM_Algo_Trading_Addin_CGR
+
 {
     public class BackgroundCrawler : Observable<Aktienwert>
     {

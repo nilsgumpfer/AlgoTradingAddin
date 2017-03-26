@@ -23,7 +23,7 @@ namespace AQM_Algo_Trading_Addin_CGR
         public Aktienwert(string aktienSymbol, bool updateRelevant)
         {
             this.aktienSymbol = aktienSymbol;
-            this.myFunctions = new RealTimePullObject_BOERSE_DE(this.aktienSymbol);
+            this.myFunctions = new RealTimePullObject_MOCKUP(this.aktienSymbol);
 
             if (updateRelevant)
                 update();

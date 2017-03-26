@@ -158,28 +158,22 @@
     can be found.
   -->
   <ItemGroup>
-    <Compile Include="Aktienwert.cs" />
     <Compile Include="AlgoTradingRibbon.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="AlgoTradingRibbon.Designer.cs">
       <DependentUpon>AlgoTradingRibbon.cs</DependentUpon>
     </Compile>
-    <Compile Include="BackgroundCrawler.cs" />
     <Compile Include="DataManager.cs" />
     <Compile Include="Enumerations.cs" />
     <Compile Include="LiveConnectionSubscriber.cs" />
-    <Compile Include="MySQLConnectionObject.cs" />
     <Compile Include="MySQLConnector.cs" />
-    <Compile Include="Observable.cs" />
-    <Compile Include="Observer.cs" />
     <Compile Include="OnVistaConnector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="PushConnector.cs" />
     <Compile Include="PushWorker.cs" />
-    <Compile Include="RealTimePullObject_ONVISTA_DE.cs" />
     <Compile Include="StockDataTransferObject.cs" />
     <Compile Include="TableObject.cs" />
     <Compile Include="YahooFinanceAPIConnector.cs" />
@@ -207,11 +201,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="RealTimePullObject.cs" />
-    <Compile Include="RealtimePullObjectFactory.cs" />
-    <Compile Include="RealTimePullObject_BOERSE_DE.cs" />
-    <Compile Include="RealTimePullObject_MOCKUP.cs" />
-    <Compile Include="RealtimePullService.cs" />
     <Compile Include="ThisAddIn.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -222,6 +211,9 @@
       <DependentUpon>ThisAddIn.Designer.xml</DependentUpon>
     </Compile>
     <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CrawlerKlassen\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
