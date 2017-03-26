@@ -36,10 +36,10 @@ namespace AQM_Algo_Trading_Addin_CGR
         public void drawOnlyRelevantHeadlineColumns()
         {
             drawPosition = startPositionRow;
+            int space = 0;
 
             foreach (int i in columnsToDraw)
             {
-                int space = 0;
                 worksheet.Cells[drawPosition, startPositionColumn + space] = headline[i];
                 space++;
             }
@@ -50,10 +50,10 @@ namespace AQM_Algo_Trading_Addin_CGR
         public void deleteOnlyRelevantHeadlineColumns()
         {
             drawPosition = startPositionRow;
+            int space = 0;
 
             foreach (int i in columnsToDraw)
             {
-                int space = 0;
                 worksheet.Cells[drawPosition, startPositionColumn + space] = "";
                 space++;
             }
@@ -102,13 +102,11 @@ namespace AQM_Algo_Trading_Addin_CGR
             for (int j = 0; j < content.Count; j++)
             {
                 line = content[j];
+                int space = 0;
 
                 foreach (int i in columnsToDraw)
                 {
-                    int space = 0;
-
                     worksheet.Cells[drawPosition, startPositionColumn + space] = line[i];
-
                     space++;
                 }
 
@@ -191,7 +189,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             content.Add(firstLine);
         }
 
-        public TableObject(Worksheet worksheet, Excel.Range startPosition, List<StockDataTransferObject> records)
+        public TableObject(Worksheet worksheet, Excel.Range startPosition, List<StockDataTransferObject> records, List<int> columnsToDraw)
         {
             this.worksheet = worksheet;
             this.startPosition = startPosition;
@@ -199,6 +197,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             startPositionColumn = startPosition.Column;
             this.headline = records[0].getHeadlineAsList();
             this.content = new List<List<string>>();
+            this.columnsToDraw = columnsToDraw;
 
             foreach(StockDataTransferObject record in records)
                 content.Add(record.getLineAsList());

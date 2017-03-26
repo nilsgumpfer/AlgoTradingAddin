@@ -16,6 +16,9 @@ namespace AQM_Algo_Trading_Addin_CGR
         public Konfigurator()
         {
             InitializeComponent();
+
+            //TODO: Fill Dropdown with Data from database.. only available symbols can be selected!
+            comboBox1.SelectedIndex = 0;
         }
 
         private void submit_Click(object sender, EventArgs e)

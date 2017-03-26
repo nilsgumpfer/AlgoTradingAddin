@@ -31,6 +31,27 @@ namespace AQM_Algo_Trading_Addin_CGR
             findOrCreateWorker(symbol, subscriber);
         }
 
+        public List<StockDataTransferObject> getHistoricalStockData(string stockSymbol, DateTime dateFrom, DateTime dateTo, YahooFinanceAPI_Resolution resolution)
+        {
+            YahooFinanceAPIConnector yahooFinanceAPIConnector = new YahooFinanceAPIConnector();
+
+            return yahooFinanceAPIConnector.getHistoricalStockData(stockSymbol, dateFrom, dateTo, resolution);
+        }
+
+        public List<int> getColumnsToDraw_forHistoricalStockData()
+        {
+            List<int> columnsToDraw = new List<int>();
+
+            columnsToDraw.Add(5);
+            columnsToDraw.Add(8);
+            columnsToDraw.Add(9);
+            columnsToDraw.Add(10);
+            columnsToDraw.Add(11);
+            columnsToDraw.Add(12);
+
+            return columnsToDraw;
+        }
+
         private void findOrCreateWorker(String symbol, LiveConnectionSubscriber subscriber)
         {
             //search for worker which already loads the relevant data

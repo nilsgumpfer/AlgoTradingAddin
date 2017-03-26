@@ -32,6 +32,7 @@
             this.cancel = new System.Windows.Forms.Button();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // submit
@@ -56,17 +57,31 @@
             // 
             // dateTimePicker1
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(42, 30);
+            this.dateTimePicker1.Location = new System.Drawing.Point(42, 53);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
             this.dateTimePicker1.TabIndex = 2;
             // 
             // dateTimePicker2
             // 
-            this.dateTimePicker2.Location = new System.Drawing.Point(42, 121);
+            this.dateTimePicker2.Location = new System.Drawing.Point(42, 79);
             this.dateTimePicker2.Name = "dateTimePicker2";
             this.dateTimePicker2.Size = new System.Drawing.Size(200, 20);
             this.dateTimePicker2.TabIndex = 3;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "ADS",
+            "BMW",
+            "YHOO"});
+            this.comboBox1.Location = new System.Drawing.Point(42, 12);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 21);
+            this.comboBox1.Sorted = true;
+            this.comboBox1.TabIndex = 4;
             // 
             // Konfigurator
             // 
@@ -74,6 +89,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 262);
             this.ControlBox = false;
+            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.dateTimePicker2);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.cancel);
@@ -87,9 +103,11 @@
 
         #endregion
 
+        //Make all attributes public so they are accessable via Main-View
         public System.Windows.Forms.Button submit;
         public System.Windows.Forms.Button cancel;
         public System.Windows.Forms.DateTimePicker dateTimePicker1;
         public System.Windows.Forms.DateTimePicker dateTimePicker2;
+        public System.Windows.Forms.ComboBox comboBox1;
     }
 }

@@ -885,8 +885,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             if (view.hasBeenCancelled == false)
             {
                 DataManager dataManager = DataManager.getInstance();
-                YahooFinanceAPIConnector api = new YahooFinanceAPIConnector();
-
+                
                 progress.progressBar1.Value = 40;
 
                 TableObject myTable = new TableObject(
@@ -895,16 +894,20 @@ namespace AQM_Algo_Trading_Addin_CGR
                                             Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet
                                         ),
                                         Globals.ThisAddIn.Application.ActiveCell,
-                                        api.getHistoricalStockData
+                                        dataManager.getHistoricalStockData
                                         (
-                                            "BMW", 
+                                            view.comboBox1.SelectedItem.ToString(),
                                             view.dateTimePicker1.Value, 
                                             view.dateTimePicker2.Value, 
                                             YahooFinanceAPI_Resolution.Daily
-                                        )
+                                        ),
+                                        dataManager.getColumnsToDraw_forHistoricalStockData()
                                       );
+
                 progress.progressBar1.Value = 80;
-                myTable.draw();
+
+                myTable.drawOnlyRelevantColumns();
+
                 progress.progressBar1.Value = 100;
                 progress.Close();
             }            
