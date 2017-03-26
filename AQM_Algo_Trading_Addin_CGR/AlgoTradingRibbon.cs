@@ -623,28 +623,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             if (selectedOptions == 5)
             {
                 //DataManager erzeugen
-
-
-
-
-
-
-
             }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
             //Aktives Tabellenblatt}
             else {
@@ -653,14 +632,6 @@ namespace AQM_Algo_Trading_Addin_CGR
 
             }
         }
-
-
-
-
-
-
-
-
 
         private void BTN_Test_Click(object sender, RibbonControlEventArgs e)
         {
@@ -730,7 +701,6 @@ namespace AQM_Algo_Trading_Addin_CGR
             {
                 MessageBox.Show(ex.Message);
             }
-
         }
 
 
@@ -874,7 +844,6 @@ namespace AQM_Algo_Trading_Addin_CGR
             //tableObject.draw();
             tableObject.drawOnlyRelevantColumns();
             //tableObject.deleteDraw();
-            
         }
 
         private void button3_Click(object sender, RibbonControlEventArgs e)
@@ -899,6 +868,46 @@ namespace AQM_Algo_Trading_Addin_CGR
                                 Globals.ThisAddIn.Application.ActiveCell);
 
             dataManager.subscribeForLiveConnection("",myTable);
+        }
+
+        private void button5_Click(object sender, RibbonControlEventArgs e)
+        {
+            Konfigurator view = new Konfigurator();
+            view.ShowDialog();
+
+            ProgressIndicator progress = new ProgressIndicator();
+            progress.progressBar1.Maximum = 100;
+            progress.progressBar1.Minimum = 0;
+            progress.progressBar1.Value = 20;
+            progress.Show();
+            progress.progressBar1.Value = 30;
+
+            if (view.hasBeenCancelled == false)
+            {
+                DataManager dataManager = DataManager.getInstance();
+                YahooFinanceAPIConnector api = new YahooFinanceAPIConnector();
+
+                progress.progressBar1.Value = 40;
+
+                TableObject myTable = new TableObject(
+                                        Globals.Factory.GetVstoObject
+                                        (
+                                            Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet
+                                        ),
+                                        Globals.ThisAddIn.Application.ActiveCell,
+                                        api.getHistoricalStockData
+                                        (
+                                            "BMW", 
+                                            view.dateTimePicker1.Value, 
+                                            view.dateTimePicker2.Value, 
+                                            YahooFinanceAPI_Resolution.Daily
+                                        )
+                                      );
+                progress.progressBar1.Value = 80;
+                myTable.draw();
+                progress.progressBar1.Value = 100;
+                progress.Close();
+            }            
         }
     }
 }

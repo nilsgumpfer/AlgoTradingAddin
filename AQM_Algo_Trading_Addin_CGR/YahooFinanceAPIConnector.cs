@@ -65,6 +65,37 @@ namespace AQM_Algo_Trading_Addin_CGR
             return records;
         }
 
+        public List<StockDataTransferObject> getHistoricalStockData(string stockSymbol, DateTime dateFrom, DateTime dateTo, YahooFinanceAPI_Resolution resolution)
+        {
+            string resolution_s = "";
+
+            switch (resolution)
+            {
+                case YahooFinanceAPI_Resolution.Hourly:
+                    resolution_s = "h";
+                    break;
+                case YahooFinanceAPI_Resolution.Daily:
+                    resolution_s = "d";
+                    break;
+                case YahooFinanceAPI_Resolution.Monthly:
+                    resolution_s = "m";
+                    break;
+                case YahooFinanceAPI_Resolution.Yearly:
+                    resolution_s = "y";
+                    break;
+            }
+            return getHistoricalStockData(
+                                            stockSymbol,
+                                            dateTo.Month.ToString(),
+                                            dateTo.Day.ToString(),
+                                            dateTo.Year.ToString(),
+                                            dateFrom.Month.ToString(),
+                                            dateFrom.Day.ToString(),
+                                            dateFrom.Year.ToString(),
+                                            resolution_s
+                                          );
+        }
+
         /// <summary>Extracts historical stockdata via YahooFinanceAPI using following parameters</summary>
         /// <param name="sNameID">Stock-Symbol</param>
         /// <param name="dToMonth">Top-Boundary Month: Values between 0 and 11</param>

@@ -191,6 +191,19 @@ namespace AQM_Algo_Trading_Addin_CGR
             content.Add(firstLine);
         }
 
+        public TableObject(Worksheet worksheet, Excel.Range startPosition, List<StockDataTransferObject> records)
+        {
+            this.worksheet = worksheet;
+            this.startPosition = startPosition;
+            startPositionRow = startPosition.Row;
+            startPositionColumn = startPosition.Column;
+            this.headline = records[0].getHeadlineAsList();
+            this.content = new List<List<string>>();
+
+            foreach(StockDataTransferObject record in records)
+                content.Add(record.getLineAsList());
+        }
+
         public TableObject(Worksheet worksheet, Excel.Range startPosition)
         {
             this.worksheet = worksheet;

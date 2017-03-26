@@ -105,10 +105,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             /*if (notfound)
                 throw new Exception("No data available for this symbol! Please update your database first.");
             else {*/
-            wkn = "wkn";
-            isin = "isin";
-            name = "name";
-            sector = "sector";
+
             url_suffix = "BMW-Aktie-DE0005190003";
         }
 

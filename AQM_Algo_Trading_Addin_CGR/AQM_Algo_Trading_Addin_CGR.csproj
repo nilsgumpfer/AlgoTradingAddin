@@ -166,9 +166,21 @@
     </Compile>
     <Compile Include="DataManager.cs" />
     <Compile Include="Enumerations.cs" />
+    <Compile Include="Konfigurator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Konfigurator.Designer.cs">
+      <DependentUpon>Konfigurator.cs</DependentUpon>
+    </Compile>
     <Compile Include="LiveConnectionSubscriber.cs" />
     <Compile Include="MySQLConnector.cs" />
     <Compile Include="OnVistaConnector.cs" />
+    <Compile Include="ProgressIndicator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProgressIndicator.Designer.cs">
+      <DependentUpon>ProgressIndicator.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -179,6 +191,12 @@
     <Compile Include="YahooFinanceAPIConnector.cs" />
     <EmbeddedResource Include="AlgoTradingRibbon.resx">
       <DependentUpon>AlgoTradingRibbon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Konfigurator.resx">
+      <DependentUpon>Konfigurator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProgressIndicator.resx">
+      <DependentUpon>ProgressIndicator.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -212,9 +230,7 @@
     </Compile>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="CrawlerKlassen\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
