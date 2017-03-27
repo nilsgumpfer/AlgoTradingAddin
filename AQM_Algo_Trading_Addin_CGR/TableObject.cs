@@ -40,7 +40,7 @@ namespace AQM_Algo_Trading_Addin_CGR
 
             foreach (int i in columnsToDraw)
             {
-                worksheet.Cells[drawPosition, startPositionColumn + space] = headline[i];
+                worksheet.Cells[drawPosition, startPositionColumn + space] = headline[i-1];
                 space++;
             }
 
@@ -106,7 +106,7 @@ namespace AQM_Algo_Trading_Addin_CGR
 
                 foreach (int i in columnsToDraw)
                 {
-                    worksheet.Cells[drawPosition, startPositionColumn + space] = line[i];
+                    worksheet.Cells[drawPosition, startPositionColumn + space] = line[i-1];
                     space++;
                 }
 
@@ -123,13 +123,10 @@ namespace AQM_Algo_Trading_Addin_CGR
             for (int j = 0; j < content.Count; j++)
             {
                 line = content[j];
-
+                int space = 0;
                 foreach (int i in columnsToDraw)
                 {
-                    int space = 0;
-
                     worksheet.Cells[drawPosition, startPositionColumn + space] = "";
-
                     space++;
                 }
 
