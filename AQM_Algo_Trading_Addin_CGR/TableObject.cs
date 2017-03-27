@@ -21,6 +21,25 @@ namespace AQM_Algo_Trading_Addin_CGR
         private List<List<string>> content;
         private int drawPosition = 1;
 
+
+        public void drawDiagram()
+        {
+            List<string> line;
+
+            MessageBox.Show(content.Count.ToString());
+            for (int j = 0; j < content.Count; j++)
+            {
+                line = content[j];
+
+                for (int i = 0; i < line.Count; i++)
+                {
+                    worksheet.Cells[drawPosition, startPositionColumn + i] = "";
+                }
+
+                drawPosition++;
+            }
+        }
+
         public void drawHeaderline()
         {
             drawPosition = startPositionRow;
@@ -228,6 +247,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             drawOnlyRelevantColumns();
         }
 
+
         public void updateMeWithNewData(StockDataTransferObject newRecord)
         {
             headline = newRecord.getHeadlineAsList();
@@ -235,6 +255,9 @@ namespace AQM_Algo_Trading_Addin_CGR
             //TODO: nicht alles neu zeichnen, sondern nur letzte Zeile!
             draw();
         }
+
+
+
     }
 
 

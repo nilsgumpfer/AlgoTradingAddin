@@ -813,22 +813,56 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         private void TableObjektTest_Click(object sender, RibbonControlEventArgs e)
         {
+            //List<string> headline = new List<string>();
+            //headline.Add("Wurscht");
+            //headline.Add("Stulle");
+
+            //List<List<string>> content = new List<List<string>>();
+
+            //List<string> line1 = new List<string>();
+            //line1.Add("Mortadella");
+            //line1.Add("Graubrot");
+
+            //List<string> line2 = new List<string>();
+            //line2.Add("Mettwurscht");
+            //line2.Add("Saatenbrot");
+
             List<string> headline = new List<string>();
-            headline.Add("Wurscht");
-            headline.Add("Stulle");
+            headline.Add("Obst");
+            headline.Add("Anzahl");
 
             List<List<string>> content = new List<List<string>>();
 
             List<string> line1 = new List<string>();
-            line1.Add("Mortadella");
-            line1.Add("Graubrot");
+            line1.Add("Banane");
+            line1.Add("5");
 
             List<string> line2 = new List<string>();
-            line2.Add("Mettwurscht");
-            line2.Add("Saatenbrot");
+            line2.Add("Apfel");
+            line2.Add("3");
+
+            List<string> line3 = new List<string>();
+            line3.Add("Orange");
+            line3.Add("12");
+
+            List<string> line4 = new List<string>();
+            line4.Add("Mango");
+            line4.Add("1");
+
+            List<string> line5 = new List<string>();
+            line5.Add("Gurke");
+            line5.Add("7");
+
+            List<string> line6 = new List<string>();
+            line6.Add("Avocado");
+            line6.Add("5");
 
             content.Add(line1);
             content.Add(line2);
+            content.Add(line3);
+            content.Add(line4);
+            content.Add(line5);
+            content.Add(line6);
 
             List<int> columns = new List<int>();
             columns.Add(1);
@@ -911,6 +945,11 @@ namespace AQM_Algo_Trading_Addin_CGR
                 progress.progressBar1.Value = 100;
                 progress.Close();
             }            
+        }
+
+        private void button6_Click(object sender, RibbonControlEventArgs e)
+        {
+            tableObject.drawDiagram();
         }
     }
 }
