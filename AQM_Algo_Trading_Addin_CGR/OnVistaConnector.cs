@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Net;
 using System.Windows.Forms;
-
+using System.Text.RegularExpressions;
 
 namespace AQM_Algo_Trading_Addin_CGR
 {
     class OnVistaConnector : PushConnector
     {
         private string symbol;
-        private string wkn;
-        private string isin;
-        private string name;
-        private string sector;
-        private string url_main_part = "http://www.onvista.de/aktien/";
-        private string url_suffix;
+        private string provider         = "OnVista.de";
+        private string urlMainPart      = "http://www.onvista.de/aktien/";
+        private string urlSuffix;
+        private string timestampFormat  = "yyyy-MM-dd HH:mm:ss";
+        private string errorPlaceholder = "N/A";
+        private double lastVolume       = 0.0;
 
         private string url;
 
@@ -80,7 +80,7 @@ namespace AQM_Algo_Trading_Addin_CGR
 
             stdTransferObject.trading_floor         = extractTradingFloor();
             stdTransferObject.currency              = extractCurrency();
-            stdTransferObject.provider              = "OnVista.de";
+            stdTransferObject.provider              = provider;
 
             return stdTransferObject;
         }
@@ -88,7 +88,7 @@ namespace AQM_Algo_Trading_Addin_CGR
         private void init()
         {
             loadMetaData();
-            url = url_main_part + url_suffix;
+            url = urlMainPart + urlSuffix;
             initWebClient();
         }
 
@@ -106,7 +106,7 @@ namespace AQM_Algo_Trading_Addin_CGR
                 throw new Exception("No data available for this symbol! Please update your database first.");
             else {*/
 
-            url_suffix = "BMW-Aktie-DE0005190003";
+            urlSuffix = "BMW-Aktie-DE0005190003";
         }
 
         private void updateMetaData()
@@ -149,41 +149,139 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         private string extractUrlSuffix()
         {
-            return url.Substring(url_main_part.Length);
+            return url.Substring(urlMainPart.Length);
         }
 
         private string extractPrice()
         {
-            return useExtractionVariant1("<span data-push=", ":last:1:1:Stock>", "<");
+            //return useExtractionVariant1("<span data-push=", ":last:1:1:Stock>", "<");
+            return useExtractionVariant1("last");
         }
 
         private string extractVolume()
         {
-            return "VOLUME";
+            try
+            {
+                if (lastVolume == 0.0)
+                {
+                    lastVolume = Convert.ToDouble(extractDayVolume());
+                    return errorPlaceholder;
+                }
+                else
+                {
+                    double deltaVolume = Convert.ToDouble(extractDayVolume()) - lastVolume;
+                    return deltaVolume.ToString();
+                }
+            }
+            catch (Exception e)
+            {
+                return errorPlaceholder;
+            }
         }
 
         private string extractDayVolume()
         {
-            return useExtractionVariant1("<span data-push=", ":totalVolume:1:1:Stock>", " ");
+            //return useExtractionVariant1("<span data-push=", ":totalVolume:1:1:Stock>", " ");
+            return useExtractionVariant1("totalVolume");
         }
 
-        private string useExtractionVariant1(string startTag_part1, string startTag_part2, string endTag)
-        {
+        private string useExtractionVariant1(string keyWord)
+        {/*
             loadOnVistaStockID();
 
-            string startTag = startTag_part1 + onVista_stockID + startTag_part2;
+            string temp = startTag_part1 + onVista_stockID + startTag_part2;
+            string startTag = getItemBetweenTags(temp, ">", endTag);
 
-            return getItemBetweenTags(startTag, endTag);
+            return getItemBetweenTags(startTag, endTag);*/
+
+            string pattern =    @"data-push=\d*:" + keyWord + @":\d{1}:\d{1}:Stock>(.?\d*[\.,\,]\d*)";
+            /*
+                                @" < span data-push=          
+                                \d*                         //0-n digits
+                                :" + keyWord + @":          //this part differs, so the caller has to hand over the relevant keyword
+                                \d*                         //0-n digits
+                                :
+                                \d*                         //0-n digits
+                                :Stock>
+                                (                           //this bracket initiates a "group". it specifies the relevant part which should be extracted
+                                .?                          //in some cases, here we expect one blankspace - .? means: here comes exactly 0 or 1 character (inlcudes space, too)
+                                \d*                         //0-n digits
+                                [\.,\,]                     //this means: here can be either one point or one comma - nothing else
+                                \d*                         //0-n digits
+                                )                           //this bracket finally closes the group
+                                ";
+             */
+
+            //in some cases the returned string would contain a blankspace at its front - so we eliminate it
+            return getItemUsingRegEx(pattern).Replace(" ", "");
+        }
+
+        private string useExtractionVariant2(string keyWord)
+        {/*
+            loadOnVistaStockID();
+
+            string temp = startTag_part1 + onVista_stockID + startTag_part2;
+            string startTag = getItemBetweenTags(temp, ">", endTag);
+
+            return getItemBetweenTags(startTag, endTag);*/
+
+            string pattern = @"data-push=\d*:" + keyWord + @":\d{1}:\d{1}:Stock>(.?[\-,\+]\d*[\.,\,]\d*)";
+            /*
+                                @" < span data-push=          
+                                \d*                         //0-n digits
+                                :" + keyWord + @":          //this part differs, so the caller has to hand over the relevant keyword
+                                \d*                         //0-n digits
+                                :
+                                \d*                         //0-n digits
+                                :Stock>
+                                (                           //this bracket initiates a "group". it specifies the relevant part which should be extracted
+                                .?                          //in some cases, here we expect one blankspace - .? means: here comes exactly 0 or 1 character (inlcudes space, too)
+                                \d*                         //0-n digits
+                                [\.,\,]                     //this means: here can be either one point or one comma - nothing else
+                                \d*                         //0-n digits
+                                )                           //this bracket finally closes the group
+                                ";
+             */
+
+            //in some cases the returned string would contain a blankspace at its front - so we eliminate it
+            return getItemUsingRegEx(pattern).Replace(" ", "");
+        }
+
+        private string useExtractionVariant3(string keyWord)
+        {
+            string pattern = @"data-push=\d*:" + keyWord + @":\d{1}:\d{1}:Stock>(.?\d*.\d*.\d*,.?\d*:\d*:\d*)";
+            /*
+                                @" < span data-push=          
+                                \d*                         //0-n digits
+                                :" + keyWord + @":          //this part differs, so the caller has to hand over the relevant keyword
+                                \d*                         //0-n digits
+                                :
+                                \d*                         //0-n digits
+                                :Stock>
+                                (                           //this bracket initiates a "group". it specifies the relevant part which should be extracted
+                                .?                          //in some cases, here we expect one blankspace - .? means: here comes exactly 0 or 1 character (inlcudes space, too)
+                                \d*                         //0-n digits
+                                [\.,\,]                     //this means: here can be either one point or one comma - nothing else
+                                \d*                         //0-n digits
+                                )                           //this bracket finally closes the group
+                                ";
+             */
+
+            //in some cases the returned string would contain a blankspace at its front - so we eliminate it
+            return getItemUsingRegEx(pattern).Replace(" ", "");
         }
 
         private string extractDayHigh()
         {
-            return useExtractionVariant1("data-push=", ":high:1:1:Stock> ", " /");
+            //return useExtractionVariant1("data-push=", ":high:1:1:Stock> ", " /");
+            return useExtractionVariant1("high");
         }
 
         private string extractDayLow()
         {
-            return useExtractionVariant1("data-push=", ":high:1:1:Stock> " + extractDayHigh() + " /", " <");
+            //return useExtractionVariant1("data-push=", ":high:1:1:Stock> " + extractDayHigh() + " /", " <");
+            //return useExtractionVariant2();
+            return "LOW";
         }
 
         private string extractDayOpen()
@@ -204,12 +302,14 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         private string extractTrendAbs()
         {
-            return getItemBetweenTags("performanceAbsolute:1:1:Stock> ", " <");
+            //return getItemBetweenTags("performanceAbsolute:1:1:Stock> ", " <");
+            return useExtractionVariant2("performanceAbsolute");
         }
 
         private string extractTrendPerc()
         {
-            return getItemBetweenTags("performanceRelative:1:1:Stock>XYZ ", " <");
+            //return getItemBetweenTags("performanceRelative:1:1:Stock> ", " <");
+            return useExtractionVariant2("performanceRelative");
         }
 
         private string extractTimestampPrice()
@@ -219,21 +319,29 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         private string parseDateTimeToTimestamp(string dateTime)
         {
-            return DateTime.ParseExact(
-                dateTime,
-                "dd.MM.yyyy, HH:mm:ss",
-                System.Globalization.CultureInfo.InvariantCulture).ToString("yyyy-MM-dd HH:mm:ss"
-                );
+            try
+            {
+                return DateTime.ParseExact(
+                    dateTime,
+                    "dd.MM.yyyy,HH:mm:ss",
+                    System.Globalization.CultureInfo.InvariantCulture)
+                    .ToString(timestampFormat);
+            }
+            catch (Exception e)
+            {
+                return errorPlaceholder;
+            }
         }
 
         private string extractDataAndTimeGeneral()
         {
-            return getItemBetweenTags("lastTime:1:1:Stock> ", " <");
+            //return getItemBetweenTags("lastTime:1:1:Stock> ", " <");
+            return useExtractionVariant3("lastTime");
         }
 
         private string extractTimestampVolume()
         {
-            return parseDateTimeToTimestamp(extractDataAndTimeGeneral());
+            return DateTime.Now.ToString(timestampFormat);
         }
 
         private string extractTimestampOtherData()
@@ -256,29 +364,42 @@ namespace AQM_Algo_Trading_Addin_CGR
             onVista_stockID = getItemBetweenTags("<meta name=\"og:image\" content=\"http://chartdata.onvista.de/image?granularity=year&type=Stock&id=", "&");
         }
 
-        private string getItemBetweenTags(string startTag, string endTag)
+        private string getItemBetweenTags(string sourceString, string startTag, string endTag)
         {
             int start = 0;
             int end = 0;
 
-            start = sourceHTML.IndexOf(startTag, 0);
+            start = sourceString.IndexOf(startTag, 0);
 
-            if (start < 0)
+            /*if (start < 0)
             {
                 MessageBox.Show("Tag cannot be found in HTML-source: \"" + startTag);
                 return "N/A";
-            }
+            }*/
 
             start += startTag.Length;
-            end = sourceHTML.IndexOf(endTag, start);
+            end = sourceString.IndexOf(endTag, start);
 
-            if (end < 0)
+            /*if (end < 0)
             {
                 MessageBox.Show("Tag cannot be found in HTML-source: \"" + endTag);
                 return "N/A";
-            }
+            }*/
 
-            return sourceHTML.Substring(start, end - start).Replace('\n', ' ');
+            try
+            {
+                return sourceString.Substring(start, end - start).Replace('\n', ' ');
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Tag cannot be found in HTML-source: \"" + endTag);
+                return errorPlaceholder;
+            }
+        }
+
+        private string getItemBetweenTags(string startTag, string endTag)
+        {
+            return getItemBetweenTags(sourceHTML, startTag, endTag);
         }
 
         public void grabMetaDataAndFillDatabase(string url)
@@ -286,6 +407,33 @@ namespace AQM_Algo_Trading_Addin_CGR
             this.url = url;
             loadHtmlData();
             updateMetaData();
+        }
+
+        private string getItemUsingRegEx(string pattern)
+        {
+            return getItemUsingRegEx(sourceHTML, pattern);
+        }
+
+        private string getItemUsingRegEx(string source, string pattern)
+        {
+            Regex regex = new Regex(pattern, RegexOptions.Compiled);
+
+            //get matches (these are the substrings which match the pattern)
+            MatchCollection matches = regex.Matches(source);
+
+            try
+            {
+                //get groups (these are the RELEVANT substring out of the substrings above we want to extract basically)
+                //hint: we assume that only one match and only one group are found, so we can access them via index
+                GroupCollection groups = matches[0].Groups;
+                //hint: index 0 contains the match again, index 1 contains the first group!
+                return groups[1].Value;
+            }
+            catch (Exception e)
+            {
+                //maybe nothing was found and we get an index out of bounds exception or sth. - so we catch it, go on and pass back a placeholder
+                return errorPlaceholder;
+            }
         }
     }
 }
