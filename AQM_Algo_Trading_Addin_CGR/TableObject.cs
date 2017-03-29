@@ -24,20 +24,7 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         public void drawDiagram()
         {
-            List<string> line;
-
-            MessageBox.Show(content.Count.ToString());
-            for (int j = 0; j < content.Count; j++)
-            {
-                line = content[j];
-
-                for (int i = 0; i < line.Count; i++)
-                {
-                    worksheet.Cells[drawPosition, startPositionColumn + i] = "";
-                }
-
-                drawPosition++;
-            }
+            
         }
 
         public void drawHeaderline()
@@ -59,7 +46,7 @@ namespace AQM_Algo_Trading_Addin_CGR
 
             foreach (int i in columnsToDraw)
             {
-                worksheet.Cells[drawPosition, startPositionColumn + space] = headline[i];
+                worksheet.Cells[drawPosition, startPositionColumn + space] = headline[i-1];
                 space++;
             }
 
@@ -125,7 +112,7 @@ namespace AQM_Algo_Trading_Addin_CGR
 
                 foreach (int i in columnsToDraw)
                 {
-                    worksheet.Cells[drawPosition, startPositionColumn + space] = line[i];
+                    worksheet.Cells[drawPosition, startPositionColumn + space] = line[i-1];
                     space++;
                 }
 

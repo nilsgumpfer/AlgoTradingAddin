@@ -23,6 +23,7 @@ namespace AQM_Algo_Trading_Addin_CGR
         //private string alteAktiensymbole;
         //private string[] aktienSymbole = { "" };
 
+        private Excel.Application app;
         private Workbook wb;
         private Worksheet ws;
         private Excel.Range range;
@@ -870,12 +871,11 @@ namespace AQM_Algo_Trading_Addin_CGR
 
             tableObject = new TableObject(
                                 Globals.Factory.GetVstoObject(
-                                    Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet),
-                                Globals.ThisAddIn.Application.ActiveCell, 
+                                Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet),
+                                Globals.ThisAddIn.Application.Cells, 
                                 headline, 
                                 content,
                                 columns);
-            //tableObject.draw();
             tableObject.drawOnlyRelevantColumns();
             //tableObject.deleteDraw();
         }
@@ -949,7 +949,71 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         private void button6_Click(object sender, RibbonControlEventArgs e)
         {
-            tableObject.drawDiagram();
+            List<string> headline = new List<string>();
+            headline.Add("Obst");
+            headline.Add("Anzahl");
+
+            List<List<string>> content = new List<List<string>>();
+
+            List<string> line1 = new List<string>();
+            line1.Add("Banane");
+            line1.Add("5");
+
+            List<string> line2 = new List<string>();
+            line2.Add("Apfel");
+            line2.Add("3");
+
+            List<string> line3 = new List<string>();
+            line3.Add("Orange");
+            line3.Add("12");
+
+            List<string> line4 = new List<string>();
+            line4.Add("Mango");
+            line4.Add("1");
+
+            List<string> line5 = new List<string>();
+            line5.Add("Gurke");
+            line5.Add("7");
+
+            List<string> line6 = new List<string>();
+            line6.Add("Avocado");
+            line6.Add("5");
+
+            content.Add(line1);
+            content.Add(line2);
+            content.Add(line3);
+            content.Add(line4);
+            content.Add(line5);
+            content.Add(line6);
+
+            List<int> columns = new List<int>();
+            columns.Add(1);
+            columns.Add(2);
+
+            tableObject = new TableObject(
+                                Globals.Factory.GetVstoObject(
+                                    Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet),
+                                Globals.ThisAddIn.Application.Cells[1, 1],
+                                headline,
+                                content,
+                                columns);
+            tableObject.drawOnlyRelevantColumns();
+
+            ws = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet);
+
+            object misValue = System.Reflection.Missing.Value;   
+        
+            Excel.ChartObjects xlCharts = (Excel.ChartObjects)ws.ChartObjects(Type.Missing);
+            Excel.ChartObject myChart = (Excel.ChartObject)xlCharts.Add(10, 80, 300, 250);
+            //TODO: Location des Diagramms setzen!
+            //Excel.ChartObject myChart = (Excel.ChartObject)xlCharts.Add(range(ws.Cells[1, columns.Count+1], ws.Cells[, 1]
+            Excel.Chart chartPage = myChart.Chart;
+
+            Excel.Range chartRange;
+            chartRange = ws.get_Range(ws.Cells[1, 1], ws.Cells[content.Count+1, columns.Count]);
+            chartPage.SetSourceData(chartRange, misValue);
+
+            chartPage.ChartType = Excel.XlChartType.xlColumnClustered;
         }
     }
 }
