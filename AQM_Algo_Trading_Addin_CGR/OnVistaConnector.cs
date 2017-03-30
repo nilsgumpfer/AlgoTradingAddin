@@ -154,7 +154,6 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         private string extractPrice()
         {
-            //return useExtractionVariant1("<span data-push=", ":last:1:1:Stock>", "<");
             return useExtractionVariant1("last");
         }
 
@@ -181,28 +180,20 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         private string extractDayVolume()
         {
-            //return useExtractionVariant1("<span data-push=", ":totalVolume:1:1:Stock>", " ");
             return useExtractionVariant1("totalVolume");
         }
 
         private string useExtractionVariant1(string keyWord)
-        {/*
-            loadOnVistaStockID();
-
-            string temp = startTag_part1 + onVista_stockID + startTag_part2;
-            string startTag = getItemBetweenTags(temp, ">", endTag);
-
-            return getItemBetweenTags(startTag, endTag);*/
-
+        {
             string pattern =    @"data-push=\d*:" + keyWord + @":\d{1}:\d{1}:Stock>(.?\d*[\.,\,]\d*)";
             /*
-                                @" < span data-push=          
+                                @" <span data-push=         //static part
                                 \d*                         //0-n digits
                                 :" + keyWord + @":          //this part differs, so the caller has to hand over the relevant keyword
                                 \d*                         //0-n digits
-                                :
+                                :                           //static part
                                 \d*                         //0-n digits
-                                :Stock>
+                                :Stock>                     //static part
                                 (                           //this bracket initiates a "group". it specifies the relevant part which should be extracted
                                 .?                          //in some cases, here we expect one blankspace - .? means: here comes exactly 0 or 1 character (inlcudes space, too)
                                 \d*                         //0-n digits
@@ -217,14 +208,7 @@ namespace AQM_Algo_Trading_Addin_CGR
         }
 
         private string useExtractionVariant2(string keyWord)
-        {/*
-            loadOnVistaStockID();
-
-            string temp = startTag_part1 + onVista_stockID + startTag_part2;
-            string startTag = getItemBetweenTags(temp, ">", endTag);
-
-            return getItemBetweenTags(startTag, endTag);*/
-
+        {
             string pattern = @"data-push=\d*:" + keyWord + @":\d{1}:\d{1}:Stock>(.?[\-,\+]\d*[\.,\,]\d*)";
             /*
                                 @" < span data-push=          
@@ -273,7 +257,6 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         private string extractDayHigh()
         {
-            //return useExtractionVariant1("data-push=", ":high:1:1:Stock> ", " /");
             return useExtractionVariant1("high");
         }
 
@@ -302,13 +285,11 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         private string extractTrendAbs()
         {
-            //return getItemBetweenTags("performanceAbsolute:1:1:Stock> ", " <");
             return useExtractionVariant2("performanceAbsolute");
         }
 
         private string extractTrendPerc()
         {
-            //return getItemBetweenTags("performanceRelative:1:1:Stock> ", " <");
             return useExtractionVariant2("performanceRelative");
         }
 
@@ -335,7 +316,6 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         private string extractDataAndTimeGeneral()
         {
-            //return getItemBetweenTags("lastTime:1:1:Stock> ", " <");
             return useExtractionVariant3("lastTime");
         }
 
@@ -371,20 +351,8 @@ namespace AQM_Algo_Trading_Addin_CGR
 
             start = sourceString.IndexOf(startTag, 0);
 
-            /*if (start < 0)
-            {
-                MessageBox.Show("Tag cannot be found in HTML-source: \"" + startTag);
-                return "N/A";
-            }*/
-
             start += startTag.Length;
             end = sourceString.IndexOf(endTag, start);
-
-            /*if (end < 0)
-            {
-                MessageBox.Show("Tag cannot be found in HTML-source: \"" + endTag);
-                return "N/A";
-            }*/
 
             try
             {

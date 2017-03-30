@@ -42,12 +42,12 @@ namespace AQM_Algo_Trading_Addin_CGR
         {
             List<int> columnsToDraw = new List<int>();
 
-            columnsToDraw.Add(5);
-            columnsToDraw.Add(8);
+            columnsToDraw.Add(6);
             columnsToDraw.Add(9);
             columnsToDraw.Add(10);
             columnsToDraw.Add(11);
             columnsToDraw.Add(12);
+            columnsToDraw.Add(13);
 
             return columnsToDraw;
         }
