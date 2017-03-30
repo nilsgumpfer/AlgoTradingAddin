@@ -12,6 +12,7 @@ namespace AQM_Algo_Trading_Addin_CGR
     class TableObject : LiveConnectionSubscriber
     {
         //TODO: Methoden sortieren, schön machen
+        private Workbook workbook;
         private Worksheet worksheet;
         private Excel.Range startPosition;
         private int startPositionRow;
@@ -22,9 +23,19 @@ namespace AQM_Algo_Trading_Addin_CGR
         private int drawPosition = 1;
 
 
-        public void drawDiagram()
+        public List<int> getColumnsToDraw()
         {
-            
+            return columnsToDraw;
+        }
+
+        public List<string> getHeadline()
+        {
+            return headline;
+        }
+
+        public List<List<string>> getContent()
+        {
+            return content;
         }
 
         public void drawHeaderline()
@@ -242,6 +253,12 @@ namespace AQM_Algo_Trading_Addin_CGR
             content.Add(newRecord.getLineAsList());
             //TODO: nicht alles neu zeichnen, sondern nur letzte Zeile!
             draw();
+        }
+
+        public void changeWorkbookName(string name)
+        {
+            workbook = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook);
+            worksheet.Name = name;
         }
 
 

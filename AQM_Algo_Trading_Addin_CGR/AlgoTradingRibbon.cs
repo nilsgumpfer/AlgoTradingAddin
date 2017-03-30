@@ -1006,6 +1006,12 @@ namespace AQM_Algo_Trading_Addin_CGR
             Excel.ChartObjects xlCharts = (Excel.ChartObjects)ws.ChartObjects(Type.Missing);
             Excel.ChartObject myChart = (Excel.ChartObject)xlCharts.Add(10, 80, 300, 250);
             //TODO: Location des Diagramms setzen!
+
+            //myChart.TopLeftCell.Cells[1, 3];
+
+
+
+
             //Excel.ChartObject myChart = (Excel.ChartObject)xlCharts.Add(range(ws.Cells[1, columns.Count+1], ws.Cells[, 1]
             Excel.Chart chartPage = myChart.Chart;
 
@@ -1014,6 +1020,20 @@ namespace AQM_Algo_Trading_Addin_CGR
             chartPage.SetSourceData(chartRange, misValue);
 
             chartPage.ChartType = Excel.XlChartType.xlColumnClustered;
+        }
+
+        private void button7_Click(object sender, RibbonControlEventArgs e)
+        {
+            DataManager dataManager = DataManager.getInstance();
+            TableObject myTable = new TableObject(
+                                Globals.Factory.GetVstoObject(
+                                    Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet),
+                                Globals.ThisAddIn.Application.Cells[1, 1]);
+   
+            myTable.changeWorkbookName("OnVista-Livedaten");
+            dataManager.subscribeForLiveConnection("", myTable);
+
+            DiagramObject myDiagram = new DiagramObject(myTable);
         }
     }
 }

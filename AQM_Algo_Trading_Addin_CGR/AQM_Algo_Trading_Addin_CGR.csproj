@@ -187,6 +187,7 @@
     <Compile Include="PushConnector.cs" />
     <Compile Include="PushWorker.cs" />
     <Compile Include="StockDataTransferObject.cs" />
+    <Compile Include="DiagramObject.cs" />
     <Compile Include="TableObject.cs" />
     <Compile Include="YahooFinanceAPIConnector.cs" />
     <EmbeddedResource Include="AlgoTradingRibbon.resx">
