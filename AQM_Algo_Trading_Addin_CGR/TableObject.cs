@@ -38,6 +38,11 @@ namespace AQM_Algo_Trading_Addin_CGR
             return content;
         }
 
+        //public void draw()
+        //{
+        //}
+
+
         public void drawHeaderline()
         {
             drawPosition = startPositionRow;
@@ -53,9 +58,6 @@ namespace AQM_Algo_Trading_Addin_CGR
                     i--;
                 }
             }
-
-       
-
             drawPosition++;
         }
 
@@ -66,8 +68,16 @@ namespace AQM_Algo_Trading_Addin_CGR
 
             foreach (int i in columnsToDraw)
             {
-                worksheet.Cells[drawPosition, startPositionColumn + space] = headline[i-1];
-                space++;
+                try
+                {
+                    worksheet.Cells[drawPosition, startPositionColumn + space] = headline[i - 1];
+                    space++;
+                }
+                catch (Exception e)
+                {
+                    continue;
+                }
+
             }
 
             drawPosition++;
@@ -80,8 +90,15 @@ namespace AQM_Algo_Trading_Addin_CGR
 
             foreach (int i in columnsToDraw)
             {
-                worksheet.Cells[drawPosition, startPositionColumn + space] = "";
-                space++;
+                try
+                {
+                    worksheet.Cells[drawPosition, startPositionColumn + space] = "";
+                    space++;
+                }
+                catch (Exception e)
+                {
+                    continue;
+                }
             }
 
             drawPosition++;
@@ -93,7 +110,14 @@ namespace AQM_Algo_Trading_Addin_CGR
 
             for (int i = 0; i < headline.Count; i++)
             {
-                worksheet.Cells[drawPosition, startPositionColumn + i] = "";
+                try
+                {
+                    worksheet.Cells[drawPosition, startPositionColumn + i] = "";
+                }
+                catch (Exception e)
+                {
+                    i--;
+                } 
             }
 
             drawPosition++;
@@ -139,8 +163,16 @@ namespace AQM_Algo_Trading_Addin_CGR
 
                 foreach (int i in columnsToDraw)
                 {
-                    worksheet.Cells[drawPosition, startPositionColumn + space] = line[i-1];
-                    space++;
+                    try
+                    {
+                        worksheet.Cells[drawPosition, startPositionColumn + space] = line[i - 1];
+                        space++;
+                    }
+                    catch (Exception e)
+                    {
+                        continue;
+                    }
+
                 }
 
                 drawPosition++;
@@ -160,8 +192,15 @@ namespace AQM_Algo_Trading_Addin_CGR
 
                 foreach (int i in columnsToDraw)
                 {
-                    worksheet.Cells[drawPosition, startPositionColumn + space] = "";
-                    space++;
+                    try
+                    {
+                        worksheet.Cells[drawPosition, startPositionColumn + space] = "";
+                        space++;
+                    }
+                    catch (Exception e)
+                    {
+                        continue;
+                    }
                 }
 
                 drawPosition++;
@@ -180,7 +219,15 @@ namespace AQM_Algo_Trading_Addin_CGR
 
                 for (int i = 0; i < line.Count; i++)
                 {
-                    worksheet.Cells[drawPosition, startPositionColumn + i] = "";
+                    try
+                    {
+                        worksheet.Cells[drawPosition, startPositionColumn + i] = "";
+                    }
+                    catch (Exception e)
+                    {
+                        i--;
+                    }
+                    
                 }
 
                 drawPosition++;

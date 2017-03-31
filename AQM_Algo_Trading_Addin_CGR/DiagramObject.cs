@@ -49,11 +49,13 @@ namespace AQM_Algo_Trading_Addin_CGR
 
             //chartPage.ChartType = Excel.XlChartType.xlColumnClustered;
             
+
+            //Aktienkurs
             Microsoft.Office.Interop.Excel.Range chartRange;
             Microsoft.Office.Interop.Excel.ChartObjects xlCharts =
                 (Excel.ChartObjects)worksheet.ChartObjects(Type.Missing);
             Microsoft.Office.Interop.Excel.ChartObject myChart =
-                (Excel.ChartObject)xlCharts.Add(10, 10, 900, 500);
+                (Excel.ChartObject)xlCharts.Add(10, 10, 500, 300);
             Microsoft.Office.Interop.Excel.Chart chartPage = myChart.Chart;
 
             //Excel.Range range = (Excel.Range) worksheet.get_Range
@@ -65,6 +67,18 @@ namespace AQM_Algo_Trading_Addin_CGR
             chartPage.ChartType = Excel.XlChartType.xlColumnClustered;
 
 
+
+            //Volumen
+            Microsoft.Office.Interop.Excel.Range chartRange2;
+            Microsoft.Office.Interop.Excel.ChartObjects xlCharts2 =
+                (Excel.ChartObjects)worksheet.ChartObjects(Type.Missing);
+            Microsoft.Office.Interop.Excel.ChartObject myChart2 =
+                (Excel.ChartObject)xlCharts2.Add(530, 10, 500, 300);
+            Microsoft.Office.Interop.Excel.Chart chartPage2 = myChart2.Chart;
+
+            chartRange2 = wsLiveData.get_Range("F1", "F30");
+            chartPage2.SetSourceData(chartRange2, misValue);
+            chartPage2.ChartType = Excel.XlChartType.xlColumnClustered;
 
 
 
