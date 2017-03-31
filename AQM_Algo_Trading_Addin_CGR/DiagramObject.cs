@@ -48,9 +48,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             //chartPage.SetSourceData(chartRange, misValue);
 
             //chartPage.ChartType = Excel.XlChartType.xlColumnClustered;
-
-
-
+            
             Microsoft.Office.Interop.Excel.Range chartRange;
             Microsoft.Office.Interop.Excel.ChartObjects xlCharts =
                 (Excel.ChartObjects)worksheet.ChartObjects(Type.Missing);
