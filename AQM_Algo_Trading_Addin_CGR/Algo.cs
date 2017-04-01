@@ -13,6 +13,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             DataManager dataManager = DataManager.getInstance();
             dataManager.subscribeForLiveConnection("", this);
             this.atr = atr;
+            atr.lblKS_Saldo.Label = Convert.ToString(kontostand);
         }
 
         private double startaktienwert = 0;
@@ -23,6 +24,7 @@ namespace AQM_Algo_Trading_Addin_CGR
         private int initStart = 0;
         private string status;
         private AlgoTradingRibbon atr;
+        private double kontostand = 10000.00;
 
         public void updateMeWithNewData(StockDataTransferObject newRecord)
         {
@@ -37,11 +39,13 @@ namespace AQM_Algo_Trading_Addin_CGR
                 {
                     startaktienwert = aktuelleraktienwert;
                     status = "Kaufen";
+                    kontostand = kontostand - startaktienwert;
                     setDataInRibbon();
                 }
                 if (initStart > 2)
                 {
                     double gewinn = ((aktuelleraktienwert - startaktienwert) * 100) - 100;
+                    kontostand = kontostand + (aktuelleraktienwert - startaktienwert);
                     status = "Behalten";
                     setDataInRibbon();
 
@@ -57,11 +61,13 @@ namespace AQM_Algo_Trading_Addin_CGR
                     if (gewinn < 2 & zahlVerlust >= 3)
                     {
                         status = "Verkaufen";
+                        kontostand = kontostand + (aktuelleraktienwert - startaktienwert);
                         setDataInRibbon();
                     }
                     else if (gewinn > 2 & zahlVerlust >= 5)
                     {
                         status = "Verkaufen";
+                        kontostand = kontostand + (aktuelleraktienwert - startaktienwert);
                         setDataInRibbon();
                     }
                     
@@ -76,8 +82,8 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         private void setDataInRibbon()
         {
-            //AlgoTradingRibbon atr = new AlgoTradingRibbon();
             String gewinnForLbl = Convert.ToString(gewinn);
+            String kontostand = Convert.ToString(this.kontostand);
             atr.lblAlgoStatus.Label = status;
             atr.lblGewinn.Label = gewinnForLbl;
         }

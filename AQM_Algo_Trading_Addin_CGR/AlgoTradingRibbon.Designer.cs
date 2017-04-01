@@ -66,13 +66,16 @@
             this.button5 = this.Factory.CreateRibbonButton();
             this.button6 = this.Factory.CreateRibbonButton();
             this.button7 = this.Factory.CreateRibbonButton();
+            this.group9 = this.Factory.CreateRibbonGroup();
+            this.button8 = this.Factory.CreateRibbonButton();
+            this.lblKontostand = this.Factory.CreateRibbonLabel();
+            this.lblGewinn = this.Factory.CreateRibbonLabel();
+            this.lblAlgoStatus = this.Factory.CreateRibbonLabel();
+            this.lblKS_Saldo = this.Factory.CreateRibbonLabel();
             this.group2 = this.Factory.CreateRibbonGroup();
             this.checkBox3 = this.Factory.CreateRibbonCheckBox();
             this.BTN_Test1 = this.Factory.CreateRibbonButton();
-            this.group9 = this.Factory.CreateRibbonGroup();
-            this.button8 = this.Factory.CreateRibbonButton();
-            this.lblAlgoStatus = this.Factory.CreateRibbonLabel();
-            this.lblGewinn = this.Factory.CreateRibbonLabel();
+            this.button9 = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.group1.SuspendLayout();
             this.group3.SuspendLayout();
@@ -242,6 +245,7 @@
             this.group8.Items.Add(this.button5);
             this.group8.Items.Add(this.button6);
             this.group8.Items.Add(this.button7);
+            this.group8.Items.Add(this.button9);
             this.group8.Label = "Test";
             this.group8.Name = "group8";
             // 
@@ -283,7 +287,7 @@
             // 
             // button5
             // 
-            this.button5.Label = "YahooFinanceAPI Test (BMW)";
+            this.button5.Label = "YahooFinanceAPI Test";
             this.button5.Name = "button5";
             this.button5.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button5_Click);
             // 
@@ -298,6 +302,42 @@
             this.button7.Label = "Management-Cockpit erstellen";
             this.button7.Name = "button7";
             this.button7.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button7_Click);
+            // 
+            // group9
+            // 
+            this.group9.Items.Add(this.button8);
+            this.group9.Items.Add(this.lblKontostand);
+            this.group9.Items.Add(this.lblGewinn);
+            this.group9.Items.Add(this.lblAlgoStatus);
+            this.group9.Items.Add(this.lblKS_Saldo);
+            this.group9.Label = "Algorithmus";
+            this.group9.Name = "group9";
+            // 
+            // button8
+            // 
+            this.button8.Label = "Algo starten";
+            this.button8.Name = "button8";
+            this.button8.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button8_Click);
+            // 
+            // lblKontostand
+            // 
+            this.lblKontostand.Label = "Kontostand";
+            this.lblKontostand.Name = "lblKontostand";
+            // 
+            // lblGewinn
+            // 
+            this.lblGewinn.Label = "-";
+            this.lblGewinn.Name = "lblGewinn";
+            // 
+            // lblAlgoStatus
+            // 
+            this.lblAlgoStatus.Label = "-";
+            this.lblAlgoStatus.Name = "lblAlgoStatus";
+            // 
+            // lblKS_Saldo
+            // 
+            this.lblKS_Saldo.Label = "-";
+            this.lblKS_Saldo.Name = "lblKS_Saldo";
             // 
             // group2
             // 
@@ -315,29 +355,11 @@
             this.BTN_Test1.Name = "BTN_Test1";
             this.BTN_Test1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.BTN_Test_Click);
             // 
-            // group9
+            // button9
             // 
-            this.group9.Items.Add(this.button8);
-            this.group9.Items.Add(this.lblAlgoStatus);
-            this.group9.Items.Add(this.lblGewinn);
-            this.group9.Label = "Algorithmus";
-            this.group9.Name = "group9";
-            // 
-            // button8
-            // 
-            this.button8.Label = "Algo starten";
-            this.button8.Name = "button8";
-            this.button8.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button8_Click);
-            // 
-            // lblAlgoStatus
-            // 
-            this.lblAlgoStatus.Label = "-";
-            this.lblAlgoStatus.Name = "lblAlgoStatus";
-            // 
-            // lblGewinn
-            // 
-            this.lblGewinn.Label = "-";
-            this.lblGewinn.Name = "lblGewinn";
+            this.button9.Label = "button9";
+            this.button9.Name = "button9";
+            this.button9.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button9_Click);
             // 
             // AlgoTradingRibbon
             // 
@@ -408,6 +430,9 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button8;
         internal Microsoft.Office.Tools.Ribbon.RibbonLabel lblAlgoStatus;
         internal Microsoft.Office.Tools.Ribbon.RibbonLabel lblGewinn;
+        internal Microsoft.Office.Tools.Ribbon.RibbonLabel lblKontostand;
+        internal Microsoft.Office.Tools.Ribbon.RibbonLabel lblKS_Saldo;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton button9;
     }
 
     partial class ThisRibbonCollection

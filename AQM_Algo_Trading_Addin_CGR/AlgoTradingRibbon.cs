@@ -1051,6 +1051,16 @@ namespace AQM_Algo_Trading_Addin_CGR
             Algo algorithmus = new Algo(this);
             
         }
+
+        private void button9_Click(object sender, RibbonControlEventArgs e)
+        {
+            OnVistaDummyConnector dummy = new OnVistaDummyConnector("");
+
+            while (true)
+            {
+                MessageBox.Show(dummy.getRandomPrice(85, 0.5, 0.5));
+            }
+        }
     }
 }
  

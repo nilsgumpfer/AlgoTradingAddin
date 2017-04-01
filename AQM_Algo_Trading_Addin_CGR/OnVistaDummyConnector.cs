@@ -19,6 +19,7 @@ namespace AQM_Algo_Trading_Addin_CGR
         private string timestampFormat  = "yyyy-MM-dd HH:mm:ss";
         private string errorPlaceholder = "N/A";
         private double lastVolume       = 0.0;
+        private int totalVolume = 0;
         private StockDataTransferObject lastRecord = new StockDataTransferObject();
         private StockDataTransferObject newRecord = new StockDataTransferObject();
 
@@ -116,27 +117,27 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         private string extractIsin()
         {
-            return "DE00000000TEST";
+            return "DE0005190003";
         }
 
         private string extractWkn()
         {
-            return "4711";
+            return "519000";
         }
 
         private string extractSymbol()
         {
-            return "TEST";
+            return "BMW";
         }
 
         private string extractName()
         {
-            return "Name";
+            return "BMW Aktie";
         }
 
         private string extractSector()
         {
-            return "Sector";
+            return "Automobilindustrie";
         }
 
         private string extractUrlSuffix()
@@ -146,52 +147,52 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         private string extractPrice()
         {
-            return "99,99";
+            return getRandomPrice(85, 1, 1);
         }
 
         private string extractVolume()
         {
-            return "9999";
+            return getRandomVolume(0,1000);
         }
 
         private string extractDayVolume()
         {
-            return "99999999";
+            return totalVolume.ToString();
         }
 
         private string extractDayHigh()
         {
-            return "100";
+            return "86,00";
         }
 
         private string extractDayLow()
         {
-            return "50";
+            return "84,00";
         }
 
         private string extractDayOpen()
         {
-            return "50";
+            return "85,00";
         }
 
         private string extractPredayClose()
         {
-            return "100";
+            return "85,00";
         }
 
         private string extractPredayVolume()
         {
-            return "999999999";
+            return "30000";
         }
 
         private string extractTrendAbs()
         {
-            return "-10";
+            return getRandomTrend(1,1);
         }
 
         private string extractTrendPerc()
         {
-            return "-10%";
+            return getRandomTrend(1, 1) + "%";
         }
 
         private string extractTimestampPrice()
@@ -272,6 +273,61 @@ namespace AQM_Algo_Trading_Addin_CGR
                        );
 
             return changed;
+        }
+
+        public string getRandomPrice(double center, double plus, double minus)
+        {
+            Random rand = new Random();
+            double result;
+            double pos_ten = rand.Next(0, 10);              //0-9
+            double pos_one = rand.Next(0, 10) / 10.0;       //0-0,9
+            double deviation = (pos_one + pos_ten) / 10.0;  //0-0,99
+
+            int neg = rand.Next();                          //some number
+            int positive_or_negative = neg % 2;             //without rest dividable by 2? 50/50-chance
+
+            if(positive_or_negative == 0)
+            {
+                result = center + (plus * deviation);
+            }
+            else
+            {
+                result = center - (minus * deviation);
+            }
+
+            return result.ToString();
+        }
+        public string getRandomTrend(double plus, double minus)
+        {
+            Random rand = new Random();
+            double result;
+            double pos_ten = rand.Next(0, 10);              //0-9
+            double pos_one = rand.Next(0, 10) / 10.0;       //0-0,9
+            double deviation = (pos_one + pos_ten) / 10.0;  //0-0,99
+
+            int neg = rand.Next();                          //some number
+            int positive_or_negative = neg % 2;             //without rest dividable by 2? 50/50-chance
+
+            if (positive_or_negative == 0)
+            {
+                result = plus * deviation;
+            }
+            else
+            {
+                result = - (minus * deviation);
+            }
+
+            return result.ToString();
+        }
+
+        public string getRandomVolume(int min, int max)
+        {
+            Random rand = new Random();
+            int result = rand.Next(min, max);
+
+            totalVolume += result;
+            
+            return result.ToString();
         }
     }
 }
