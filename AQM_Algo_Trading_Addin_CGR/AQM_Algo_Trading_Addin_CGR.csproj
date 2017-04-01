@@ -158,6 +158,7 @@
     can be found.
   -->
   <ItemGroup>
+    <Compile Include="Algo.cs" />
     <Compile Include="AlgoTradingRibbon.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -213,6 +214,7 @@
     <None Include="AQM_Algo_Trading_Addin_CGR_3_TemporaryKey.pfx" />
     <None Include="AQM_Algo_Trading_Addin_CGR_4_TemporaryKey.pfx" />
     <None Include="AQM_Algo_Trading_Addin_CGR_5_TemporaryKey.pfx" />
+    <None Include="AQM_Algo_Trading_Addin_CGR_6_TemporaryKey.pfx" />
     <None Include="AQM_Algo_Trading_Addin_CGR_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -242,10 +244,10 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>AQM_Algo_Trading_Addin_CGR_3_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>AQM_Algo_Trading_Addin_CGR_6_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>6ABBA1F845C8C9D201A288B9459A66B8E379F42B</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>9D16C14832FC421EE20FB50A74B5F5A3D5FB2355</ManifestCertificateThumbprint>
   </PropertyGroup>
   <!-- Include the build rules for a C# project. -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
