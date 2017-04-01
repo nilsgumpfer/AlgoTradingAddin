@@ -176,6 +176,7 @@
     <Compile Include="LiveConnectionSubscriber.cs" />
     <Compile Include="MySQLConnector.cs" />
     <Compile Include="OnVistaConnector.cs" />
+    <Compile Include="OnVistaDummyConnector.cs" />
     <Compile Include="ProgressIndicator.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -215,6 +216,7 @@
     <None Include="AQM_Algo_Trading_Addin_CGR_4_TemporaryKey.pfx" />
     <None Include="AQM_Algo_Trading_Addin_CGR_5_TemporaryKey.pfx" />
     <None Include="AQM_Algo_Trading_Addin_CGR_6_TemporaryKey.pfx" />
+    <None Include="AQM_Algo_Trading_Addin_CGR_7_TemporaryKey.pfx" />
     <None Include="AQM_Algo_Trading_Addin_CGR_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -244,10 +246,10 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>AQM_Algo_Trading_Addin_CGR_6_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>AQM_Algo_Trading_Addin_CGR_7_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>9D16C14832FC421EE20FB50A74B5F5A3D5FB2355</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>F9B17DC5BE415F595568348FA7D4E1DF4B070919</ManifestCertificateThumbprint>
   </PropertyGroup>
   <!-- Include the build rules for a C# project. -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

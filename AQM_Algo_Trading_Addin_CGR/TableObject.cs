@@ -21,7 +21,49 @@ namespace AQM_Algo_Trading_Addin_CGR
         private List<string> headline;
         private List<List<string>> content;
         private int drawPosition = 1;
+        private List<DiagramObject> listOfSubscribers = new List<DiagramObject>();
 
+        public int getDrawPositionOfColumn(int column)
+        {
+            if (columnsToDraw == null)
+                return column;
+
+            int position = 0;
+
+            foreach (int i in columnsToDraw)
+            {
+                position++;
+                if (i == column)
+                    return position;
+            }
+
+            return -1;
+        }
+
+        public int getContentCount()
+        {
+                return content.Count;
+        }
+
+        public Worksheet getWorksheetOfTableObject()
+        {
+            return worksheet;
+        }
+
+        public void updateSubscribers()
+        {
+            foreach(DiagramObject subscriber in listOfSubscribers)
+            {
+                subscriber.updateMeWithNewData();
+            }
+        }
+
+
+
+        public void subscribeForTableContent(DiagramObject diagramobject)
+        {
+            listOfSubscribers.Add(diagramobject);
+        }
 
         public List<int> getColumnsToDraw()
         {
@@ -316,6 +358,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             content.Add(newRecord.getLineAsList());
             //TODO: nicht alles neu zeichnen, sondern nur letzte Zeile!
             draw();
+            updateSubscribers();
         }
 
         public void changeWorkbookName(string name)
