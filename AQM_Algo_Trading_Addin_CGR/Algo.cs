@@ -8,10 +8,11 @@ namespace AQM_Algo_Trading_Addin_CGR
 {
     class Algo : LiveConnectionSubscriber
     {
-        public Algo()
+        public Algo(AlgoTradingRibbon atr)
         {
             DataManager dataManager = DataManager.getInstance();
             dataManager.subscribeForLiveConnection("", this);
+            this.atr = atr;
         }
 
         private double startaktienwert = 0;
@@ -21,6 +22,7 @@ namespace AQM_Algo_Trading_Addin_CGR
         private int zahlVerlust = 0;
         private int initStart = 0;
         private string status;
+        private AlgoTradingRibbon atr;
 
         public void updateMeWithNewData(StockDataTransferObject newRecord)
         {
@@ -37,7 +39,7 @@ namespace AQM_Algo_Trading_Addin_CGR
                     status = "Kaufen";
                     setDataInRibbon();
                 }
-                if (initStart >= 2)
+                if (initStart > 2)
                 {
                     double gewinn = ((aktuelleraktienwert - startaktienwert) * 100) - 100;
                     status = "Behalten";
@@ -74,7 +76,7 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         private void setDataInRibbon()
         {
-            AlgoTradingRibbon atr = new AlgoTradingRibbon();
+            //AlgoTradingRibbon atr = new AlgoTradingRibbon();
             String gewinnForLbl = Convert.ToString(gewinn);
             atr.lblAlgoStatus.Label = status;
             atr.lblGewinn.Label = gewinnForLbl;

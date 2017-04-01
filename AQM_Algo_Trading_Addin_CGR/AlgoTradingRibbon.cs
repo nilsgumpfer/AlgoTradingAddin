@@ -1048,7 +1048,7 @@ namespace AQM_Algo_Trading_Addin_CGR
                                 Globals.ThisAddIn.Application.ActiveCell);
 
             dataManager.subscribeForLiveConnection("", myTable);
-            Algo algorithmus = new Algo();
+            Algo algorithmus = new Algo(this);
             
         }
     }
