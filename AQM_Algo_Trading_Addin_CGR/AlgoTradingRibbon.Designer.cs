@@ -66,13 +66,15 @@
             this.button5 = this.Factory.CreateRibbonButton();
             this.button6 = this.Factory.CreateRibbonButton();
             this.button7 = this.Factory.CreateRibbonButton();
-            this.group2 = this.Factory.CreateRibbonGroup();
-            this.checkBox3 = this.Factory.CreateRibbonCheckBox();
-            this.BTN_Test1 = this.Factory.CreateRibbonButton();
             this.group9 = this.Factory.CreateRibbonGroup();
             this.button8 = this.Factory.CreateRibbonButton();
             this.lblAlgoStatus = this.Factory.CreateRibbonLabel();
             this.lblGewinn = this.Factory.CreateRibbonLabel();
+            this.group2 = this.Factory.CreateRibbonGroup();
+            this.checkBox3 = this.Factory.CreateRibbonCheckBox();
+            this.BTN_Test1 = this.Factory.CreateRibbonButton();
+            this.lblKontostand = this.Factory.CreateRibbonLabel();
+            this.lblKS_Saldo = this.Factory.CreateRibbonLabel();
             this.tab1.SuspendLayout();
             this.group1.SuspendLayout();
             this.group3.SuspendLayout();
@@ -299,27 +301,13 @@
             this.button7.Name = "button7";
             this.button7.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button7_Click);
             // 
-            // group2
-            // 
-            this.group2.Label = "group2";
-            this.group2.Name = "group2";
-            // 
-            // checkBox3
-            // 
-            this.checkBox3.Label = "checkBox3";
-            this.checkBox3.Name = "checkBox3";
-            // 
-            // BTN_Test1
-            // 
-            this.BTN_Test1.Label = "Tabelle bei aktiver Zelle einfügen";
-            this.BTN_Test1.Name = "BTN_Test1";
-            this.BTN_Test1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.BTN_Test_Click);
-            // 
             // group9
             // 
             this.group9.Items.Add(this.button8);
-            this.group9.Items.Add(this.lblAlgoStatus);
+            this.group9.Items.Add(this.lblKontostand);
             this.group9.Items.Add(this.lblGewinn);
+            this.group9.Items.Add(this.lblAlgoStatus);
+            this.group9.Items.Add(this.lblKS_Saldo);
             this.group9.Label = "Algorithmus";
             this.group9.Name = "group9";
             // 
@@ -338,6 +326,32 @@
             // 
             this.lblGewinn.Label = "-";
             this.lblGewinn.Name = "lblGewinn";
+            // 
+            // group2
+            // 
+            this.group2.Label = "group2";
+            this.group2.Name = "group2";
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.Label = "checkBox3";
+            this.checkBox3.Name = "checkBox3";
+            // 
+            // BTN_Test1
+            // 
+            this.BTN_Test1.Label = "Tabelle bei aktiver Zelle einfügen";
+            this.BTN_Test1.Name = "BTN_Test1";
+            this.BTN_Test1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.BTN_Test_Click);
+            // 
+            // lblKontostand
+            // 
+            this.lblKontostand.Label = "Kontostand";
+            this.lblKontostand.Name = "lblKontostand";
+            // 
+            // lblKS_Saldo
+            // 
+            this.lblKS_Saldo.Label = "-";
+            this.lblKS_Saldo.Name = "lblKS_Saldo";
             // 
             // AlgoTradingRibbon
             // 
@@ -408,6 +422,8 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button8;
         internal Microsoft.Office.Tools.Ribbon.RibbonLabel lblAlgoStatus;
         internal Microsoft.Office.Tools.Ribbon.RibbonLabel lblGewinn;
+        internal Microsoft.Office.Tools.Ribbon.RibbonLabel lblKontostand;
+        internal Microsoft.Office.Tools.Ribbon.RibbonLabel lblKS_Saldo;
     }
 
     partial class ThisRibbonCollection
