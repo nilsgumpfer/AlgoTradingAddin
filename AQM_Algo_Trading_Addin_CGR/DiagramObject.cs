@@ -49,7 +49,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             //Update Aktienkursdiagramm
             updateDiagram(wsLiveData, chartPageAktienkurs, StockDataTransferObject.posPrice, tableobject.getContentCount());
             //Update Volumendiagramm
-            updateDiagram(wsLiveData, chartPageAktienkurs, StockDataTransferObject.posVolume, tableobject.getContentCount());
+            updateDiagram(wsLiveData, chartPageVolumen, StockDataTransferObject.posVolume, tableobject.getContentCount());
             //Update Historiendiagramm
             //updateDiagram(wsLiveData, chartPageAktienkurs, 5, tableobject.getContentCount());
         }
@@ -70,7 +70,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             //Microsoft.Office.Interop.Excel.Chart chartPageAktienkurs = myChartAktienkurs.Chart;
             chartPageAktienkurs = myChartAktienkurs.Chart;
 
-            chartPageAktienkurs.ChartType = Excel.XlChartType.xlColumnClustered;
+            chartPageAktienkurs.ChartType = Excel.XlChartType.xlLine;
 
             //Tabellenblatt, aus welchem die Daten gezogen werden aus Table-Object auslesen
             wsLiveData = (Excel.Worksheet)workbook.Worksheets["OnVista-Livedaten"];
@@ -89,9 +89,9 @@ namespace AQM_Algo_Trading_Addin_CGR
             Microsoft.Office.Interop.Excel.ChartObjects xlChartsVolumen =
                 (Excel.ChartObjects)worksheet.ChartObjects(Type.Missing);
             Microsoft.Office.Interop.Excel.ChartObject myChartVolumen =
-                (Excel.ChartObject)xlChartsAktienkurs.Add(530, 10, 500, 280);
+                (Excel.ChartObject)xlChartsVolumen.Add(530, 10, 500, 280);
             //Microsoft.Office.Interop.Excel.Chart chartPageAktienkurs = myChartAktienkurs.Chart;
-            Microsoft.Office.Interop.Excel.Chart chartPageVolumen = myChartVolumen.Chart;
+            chartPageVolumen = myChartVolumen.Chart;
 
             chartPageVolumen.ChartType = Excel.XlChartType.xlColumnClustered;
 

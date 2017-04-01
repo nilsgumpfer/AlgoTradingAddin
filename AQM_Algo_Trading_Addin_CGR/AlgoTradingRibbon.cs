@@ -1033,7 +1033,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             myTable.changeWorkbookName("OnVista-Livedaten");
             dataManager.subscribeForLiveConnection("", myTable);
 
-            Thread.Sleep(2000);
+            //Thread.Sleep(2000);
 
             DiagramObject myDiagram = new DiagramObject(myTable);
         }

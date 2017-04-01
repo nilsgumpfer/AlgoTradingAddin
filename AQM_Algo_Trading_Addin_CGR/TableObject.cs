@@ -180,7 +180,8 @@ namespace AQM_Algo_Trading_Addin_CGR
                 {
                     try
                     {
-                        worksheet.Cells[drawPosition, startPositionColumn + i] = line[i];
+                        if(line[i] != null)
+                            worksheet.Cells[drawPosition, startPositionColumn + i] = line[i].Replace(',','.');
                     }
                     catch(Exception e)
                     {
