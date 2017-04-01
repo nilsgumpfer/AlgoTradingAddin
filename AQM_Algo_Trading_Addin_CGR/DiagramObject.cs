@@ -54,7 +54,10 @@ namespace AQM_Algo_Trading_Addin_CGR
                 {
                     foundedColumn = i;
                 }
+
             }
+
+            foundedColumn = StockDataTransferObject.posPrice;
 
 
             //Diagramm erstellen
