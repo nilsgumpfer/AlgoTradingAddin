@@ -29,6 +29,10 @@ namespace AQM_Algo_Trading_Addin_CGR
                 case LiveConnectors.OnVista:
                     liveConnector = new OnVistaConnector(symbol);
                     break;
+
+                case LiveConnectors.OnVistaDummy:
+                    liveConnector = new OnVistaDummyConnector(symbol);
+                    break;
             }
         }
 

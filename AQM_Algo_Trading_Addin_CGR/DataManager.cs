@@ -60,8 +60,16 @@ namespace AQM_Algo_Trading_Addin_CGR
             //create worker only in case of new symbol
             if(worker == null)
             {
-                worker = new PushWorker(LiveConnectors.OnVista, symbol);
-                MySQLConnector  mySQLConnector = new MySQLConnector();
+                //**********************************************!!!TESTING!!!*****************************************************
+                //****************************************************************************************************************
+
+                worker = new PushWorker(LiveConnectors.OnVistaDummy, symbol); //TODO: This is just for development and test-usage!
+                //worker = new PushWorker(LiveConnectors.OnVista, symbol);
+
+                //****************************************************************************************************************
+                //**********************************************!!!TESTING!!!*****************************************************
+
+                MySQLConnector mySQLConnector = new MySQLConnector();
 
                 //stash objects for later use
                 listOfPushWorkers.Add(worker);
