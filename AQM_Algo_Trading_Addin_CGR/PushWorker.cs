@@ -9,7 +9,7 @@ namespace AQM_Algo_Trading_Addin_CGR
 {
     class PushWorker
     {
-        private PushConnector pushConnector;
+        private LiveConnector liveConnector;
         private List<LiveConnectionSubscriber> listOfSubscribers = new List<LiveConnectionSubscriber>();
         public String symbol { get; }
         private bool doThreading = false;
@@ -20,14 +20,14 @@ namespace AQM_Algo_Trading_Addin_CGR
             //no public constructor without parameters available for this class!
         }
 
-        public PushWorker(PushConnectors variant, String symbol)
+        public PushWorker(LiveConnectors variant, String symbol)
         {
             this.symbol = symbol;
 
             switch(variant)
             {
-                case PushConnectors.OnVista:
-                    pushConnector = new OnVistaConnector(symbol);
+                case LiveConnectors.OnVista:
+                    liveConnector = new OnVistaConnector(symbol);
                     break;
             }
         }
@@ -46,7 +46,10 @@ namespace AQM_Algo_Trading_Addin_CGR
         {
             while (doThreading)
             {
-                updateSubscribers(pushConnector.getStockData());
+                StockDataTransferObject sdtObject = liveConnector.getStockData();
+
+                if (liveConnector.checkChange())
+                    updateSubscribers(sdtObject);
             }
         }
 

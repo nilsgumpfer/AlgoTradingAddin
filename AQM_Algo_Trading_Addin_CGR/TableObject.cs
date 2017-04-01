@@ -277,7 +277,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             this.content = new List<List<string>>();
             this.columnsToDraw = columnsToDraw;
 
-            foreach(StockDataTransferObject record in records)
+            foreach (StockDataTransferObject record in records)
                 content.Add(record.getLineAsList());
         }
 
