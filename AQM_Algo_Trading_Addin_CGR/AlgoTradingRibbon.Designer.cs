@@ -65,10 +65,10 @@
             this.button4 = this.Factory.CreateRibbonButton();
             this.button5 = this.Factory.CreateRibbonButton();
             this.button6 = this.Factory.CreateRibbonButton();
+            this.button7 = this.Factory.CreateRibbonButton();
             this.group2 = this.Factory.CreateRibbonGroup();
             this.checkBox3 = this.Factory.CreateRibbonCheckBox();
             this.BTN_Test1 = this.Factory.CreateRibbonButton();
-            this.button7 = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.group1.SuspendLayout();
             this.group3.SuspendLayout();
@@ -287,6 +287,12 @@
             this.button6.Name = "button6";
             this.button6.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button6_Click);
             // 
+            // button7
+            // 
+            this.button7.Label = "Management-Cockpit erstellen";
+            this.button7.Name = "button7";
+            this.button7.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button7_Click);
+            // 
             // group2
             // 
             this.group2.Label = "group2";
@@ -302,12 +308,6 @@
             this.BTN_Test1.Label = "Tabelle bei aktiver Zelle einfügen";
             this.BTN_Test1.Name = "BTN_Test1";
             this.BTN_Test1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.BTN_Test_Click);
-            // 
-            // button7
-            // 
-            this.button7.Label = "OnVista Livedaten + Diagramm";
-            this.button7.Name = "button7";
-            this.button7.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button7_Click);
             // 
             // AlgoTradingRibbon
             // 

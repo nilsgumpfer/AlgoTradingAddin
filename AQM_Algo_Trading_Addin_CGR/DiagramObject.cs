@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 using Excel = Microsoft.Office.Interop.Excel;
 using Microsoft.Office.Tools.Excel;
 using System.Windows.Forms;
+using System.Reflection;
 
 namespace AQM_Algo_Trading_Addin_CGR
 {
     class DiagramObject : LiveConnectionSubscriber
     {
+        Microsoft.Office.Interop.Excel.Application app = new Microsoft.Office.Interop.Excel.Application();
         private Workbook workbook;
         private Worksheet worksheet;
         //private Excel.Range startPosition;
@@ -18,14 +20,17 @@ namespace AQM_Algo_Trading_Addin_CGR
         private List<int> tableColumnsToDraw;
         private List<string> tableHeadline;
         private List<List<string>> tableContent;
+        private TableObject tableobject;
+        int foundedColumn = 0;
 
 
         public DiagramObject(TableObject tableObject)
         {
             workbook = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook);
             worksheet = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook.Worksheets.Add());
-            worksheet.Name = "Diagramm OnVista-Livedaten";
+            worksheet.Name = "Management-Cockpit";
 
+            this.tableobject = tableObject;
             this.tableColumnsToDraw = tableObject.getColumnsToDraw();
             this.tableHeadline = tableObject.getHeadline();
             this.tableContent = tableObject.getContent();
@@ -37,50 +42,95 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         public void drawDiagram()
         {
-            ////worksheet = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet);
             object misValue = System.Reflection.Missing.Value;
-            //Excel.ChartObjects xlCharts = (Excel.ChartObjects)ws.ChartObjects(Type.Missing);
-            //Excel.ChartObject myChart = (Excel.ChartObject)xlCharts.Add(10, 80, 300, 250);
-            //Excel.Chart chartPage = myChart.Chart;
-
-            //Excel.Range chartRange;
-            //chartRange = ws.get_Range(ws.Cells[1, 1], ws.Cells[content.Count + 1, columns.Count]);
-            //chartPage.SetSourceData(chartRange, misValue);
-
-            //chartPage.ChartType = Excel.XlChartType.xlColumnClustered;
-            
 
             //Aktienkurs
-            Microsoft.Office.Interop.Excel.Range chartRange;
-            Microsoft.Office.Interop.Excel.ChartObjects xlCharts =
-                (Excel.ChartObjects)worksheet.ChartObjects(Type.Missing);
-            Microsoft.Office.Interop.Excel.ChartObject myChart =
-                (Excel.ChartObject)xlCharts.Add(10, 10, 500, 300);
-            Microsoft.Office.Interop.Excel.Chart chartPage = myChart.Chart;
 
-            //Excel.Range range = (Excel.Range) worksheet.get_Range
+            //Spalte Aktienkurs finden
+            
+            for (int i = 0; i < tableHeadline.Count; i++)
+            {
+                if (tableHeadline[i] == "Kurs")
+                {
+                    foundedColumn = i;
+                }
+            }
+
+
+            //Diagramm erstellen
+            Microsoft.Office.Interop.Excel.Range chartRangeAktienkurs;
+            Microsoft.Office.Interop.Excel.ChartObjects xlChartsAktienkurs =
+                (Excel.ChartObjects)worksheet.ChartObjects(Type.Missing);
+            Microsoft.Office.Interop.Excel.ChartObject myChartAktienkurs =
+                (Excel.ChartObject)xlChartsAktienkurs.Add(10, 10, 500, 280);
+            Microsoft.Office.Interop.Excel.Chart chartPageAktienkurs = myChartAktienkurs.Chart;
 
             Excel.Worksheet wsLiveData = (Excel.Worksheet)workbook.Worksheets["OnVista-Livedaten"];
 
-            chartRange = wsLiveData.get_Range("E1", "E20");
-            chartPage.SetSourceData(chartRange, misValue);
-            chartPage.ChartType = Excel.XlChartType.xlColumnClustered;
+            //chartRangeAktienkurs = wsLiveData.get_Range("E1", "E20");
+            chartRangeAktienkurs = wsLiveData.get_Range(wsLiveData.Cells[1, foundedColumn+1], wsLiveData.Cells[10, foundedColumn+1]);
+            chartPageAktienkurs.SetSourceData(chartRangeAktienkurs, misValue);
+            chartPageAktienkurs.ChartType = Excel.XlChartType.xlColumnClustered;
+
+
+
+            ////Spalte finden
+            //Excel.Range foundValue = null;
+
+            //Excel.Range headline = wsLiveData.get_Range("A1", "A20");
+            //foundValue = headline.Find("Kurs", misValue,
+            //    Excel.XlFindLookIn.xlValues, Excel.XlLookAt.xlPart,
+            //    Excel.XlSearchOrder.xlByRows, Excel.XlSearchDirection.xlNext, false,
+            //    misValue, misValue);
+            //foundValue.get_Address(Excel.XlReferenceStyle.xlA1);
+            //MessageBox.Show(foundValue.get_Address(Excel.XlReferenceStyle.xlA1));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
             //Volumen
-            Microsoft.Office.Interop.Excel.Range chartRange2;
-            Microsoft.Office.Interop.Excel.ChartObjects xlCharts2 =
+            Microsoft.Office.Interop.Excel.Range chartRangechartRangeVolumen;
+            Microsoft.Office.Interop.Excel.ChartObjects xlChartsVolumen =
                 (Excel.ChartObjects)worksheet.ChartObjects(Type.Missing);
-            Microsoft.Office.Interop.Excel.ChartObject myChart2 =
-                (Excel.ChartObject)xlCharts2.Add(530, 10, 500, 300);
-            Microsoft.Office.Interop.Excel.Chart chartPage2 = myChart2.Chart;
+            Microsoft.Office.Interop.Excel.ChartObject myChartVolumen =
+                (Excel.ChartObject)xlChartsVolumen.Add(530, 10, 500, 280);
+            Microsoft.Office.Interop.Excel.Chart chartPageVolumen = myChartVolumen.Chart;
 
-            chartRange2 = wsLiveData.get_Range("F1", "F30");
-            chartPage2.SetSourceData(chartRange2, misValue);
-            chartPage2.ChartType = Excel.XlChartType.xlColumnClustered;
+            chartRangechartRangeVolumen = wsLiveData.get_Range("F1", "F30");
+            chartPageVolumen.SetSourceData(chartRangechartRangeVolumen, misValue);
+            chartPageVolumen.ChartType = Excel.XlChartType.xlColumnClustered;
 
 
+            //Historische Daten
+            Microsoft.Office.Interop.Excel.Range chartRangeHistoDaten;
+            Microsoft.Office.Interop.Excel.ChartObjects xlChartsHistoDaten =
+                (Excel.ChartObjects)worksheet.ChartObjects(Type.Missing);
+            Microsoft.Office.Interop.Excel.ChartObject myChartHistoDaten =
+                (Excel.ChartObject)xlChartsHistoDaten.Add(10, 300, 1020, 270);
+            Microsoft.Office.Interop.Excel.Chart chartPageHistoDaten = myChartHistoDaten.Chart;
+
+            chartRangeHistoDaten = wsLiveData.get_Range("F1", "F30");
+            chartPageHistoDaten.SetSourceData(chartRangeHistoDaten, misValue);
+            chartPageHistoDaten.ChartType = Excel.XlChartType.xlColumnClustered;
+
+            //Tests
+            //MessageBox.Show(this.tableColumnsToDraw.ToString());
 
         }
 
