@@ -45,7 +45,7 @@ namespace AQM_Algo_Trading_Addin_CGR
                 if (initStart > 2)
                 {
                     double gewinn = ((aktuelleraktienwert - startaktienwert) * 100) - 100;
-                    kontostand = kontostand + aktuelleraktienwert;
+                    kontostand = kontostand + (aktuelleraktienwert - startaktienwert);
                     status = "Behalten";
                     setDataInRibbon();
 
@@ -61,13 +61,13 @@ namespace AQM_Algo_Trading_Addin_CGR
                     if (gewinn < 2 & zahlVerlust >= 3)
                     {
                         status = "Verkaufen";
-                        kontostand = kontostand + aktuelleraktienwert;
+                        kontostand = kontostand + (aktuelleraktienwert - startaktienwert);
                         setDataInRibbon();
                     }
                     else if (gewinn > 2 & zahlVerlust >= 5)
                     {
                         status = "Verkaufen";
-                        kontostand = kontostand + aktuelleraktienwert;
+                        kontostand = kontostand + (aktuelleraktienwert - startaktienwert);
                         setDataInRibbon();
                     }
                     
