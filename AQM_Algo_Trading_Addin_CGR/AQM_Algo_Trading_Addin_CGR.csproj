@@ -177,7 +177,6 @@
     <Compile Include="MySQLConnector.cs" />
     <Compile Include="OnVistaDummyConnector.cs" />
     <Compile Include="OnVistaConnector.cs" />
-    <Compile Include="OnVistaDummyConnector.cs" />
     <Compile Include="ProgressIndicator.cs">
       <SubType>Form</SubType>
     </Compile>
