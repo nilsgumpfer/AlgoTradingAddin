@@ -217,6 +217,7 @@
     <None Include="AQM_Algo_Trading_Addin_CGR_5_TemporaryKey.pfx" />
     <None Include="AQM_Algo_Trading_Addin_CGR_6_TemporaryKey.pfx" />
     <None Include="AQM_Algo_Trading_Addin_CGR_7_TemporaryKey.pfx" />
+    <None Include="AQM_Algo_Trading_Addin_CGR_8_TemporaryKey.pfx" />
     <None Include="AQM_Algo_Trading_Addin_CGR_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -246,10 +247,10 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>AQM_Algo_Trading_Addin_CGR_7_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>AQM_Algo_Trading_Addin_CGR_8_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>F9B17DC5BE415F595568348FA7D4E1DF4B070919</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>AA5ECA6DDFBBCE7B299D4954343B6957E26365F4</ManifestCertificateThumbprint>
   </PropertyGroup>
   <!-- Include the build rules for a C# project. -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

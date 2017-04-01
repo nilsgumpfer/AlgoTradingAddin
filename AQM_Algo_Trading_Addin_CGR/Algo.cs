@@ -19,7 +19,7 @@ namespace AQM_Algo_Trading_Addin_CGR
         private double startaktienwert = 0;
         private double aktuelleraktienwert = 0;
         private double letzterwert = 0;
-        private double gewinn = 0;
+        private double gewinn;
         private int zahlVerlust = 0;
         private int initStart = 0;
         private string status;
@@ -40,14 +40,14 @@ namespace AQM_Algo_Trading_Addin_CGR
                     startaktienwert = aktuelleraktienwert;
                     status = "Kaufen";
                     kontostand = kontostand - startaktienwert;
-                    setDataInRibbon();
+                    setDataInRibbon(0,kontostand);
                 }
                 if (initStart > 2)
                 {
-                    double gewinn = ((aktuelleraktienwert - startaktienwert) * 100) - 100;
+                    double gewinn = ((aktuelleraktienwert - startaktienwert) / startaktienwert) * 100;
                     kontostand = kontostand + (aktuelleraktienwert - startaktienwert);
                     status = "Behalten";
-                    setDataInRibbon();
+                    setDataInRibbon(gewinn, kontostand);
 
                 }
             }
@@ -57,18 +57,18 @@ namespace AQM_Algo_Trading_Addin_CGR
                 if (initStart >= 2)
                 {
                     zahlVerlust = zahlVerlust + 1;
-                    double gewinn = ((aktuelleraktienwert - startaktienwert) * 100) - 100;
+                    double gewinn = ((aktuelleraktienwert - startaktienwert) / startaktienwert) * 100;
                     if (gewinn < 2 & zahlVerlust >= 3)
                     {
                         status = "Verkaufen";
                         kontostand = kontostand + (aktuelleraktienwert - startaktienwert);
-                        setDataInRibbon();
+                        setDataInRibbon(gewinn, kontostand);
                     }
                     else if (gewinn > 2 & zahlVerlust >= 5)
                     {
                         status = "Verkaufen";
                         kontostand = kontostand + (aktuelleraktienwert - startaktienwert);
-                        setDataInRibbon();
+                        setDataInRibbon(gewinn, kontostand);
                     }
                     
                 }
@@ -80,12 +80,13 @@ namespace AQM_Algo_Trading_Addin_CGR
             }
         }
 
-        private void setDataInRibbon()
+        private void setDataInRibbon(double aktuellergewinn, double aktuellerkontostand)
         {
-            String gewinnForLbl = Convert.ToString(gewinn);
-            String kontostand = Convert.ToString(this.kontostand);
+            String gewinnForLbl = Convert.ToString(aktuellergewinn) + " %";
+            String kontostand_saldo = Convert.ToString(aktuellerkontostand) + " €";
             atr.lblAlgoStatus.Label = status;
             atr.lblGewinn.Label = gewinnForLbl;
+            atr.lblKS_Saldo.Label = kontostand_saldo;
         }
     }
 }
