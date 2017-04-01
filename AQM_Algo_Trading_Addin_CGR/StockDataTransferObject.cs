@@ -10,10 +10,32 @@ namespace AQM_Algo_Trading_Addin_CGR
     class StockDataTransferObject
     {
         private List<string> headline = new List<string>();
+        public static int posISIN               = 1;
+        public static int posWKN                = 2;
+        public static int posSymbol             = 3;
+        public static int posSector             = 4;
+        public static int posPrice              = 5;
+        public static int posVolume             = 6;
+        public static int posTrendAbs           = 7;
+        public static int posTrendPerc          = 8;
+        public static int posOpen               = 9;
+        public static int posPreDayClose        = 10;
+        public static int posAdjClose           = 11;
+        public static int posHigh               = 12;
+        public static int posLow                = 13;
+        public static int posTotalVolume        = 14;
+        public static int posTimestampPrice     = 15;
+        public static int posTimestampVolume    = 16;
+        public static int posTimestampOther     = 17;
+        public static int posProvider           = 18;
+        public static int posTradingFloor       = 19;
+        public static int posName               = 20;
+        public static int posCurrency           = 21;
+        public static int posClose              = 22;
 
         public StockDataTransferObject()
         {
-            //this order has to be kept equal to data-export-order!
+            //this order has to be kept equal to data-export/column-order!
             headline.Add("ISIN");
             headline.Add("WKN");
             headline.Add("Symbol");
@@ -25,9 +47,9 @@ namespace AQM_Algo_Trading_Addin_CGR
             headline.Add("Eröffnungskurs");
             headline.Add("Schlusskurs Vortag");
             headline.Add("Adj.Close");
-            headline.Add("Tageshoch");
-            headline.Add("Tagestief");
-            headline.Add("Tagesvolumen");
+            headline.Add("Hoch");
+            headline.Add("Tief");
+            headline.Add("Volumen gesamt");
             headline.Add("Timestamp Kurs");
             headline.Add("Timestamp Volumen");
             headline.Add("Timestamp");
@@ -35,6 +57,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             headline.Add("Handelsplatz");
             headline.Add("Name");
             headline.Add("Currency");
+            headline.Add("Schlusskurs");
         }
         public string isin { get; set; }
         public string wkn { get; set; }
@@ -44,12 +67,12 @@ namespace AQM_Algo_Trading_Addin_CGR
         public string volume { get; set; }
         public string trend_abs { get; set; }
         public string trend_perc { get; set; }
-        public string day_open { get; set; }
+        public string open { get; set; }
         public string preday_close { get; set; }
-        public string day_adj_close { get; set; }
-        public string day_high { get; set; }
-        public string day_low { get; set; }
-        public string day_volume { get; set; }
+        public string adj_close { get; set; }
+        public string high { get; set; }
+        public string low { get; set; }
+        public string total_volume { get; set; }
         public string timestamp_price { get; set; }
         public string timestamp_volume { get; set; }
         public string timestamp_otherdata { get; set; }
@@ -57,6 +80,7 @@ namespace AQM_Algo_Trading_Addin_CGR
         public string trading_floor { get; set; }
         public string name { get; set; }
         public string currency { get; set; }
+        public string close { get; set; }
 
         public List<string> getHeadlineAsList()
         {
@@ -67,7 +91,7 @@ namespace AQM_Algo_Trading_Addin_CGR
         {
             List<string> line = new List<string>();
 
-            //this order has to be kept equal to headline-order!
+            //this order has to be kept equal to headline/column-order!
             line.Add(isin);
             line.Add(wkn);
             line.Add(symbol);
@@ -76,12 +100,12 @@ namespace AQM_Algo_Trading_Addin_CGR
             line.Add(volume);
             line.Add(trend_abs);
             line.Add(trend_perc);
-            line.Add(day_open);
+            line.Add(open);
             line.Add(preday_close);
-            line.Add(day_adj_close);
-            line.Add(day_high);
-            line.Add(day_low);
-            line.Add(day_volume);
+            line.Add(adj_close);
+            line.Add(high);
+            line.Add(low);
+            line.Add(total_volume);
             line.Add(timestamp_price);
             line.Add(timestamp_volume);
             line.Add(timestamp_otherdata);
@@ -89,6 +113,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             line.Add(trading_floor);
             line.Add(name);
             line.Add(currency);
+            line.Add(close);
 
             return line;
         }

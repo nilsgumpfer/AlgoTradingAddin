@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 
 namespace AQM_Algo_Trading_Addin_CGR
 {
-    class OnVistaConnector : PushConnector
+    class OnVistaConnector : LiveConnector
     {
         private string symbol;
         private string provider         = "OnVista.de";
@@ -19,6 +19,8 @@ namespace AQM_Algo_Trading_Addin_CGR
         private string timestampFormat  = "yyyy-MM-dd HH:mm:ss";
         private string errorPlaceholder = "N/A";
         private double lastVolume       = 0.0;
+        private StockDataTransferObject lastRecord = new StockDataTransferObject();
+        private StockDataTransferObject newRecord = new StockDataTransferObject();
 
         private string url;
 
@@ -45,6 +47,7 @@ namespace AQM_Algo_Trading_Addin_CGR
         {
             initWebClient();
             loadHtmlData();
+            lastRecord = newRecord;
 
             if(checkMetaData)
             {
@@ -66,12 +69,12 @@ namespace AQM_Algo_Trading_Addin_CGR
             stdTransferObject.volume                = extractVolume();
             stdTransferObject.timestamp_volume      = extractTimestampVolume();
 
-            stdTransferObject.day_high              = extractDayHigh();
-            stdTransferObject.day_low               = extractDayLow();
-            stdTransferObject.day_open              = extractDayOpen();
+            stdTransferObject.high                  = extractDayHigh();
+            stdTransferObject.low                   = extractDayLow();
+            stdTransferObject.open                  = extractDayOpen();
 
             stdTransferObject.preday_close          = extractPredayClose();
-            stdTransferObject.day_volume            = extractDayVolume();
+            stdTransferObject.total_volume          = extractDayVolume();
             
             stdTransferObject.trend_abs             = extractTrendAbs();
             stdTransferObject.trend_perc            = extractTrendPerc();
@@ -81,6 +84,8 @@ namespace AQM_Algo_Trading_Addin_CGR
             stdTransferObject.trading_floor         = extractTradingFloor();
             stdTransferObject.currency              = extractCurrency();
             stdTransferObject.provider              = provider;
+
+            newRecord = stdTransferObject;
 
             return stdTransferObject;
         }
@@ -210,23 +215,7 @@ namespace AQM_Algo_Trading_Addin_CGR
         private string useExtractionVariant2(string keyWord)
         {
             string pattern = @"data-push=\d*:" + keyWord + @":\d{1}:\d{1}:Stock>(.?[\-,\+]\d*[\.,\,]\d*)";
-            /*
-                                @" < span data-push=          
-                                \d*                         //0-n digits
-                                :" + keyWord + @":          //this part differs, so the caller has to hand over the relevant keyword
-                                \d*                         //0-n digits
-                                :
-                                \d*                         //0-n digits
-                                :Stock>
-                                (                           //this bracket initiates a "group". it specifies the relevant part which should be extracted
-                                .?                          //in some cases, here we expect one blankspace - .? means: here comes exactly 0 or 1 character (inlcudes space, too)
-                                \d*                         //0-n digits
-                                [\.,\,]                     //this means: here can be either one point or one comma - nothing else
-                                \d*                         //0-n digits
-                                )                           //this bracket finally closes the group
-                                ";
-             */
-
+            
             //in some cases the returned string would contain a blankspace at its front - so we eliminate it
             return getItemUsingRegEx(pattern).Replace(" ", "");
         }
@@ -234,23 +223,7 @@ namespace AQM_Algo_Trading_Addin_CGR
         private string useExtractionVariant3(string keyWord)
         {
             string pattern = @"data-push=\d*:" + keyWord + @":\d{1}:\d{1}:Stock>(.?\d*.\d*.\d*,.?\d*:\d*:\d*)";
-            /*
-                                @" < span data-push=          
-                                \d*                         //0-n digits
-                                :" + keyWord + @":          //this part differs, so the caller has to hand over the relevant keyword
-                                \d*                         //0-n digits
-                                :
-                                \d*                         //0-n digits
-                                :Stock>
-                                (                           //this bracket initiates a "group". it specifies the relevant part which should be extracted
-                                .?                          //in some cases, here we expect one blankspace - .? means: here comes exactly 0 or 1 character (inlcudes space, too)
-                                \d*                         //0-n digits
-                                [\.,\,]                     //this means: here can be either one point or one comma - nothing else
-                                \d*                         //0-n digits
-                                )                           //this bracket finally closes the group
-                                ";
-             */
-
+            
             //in some cases the returned string would contain a blankspace at its front - so we eliminate it
             return getItemUsingRegEx(pattern).Replace(" ", "");
         }
@@ -402,6 +375,49 @@ namespace AQM_Algo_Trading_Addin_CGR
                 //maybe nothing was found and we get an index out of bounds exception or sth. - so we catch it, go on and pass back a placeholder
                 return errorPlaceholder;
             }
+        }
+
+        public bool checkChange()
+        {
+            bool changed = false;
+
+            changed = !(
+                        newRecord.isin          == lastRecord.isin 
+                        &&
+                        newRecord.wkn           == lastRecord.wkn
+                        &&
+                        newRecord.symbol        == lastRecord.symbol
+                        &&
+                        newRecord.name          == lastRecord.name
+                        &&
+                        newRecord.sector        == lastRecord.sector
+                        &&
+                        newRecord.price         == lastRecord.price
+                        &&
+                        newRecord.volume        == lastRecord.volume
+                        &&
+                        newRecord.high          == lastRecord.high
+                        &&
+                        newRecord.low           == lastRecord.low
+                        &&
+                        newRecord.open          == lastRecord.open
+                        &&
+                        newRecord.preday_close  == lastRecord.preday_close
+                        &&
+                        newRecord.total_volume  == lastRecord.total_volume
+                        &&
+                        newRecord.trend_abs     == lastRecord.trend_abs
+                        &&
+                        newRecord.trend_perc    == lastRecord.trend_perc
+                        &&
+                        newRecord.trading_floor == lastRecord.trading_floor
+                        &&
+                        newRecord.currency      == lastRecord.currency
+                        &&
+                        newRecord.provider      == lastRecord.provider
+                       );
+
+            return changed;
         }
     }
 }

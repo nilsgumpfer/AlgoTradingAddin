@@ -1037,6 +1037,20 @@ namespace AQM_Algo_Trading_Addin_CGR
 
             DiagramObject myDiagram = new DiagramObject(myTable);
         }
+
+        private void button8_Click(object sender, RibbonControlEventArgs e)
+        {
+            DataManager dataManager = DataManager.getInstance();
+
+            TableObject myTable = new TableObject(
+                                Globals.Factory.GetVstoObject(
+                                    Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet),
+                                Globals.ThisAddIn.Application.ActiveCell);
+
+            dataManager.subscribeForLiveConnection("", myTable);
+            Algo algorithmus = new Algo();
+            
+        }
     }
 }
  

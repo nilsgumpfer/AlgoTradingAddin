@@ -42,12 +42,12 @@ namespace AQM_Algo_Trading_Addin_CGR
         {
             List<int> columnsToDraw = new List<int>();
 
-            columnsToDraw.Add(6);
-            columnsToDraw.Add(9);
-            columnsToDraw.Add(10);
-            columnsToDraw.Add(11);
-            columnsToDraw.Add(12);
-            columnsToDraw.Add(13);
+            columnsToDraw.Add(StockDataTransferObject.posHigh);
+            columnsToDraw.Add(StockDataTransferObject.posTotalVolume);
+            columnsToDraw.Add(StockDataTransferObject.posAdjClose);
+            columnsToDraw.Add(StockDataTransferObject.posLow);
+            columnsToDraw.Add(StockDataTransferObject.posClose);
+            columnsToDraw.Add(StockDataTransferObject.posOpen);
 
             return columnsToDraw;
         }
@@ -60,8 +60,16 @@ namespace AQM_Algo_Trading_Addin_CGR
             //create worker only in case of new symbol
             if(worker == null)
             {
-                worker = new PushWorker(PushConnectors.OnVista, symbol);
-                MySQLConnector  mySQLConnector = new MySQLConnector();
+                //**********************************************!!!TESTING!!!*****************************************************
+                //****************************************************************************************************************
+
+                worker = new PushWorker(LiveConnectors.OnVistaDummy, symbol); //TODO: This is just for development and test-usage!
+                //worker = new PushWorker(LiveConnectors.OnVista, symbol);
+
+                //****************************************************************************************************************
+                //**********************************************!!!TESTING!!!*****************************************************
+
+                MySQLConnector mySQLConnector = new MySQLConnector();
 
                 //stash objects for later use
                 listOfPushWorkers.Add(worker);
