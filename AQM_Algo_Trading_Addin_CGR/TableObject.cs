@@ -23,6 +23,61 @@ namespace AQM_Algo_Trading_Addin_CGR
         private int drawPosition = 1;
         private List<DiagramObject> listOfSubscribers = new List<DiagramObject>();
 
+        //Konstruktoren
+        public TableObject(Worksheet worksheet, Excel.Range startPosition, List<string> headline, List<List<string>> content, List<int> columnsToDraw)
+        {
+            this.worksheet = worksheet;
+            this.startPosition = startPosition;
+            startPositionRow = startPosition.Row;
+            startPositionColumn = startPosition.Column;
+            this.columnsToDraw = columnsToDraw;
+            this.headline = headline;
+            this.content = content;
+        }
+        public TableObject(Worksheet worksheet, Excel.Range startPosition, List<string> headline, List<List<string>> content)
+        {
+            this.worksheet = worksheet;
+            this.startPosition = startPosition;
+            startPositionRow = startPosition.Row;
+            startPositionColumn = startPosition.Column;
+            this.headline = headline;
+            this.content = content;
+        }
+        public TableObject(Worksheet worksheet, Excel.Range startPosition, List<string> headline, List<string> firstLine)
+        {
+            this.worksheet = worksheet;
+            this.startPosition = startPosition;
+            startPositionRow = startPosition.Row;
+            startPositionColumn = startPosition.Column;
+            this.headline = headline;
+            this.content = new List<List<string>>();
+            content.Add(firstLine);
+        }
+        public TableObject(Worksheet worksheet, Excel.Range startPosition, List<StockDataTransferObject> records, List<int> columnsToDraw)
+        {
+            this.worksheet = worksheet;
+            this.startPosition = startPosition;
+            startPositionRow = startPosition.Row;
+            startPositionColumn = startPosition.Column;
+            this.headline = records[0].getHeadlineAsList();
+            this.content = new List<List<string>>();
+            this.columnsToDraw = columnsToDraw;
+            foreach (StockDataTransferObject record in records)
+                content.Add(record.getLineAsList());
+        }
+        public TableObject(Worksheet worksheet, Excel.Range startPosition)
+        {
+            this.worksheet = worksheet;
+            this.startPosition = startPosition;
+            startPositionRow = startPosition.Row;
+            startPositionColumn = startPosition.Column;
+            this.headline = new List<string>();
+            this.content = new List<List<string>>();
+        }
+
+
+        //Allgemeine Funktionen
+
         public int getDrawPositionOfColumn(int column)
         {
             if (columnsToDraw == null)
@@ -45,34 +100,6 @@ namespace AQM_Algo_Trading_Addin_CGR
                 return content.Count;
         }
 
-        public void createNewWorksheet(string worksheetName)
-        {
-            workbook = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook);
-            worksheet = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook.Worksheets.Add());
-            worksheet.Name = worksheetName;
-        }
-
-
-        public Worksheet getWorksheetOfTableObject()
-        {
-            return worksheet;
-        }
-
-        public void updateSubscribers()
-        {
-            foreach(DiagramObject subscriber in listOfSubscribers)
-            {
-                subscriber.updateMeWithNewData();
-            }
-        }
-
-
-
-        public void subscribeForTableContent(DiagramObject diagramobject)
-        {
-            listOfSubscribers.Add(diagramobject);
-        }
-
         public List<int> getColumnsToDraw()
         {
             return columnsToDraw;
@@ -88,10 +115,49 @@ namespace AQM_Algo_Trading_Addin_CGR
             return content;
         }
 
-        //public void draw()
-        //{
-        //}
+        public Worksheet getWorksheetOfTableObject()
+        {
+            return worksheet;
+        }
+    
+        public void changeWorkbookName(string name)
+        {
+            workbook = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook);
+            worksheet.Name = name;
+        }
 
+        public void createNewWorksheet(string worksheetName)
+        {
+            workbook = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook);
+            worksheet = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook.Worksheets.Add());
+            worksheet.Name = worksheetName;
+        }
+
+        //Observer-Pattern
+        public void updateSubscribers()
+        {
+            foreach(DiagramObject subscriber in listOfSubscribers)
+            {
+                subscriber.updateMeWithNewData();
+            }
+        }
+
+        public void subscribeForTableContent(DiagramObject diagramobject)
+        {
+            listOfSubscribers.Add(diagramobject);
+        }
+
+        public void updateMeWithNewData(StockDataTransferObject newRecord)
+        {
+            headline = newRecord.getHeadlineAsList();
+            content.Add(newRecord.getLineAsList());
+            //TODO: nicht alles neu zeichnen, sondern nur letzte Zeile!
+            draw();
+            updateSubscribers();
+        }
+
+
+        //Draw-Funktionen
 
         public void drawHeaderline()
         {
@@ -285,63 +351,6 @@ namespace AQM_Algo_Trading_Addin_CGR
             }
         }
 
-
-        public TableObject(Worksheet worksheet, Excel.Range startPosition, List<string> headline, List<List<string>> content, List<int> columnsToDraw)
-        {
-            this.worksheet = worksheet;
-            this.startPosition = startPosition;
-            startPositionRow = startPosition.Row;
-            startPositionColumn = startPosition.Column;
-            this.columnsToDraw = columnsToDraw;
-            this.headline = headline;
-            this.content = content;
-        }
-
-        public TableObject(Worksheet worksheet, Excel.Range startPosition, List<string> headline, List<List<string>> content)
-        {
-            this.worksheet = worksheet;
-            this.startPosition = startPosition;
-            startPositionRow = startPosition.Row;
-            startPositionColumn = startPosition.Column;
-            this.headline = headline;
-            this.content = content;
-        }
-
-        public TableObject(Worksheet worksheet, Excel.Range startPosition, List<string> headline, List<string> firstLine)
-        {
-            this.worksheet = worksheet;
-            this.startPosition = startPosition;
-            startPositionRow = startPosition.Row;
-            startPositionColumn = startPosition.Column;
-            this.headline = headline;
-            this.content = new List<List<string>>();
-            content.Add(firstLine);
-        }
-
-        public TableObject(Worksheet worksheet, Excel.Range startPosition, List<StockDataTransferObject> records, List<int> columnsToDraw)
-        {
-            this.worksheet = worksheet;
-            this.startPosition = startPosition;
-            startPositionRow = startPosition.Row;
-            startPositionColumn = startPosition.Column;
-            this.headline = records[0].getHeadlineAsList();
-            this.content = new List<List<string>>();
-            this.columnsToDraw = columnsToDraw;
-
-            foreach (StockDataTransferObject record in records)
-                content.Add(record.getLineAsList());
-        }
-
-        public TableObject(Worksheet worksheet, Excel.Range startPosition)
-        {
-            this.worksheet = worksheet;
-            this.startPosition = startPosition;
-            startPositionRow = startPosition.Row;
-            startPositionColumn = startPosition.Column;
-            this.headline = new List<string>();
-            this.content = new List<List<string>>();
-        }
-
         public void drawAtPosition(Worksheet worksheet, Excel.Range startPosition)
         {
             this.worksheet = worksheet;
@@ -361,20 +370,6 @@ namespace AQM_Algo_Trading_Addin_CGR
         }
 
 
-        public void updateMeWithNewData(StockDataTransferObject newRecord)
-        {
-            headline = newRecord.getHeadlineAsList();
-            content.Add(newRecord.getLineAsList());
-            //TODO: nicht alles neu zeichnen, sondern nur letzte Zeile!
-            draw();
-            updateSubscribers();
-        }
-
-        public void changeWorkbookName(string name)
-        {
-            workbook = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook);
-            worksheet.Name = name;
-        }
 
 
 
