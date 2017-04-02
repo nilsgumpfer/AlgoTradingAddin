@@ -159,6 +159,12 @@
   -->
   <ItemGroup>
     <Compile Include="Algo.cs" />
+    <Compile Include="AlgoControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AlgoControl.Designer.cs">
+      <DependentUpon>AlgoControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="AlgoTradingRibbon.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -192,6 +198,9 @@
     <Compile Include="DiagramObject.cs" />
     <Compile Include="TableObject.cs" />
     <Compile Include="YahooFinanceAPIConnector.cs" />
+    <EmbeddedResource Include="AlgoControl.resx">
+      <DependentUpon>AlgoControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AlgoTradingRibbon.resx">
       <DependentUpon>AlgoTradingRibbon.cs</DependentUpon>
     </EmbeddedResource>
@@ -210,6 +219,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="AQM_Algo_Trading_Addin_CGR_10_TemporaryKey.pfx" />
     <None Include="AQM_Algo_Trading_Addin_CGR_1_TemporaryKey.pfx" />
     <None Include="AQM_Algo_Trading_Addin_CGR_2_TemporaryKey.pfx" />
     <None Include="AQM_Algo_Trading_Addin_CGR_3_TemporaryKey.pfx" />
@@ -248,10 +258,10 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>AQM_Algo_Trading_Addin_CGR_9_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>AQM_Algo_Trading_Addin_CGR_10_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>F9C2F6D53814D4378963295F35BE918ACCF7844F</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>1CBCF60A3EF055C994B8C20F1A86A044C0B0DB3D</ManifestCertificateThumbprint>
   </PropertyGroup>
   <!-- Include the build rules for a C# project. -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

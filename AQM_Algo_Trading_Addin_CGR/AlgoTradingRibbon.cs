@@ -9,6 +9,7 @@ using Microsoft.VisualBasic;
 using Excel = Microsoft.Office.Interop.Excel;
 using Microsoft.Office.Tools.Excel;
 using MySql.Data.MySqlClient;
+using Microsoft.Office.Tools;
 
 namespace AQM_Algo_Trading_Addin_CGR
 {
@@ -1092,8 +1093,9 @@ namespace AQM_Algo_Trading_Addin_CGR
                                 Globals.ThisAddIn.Application.ActiveCell);
 
             dataManager.subscribeForLiveConnection("", myTable);
-            Algo algorithmus = new Algo(this);
-            
+            Algo algorithmus = new Algo(Globals.ThisAddIn.ac);
+            Globals.ThisAddIn.SharePane.Visible = true;
+
         }
 
         private void button9_Click(object sender, RibbonControlEventArgs e)
@@ -1105,6 +1107,8 @@ namespace AQM_Algo_Trading_Addin_CGR
                 MessageBox.Show(dummy.getRandomPrice(85, 0.5, 0.5));
             }
         }
+
+        
     }
 }
  
