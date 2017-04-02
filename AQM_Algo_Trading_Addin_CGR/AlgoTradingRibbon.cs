@@ -1110,7 +1110,7 @@ namespace AQM_Algo_Trading_Addin_CGR
 
             while (true)
             {
-                MessageBox.Show(dummy.getRandomPrice(85, 0.5, 0.5));
+                MessageBox.Show(dummy.getRandomPrice(1, 1));
             }
         }
 
