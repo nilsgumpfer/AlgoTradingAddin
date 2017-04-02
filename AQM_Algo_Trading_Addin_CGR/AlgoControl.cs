@@ -13,10 +13,10 @@ namespace AQM_Algo_Trading_Addin_CGR
     public partial class AlgoControl : UserControl
     {
 
-        private delegate void setKontostandCallback(String kontostand);
+        /*private delegate void setKontostandCallback(String kontostand);
         private delegate void setGewinnCallback(String gewinn);
         private delegate void setStartwertCallback(String startwert);
-        private delegate void setStatusCallback(String status, System.Drawing.Color farbe);
+        private delegate void setStatusCallback(String status, System.Drawing.Color farbe);*/
 
         public String gewStatus;
 
