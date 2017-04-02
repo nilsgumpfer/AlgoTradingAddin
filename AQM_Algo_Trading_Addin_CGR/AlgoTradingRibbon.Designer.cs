@@ -66,6 +66,7 @@
             this.button5 = this.Factory.CreateRibbonButton();
             this.button6 = this.Factory.CreateRibbonButton();
             this.button7 = this.Factory.CreateRibbonButton();
+            this.button9 = this.Factory.CreateRibbonButton();
             this.group9 = this.Factory.CreateRibbonGroup();
             this.button8 = this.Factory.CreateRibbonButton();
             this.lblKontostand = this.Factory.CreateRibbonLabel();
@@ -75,7 +76,7 @@
             this.group2 = this.Factory.CreateRibbonGroup();
             this.checkBox3 = this.Factory.CreateRibbonCheckBox();
             this.BTN_Test1 = this.Factory.CreateRibbonButton();
-            this.button9 = this.Factory.CreateRibbonButton();
+            this.checkBox1 = this.Factory.CreateRibbonCheckBox();
             this.tab1.SuspendLayout();
             this.group1.SuspendLayout();
             this.group3.SuspendLayout();
@@ -137,6 +138,7 @@
             this.group3.Items.Add(this.CB_Quelle_Lokal);
             this.group3.Items.Add(this.CB_Quelle_Onvista);
             this.group3.Items.Add(this.CB_Quelle_Yahoo);
+            this.group3.Items.Add(this.checkBox1);
             this.group3.Label = "Datenquelle";
             this.group3.Name = "group3";
             // 
@@ -303,6 +305,12 @@
             this.button7.Name = "button7";
             this.button7.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button7_Click);
             // 
+            // button9
+            // 
+            this.button9.Label = "button9";
+            this.button9.Name = "button9";
+            this.button9.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button9_Click);
+            // 
             // group9
             // 
             this.group9.Items.Add(this.button8);
@@ -355,11 +363,10 @@
             this.BTN_Test1.Name = "BTN_Test1";
             this.BTN_Test1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.BTN_Test_Click);
             // 
-            // button9
+            // checkBox1
             // 
-            this.button9.Label = "button9";
-            this.button9.Name = "button9";
-            this.button9.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button9_Click);
+            this.checkBox1.Label = "DummyDaten";
+            this.checkBox1.Name = "checkBox1";
             // 
             // AlgoTradingRibbon
             // 
@@ -433,6 +440,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonLabel lblKontostand;
         internal Microsoft.Office.Tools.Ribbon.RibbonLabel lblKS_Saldo;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button9;
+        internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox checkBox1;
     }
 
     partial class ThisRibbonCollection

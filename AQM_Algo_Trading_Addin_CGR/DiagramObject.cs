@@ -27,9 +27,14 @@ namespace AQM_Algo_Trading_Addin_CGR
         private Excel.Worksheet wsLiveData;
         private Microsoft.Office.Interop.Excel.Chart chartPageAktienkurs;
         private Microsoft.Office.Interop.Excel.Chart chartPageVolumen;
+        private TableObject historicalTableObject;
+        private string selectedTicker; 
 
-        public DiagramObject(TableObject tableObject)
+        public DiagramObject(TableObject tableObject, TableObject historicalTableObject, string selectedTicker)
         {
+            this.historicalTableObject = historicalTableObject;
+            this.selectedTicker = selectedTicker;
+
             tableObject.subscribeForTableContent(this);
             workbook = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook);
             worksheet = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook.Worksheets.Add());
@@ -39,22 +44,22 @@ namespace AQM_Algo_Trading_Addin_CGR
             this.tableColumnsToDraw = tableObject.getColumnsToDraw();
             this.tableHeadline = tableObject.getHeadline();
             this.tableContent = tableObject.getContent();
-
+            
             initDiagram();
 
         }
-  
+
+        //public void setHistoricalDataTable(TableObject historicalDataTable)
+        //{
+        //    this.historicalDataTable = historicalDataTable;
+        //}
+
         public void updateMeWithNewData()
         {   
             //Update Aktienkursdiagramm
             updateDiagram(wsLiveData, chartPageAktienkurs, StockDataTransferObject.posPrice, tableobject.getContentCount());
             //Update Volumendiagramm
             updateDiagram(wsLiveData, chartPageVolumen, StockDataTransferObject.posVolume, tableobject.getContentCount());
-           
-            
-            //Kann wohl raus//
-            //Update Historiendiagramm
-            //updateDiagram(wsLiveData, chartPageAktienkurs, 5, tableobject.getContentCount());
         }
 
 
@@ -106,6 +111,8 @@ namespace AQM_Algo_Trading_Addin_CGR
 
 
             ////Historische Daten
+
+
             Microsoft.Office.Interop.Excel.Range chartRangeHistoDaten;
             Microsoft.Office.Interop.Excel.ChartObjects xlChartsHistoDaten =
                 (Excel.ChartObjects)worksheet.ChartObjects(Type.Missing);
@@ -113,24 +120,36 @@ namespace AQM_Algo_Trading_Addin_CGR
                 (Excel.ChartObject)xlChartsHistoDaten.Add(10, 300, 1020, 270);
             Microsoft.Office.Interop.Excel.Chart chartPageHistoDaten = myChartHistoDaten.Chart;
 
-            chartRangeHistoDaten = wsLiveData.get_Range("F1", "F30");
+            //Excel.Worksheet wsHistoricalData = (Excel.Worksheet)historicalTableObject.getWorksheetOfTableObject();
+            Excel.Worksheet wsHistoricalData = (Excel.Worksheet)workbook.Worksheets["Historische Daten"];
+            chartRangeHistoDaten = wsHistoricalData.Range[wsHistoricalData.Cells[1, 1], wsHistoricalData.Cells[historicalTableObject.getContentCount() + 1, historicalTableObject.getColumnsToDrawCount()]];
+
+
             chartPageHistoDaten.SetSourceData(chartRangeHistoDaten, misValue);
-            chartPageHistoDaten.ChartType = Excel.XlChartType.xlColumnClustered;
+            chartPageHistoDaten.ChartType = Excel.XlChartType.xlLine;
+
+            //TODO: Titel setzen
+            //myChartHistoDaten.Chart.Name = "Historische Daten der " + selectedTicker + " Aktie.";
+             
 
 
         }
 
         public void updateDiagram(Excel.Worksheet wsLiveData, Microsoft.Office.Interop.Excel.Chart chartPageAktienkurs, int foundColumn, int ColumnCount)
         {
-            //chartRangeAktienkurs = wsLiveData.get_Range("E1", "E20");
-
             Microsoft.Office.Interop.Excel.Range chartRangeAktienkurs = wsLiveData.Range[wsLiveData.Cells[1, foundColumn], wsLiveData.Cells[ColumnCount+1, foundColumn]];
             chartPageAktienkurs.SetSourceData(chartRangeAktienkurs, misValue);
+
+            //evtl. noch in try-catch
+            //try
+            //{
+            //    chartPageAktienkurs.SetSourceData(chartRangeAktienkurs, misValue);
+            //}
+            //catch (Exception e)
+            //{
+            //}
+            
         }
-
-
-
-
 
     }
 }

@@ -22,6 +22,7 @@ namespace AQM_Algo_Trading_Addin_CGR
         private List<List<string>> content;
         private int drawPosition = 1;
         private List<DiagramObject> listOfSubscribers = new List<DiagramObject>();
+        private string selectedDropDownTicker;
 
         //Konstruktoren
         public TableObject(Worksheet worksheet, Excel.Range startPosition, List<string> headline, List<List<string>> content, List<int> columnsToDraw)
@@ -105,6 +106,11 @@ namespace AQM_Algo_Trading_Addin_CGR
             return columnsToDraw;
         }
 
+        public int getColumnsToDrawCount()
+        {
+            return columnsToDraw.Count;
+        }
+
         public List<string> getHeadline()
         {
             return headline;
@@ -120,7 +126,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             return worksheet;
         }
     
-        public void changeWorkbookName(string name)
+        public void changeSheetName(string name)
         {
             workbook = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook);
             worksheet.Name = name;

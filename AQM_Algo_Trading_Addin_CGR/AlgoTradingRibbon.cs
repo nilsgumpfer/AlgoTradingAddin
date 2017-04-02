@@ -1016,9 +1016,6 @@ namespace AQM_Algo_Trading_Addin_CGR
 
             //myChart.TopLeftCell.Cells[1, 3];
 
-
-
-
             //Excel.ChartObject myChart = (Excel.ChartObject)xlCharts.Add(range(ws.Cells[1, columns.Count+1], ws.Cells[, 1]
             Excel.Chart chartPage = myChart.Chart;
 
@@ -1040,16 +1037,16 @@ namespace AQM_Algo_Trading_Addin_CGR
             progress.progressBar1.Minimum = 0;
             progress.progressBar1.Value = 20;
             progress.Show();
-            progress.progressBar1.Value = 30;
+            progress.progressBar1.Value = 25;
 
             DataManager dataManager = DataManager.getInstance();
 
             if (view.hasBeenCancelled == false)
             {
 
-                progress.progressBar1.Value = 40;
+                progress.progressBar1.Value = 30;
 
-                TableObject historicalDataTable = new TableObject(
+                TableObject historicalDataTableObject = new TableObject(
                                         Globals.Factory.GetVstoObject
                                         (
                                             Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet
@@ -1065,29 +1062,41 @@ namespace AQM_Algo_Trading_Addin_CGR
                                         dataManager.getColumnsToDraw_forHistoricalStockData()
                                       );
 
-                historicalDataTable.createNewWorksheet("Historische Daten");
 
-                progress.progressBar1.Value = 80;
+                progress.progressBar1.Value = 45;
 
-                historicalDataTable.drawOnlyRelevantColumns();
+                historicalDataTableObject.changeSheetName("Historische Daten");
 
-                progress.progressBar1.Value = 100;
-                progress.Close();
-            }
+                progress.progressBar1.Value = 55;
+
+                historicalDataTableObject.drawOnlyRelevantColumns();
+
+                progress.progressBar1.Value = 60;
+                
+            
 
             //Thread.Sleep(2000);
 
             //Livedaten
-            TableObject liveDataTable = new TableObject(
+            TableObject liveDataTableObject = new TableObject(
                                 Globals.Factory.GetVstoObject(
                                     Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet),
                                 Globals.ThisAddIn.Application.Cells[1, 1]);
 
-            //liveDataTable.changeWorkbookName("OnVista-Livedaten");
-            liveDataTable.createNewWorksheet("OnVista-Livedaten");
-            dataManager.subscribeForLiveConnection("", liveDataTable);
+            progress.progressBar1.Value = 75;
 
-            DiagramObject myDiagram = new DiagramObject(liveDataTable);
+            //liveDataTable.changeWorkbookName("OnVista-Livedaten");
+            liveDataTableObject.createNewWorksheet("OnVista-Livedaten");
+
+            progress.progressBar1.Value = 85;
+            dataManager.subscribeForLiveConnection("", liveDataTableObject);
+
+            progress.progressBar1.Value = 95;
+
+            DiagramObject myDiagram = new DiagramObject(liveDataTableObject, historicalDataTableObject, view.comboBox1.SelectedItem.ToString());
+            progress.progressBar1.Value = 100;
+            progress.Close();
+            }
         }
 
         private void button8_Click(object sender, RibbonControlEventArgs e)

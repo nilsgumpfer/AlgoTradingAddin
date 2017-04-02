@@ -47,7 +47,7 @@
             this.Controls.Add(this.progressBar1);
             this.Name = "ProgressIndicator";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Progress";
+            this.Text = "Management-Cockpit wird erstellt. Bitte warten.";
             this.ResumeLayout(false);
 
         }

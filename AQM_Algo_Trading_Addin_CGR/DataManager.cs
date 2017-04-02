@@ -50,7 +50,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             List<int> columnsToDraw = new List<int>();
 
             columnsToDraw.Add(StockDataTransferObject.posHigh);
-            columnsToDraw.Add(StockDataTransferObject.posTotalVolume);
+            //columnsToDraw.Add(StockDataTransferObject.posTotalVolume);
             columnsToDraw.Add(StockDataTransferObject.posAdjClose);
             columnsToDraw.Add(StockDataTransferObject.posLow);
             columnsToDraw.Add(StockDataTransferObject.posClose);
