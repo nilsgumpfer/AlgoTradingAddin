@@ -23,7 +23,13 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         private void submit_Click(object sender, EventArgs e)
         {
-            this.Close();
+            if (dateTimePicker1.Value <= dateTimePicker2.Value)
+                this.Close();
+            else
+            {
+                MessageBox.Show("Der Startzeitpunkt muss vor dem Endzeitpunkt liegen!");
+                dateTimePicker2.Value = dateTimePicker1.Value;
+            }
         }
 
         private void cancel_Click(object sender, EventArgs e)

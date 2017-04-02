@@ -11,73 +11,87 @@ namespace AQM_Algo_Trading_Addin_CGR
 {
     class TableObject : LiveConnectionSubscriber
     {
-        //TODO: Methoden sortieren, schön machen
         private Workbook workbook;
         private Worksheet worksheet;
         private Excel.Range startPosition;
+
+        private int drawPosition;
         private int startPositionRow;
         private int startPositionColumn;
+
         private List<int> columnsToDraw;
         private List<string> headline;
         private List<List<string>> content;
-        private int drawPosition = 1;
         private List<DiagramObject> listOfSubscribers = new List<DiagramObject>();
+<<<<<<< Updated upstream
         private string selectedDropDownTicker;
+=======
+        private bool headlineVisible = false;
+>>>>>>> Stashed changes
 
-        //Konstruktoren
-        public TableObject(Worksheet worksheet, Excel.Range startPosition, List<string> headline, List<List<string>> content, List<int> columnsToDraw)
+        //********************************************** Konstruktoren ************************************************************
+
+        //Variante 1: Position
+        public TableObject(Worksheet worksheet, Excel.Range startPosition)
         {
             this.worksheet = worksheet;
             this.startPosition = startPosition;
-            startPositionRow = startPosition.Row;
-            startPositionColumn = startPosition.Column;
-            this.columnsToDraw = columnsToDraw;
-            this.headline = headline;
-            this.content = content;
+            initStartPosition();
+            this.headline = new List<string>();
+            this.content = new List<List<string>>();
+            columnsToDraw = StockDataTransferObject.getStandardColumnsToDraw();
         }
-        public TableObject(Worksheet worksheet, Excel.Range startPosition, List<string> headline, List<List<string>> content)
-        {
-            this.worksheet = worksheet;
-            this.startPosition = startPosition;
-            startPositionRow = startPosition.Row;
-            startPositionColumn = startPosition.Column;
-            this.headline = headline;
-            this.content = content;
-        }
+
+        //Variante 2: Position, Headline, FirstLine
         public TableObject(Worksheet worksheet, Excel.Range startPosition, List<string> headline, List<string> firstLine)
         {
             this.worksheet = worksheet;
             this.startPosition = startPosition;
-            startPositionRow = startPosition.Row;
-            startPositionColumn = startPosition.Column;
+            initStartPosition();
             this.headline = headline;
             this.content = new List<List<string>>();
             content.Add(firstLine);
+            columnsToDraw = StockDataTransferObject.getStandardColumnsToDraw();
         }
+
+        //Variante 3: Position, Headline, Content
+        public TableObject(Worksheet worksheet, Excel.Range startPosition, List<string> headline, List<List<string>> content)
+        {
+            this.worksheet = worksheet;
+            this.startPosition = startPosition;
+            initStartPosition();
+            this.headline = headline;
+            this.content = content;
+            columnsToDraw = StockDataTransferObject.getStandardColumnsToDraw();
+        }
+
+        //Variante 4: Position, Headline, Content, ColumnsToDraw
+        public TableObject(Worksheet worksheet, Excel.Range startPosition, List<string> headline, List<List<string>> content, List<int> columnsToDraw)
+        {
+            this.worksheet = worksheet;
+            this.startPosition = startPosition;
+            initStartPosition();
+            this.columnsToDraw = columnsToDraw;
+            this.headline = headline;
+            this.content = content;
+        }
+
+        //Variante 5: Position, StockDataTransferObject-Liste (Content), ColumnsToDraw
         public TableObject(Worksheet worksheet, Excel.Range startPosition, List<StockDataTransferObject> records, List<int> columnsToDraw)
         {
             this.worksheet = worksheet;
             this.startPosition = startPosition;
-            startPositionRow = startPosition.Row;
-            startPositionColumn = startPosition.Column;
+            initStartPosition();
             this.headline = records[0].getHeadlineAsList();
             this.content = new List<List<string>>();
             this.columnsToDraw = columnsToDraw;
             foreach (StockDataTransferObject record in records)
                 content.Add(record.getLineAsList());
         }
-        public TableObject(Worksheet worksheet, Excel.Range startPosition)
-        {
-            this.worksheet = worksheet;
-            this.startPosition = startPosition;
-            startPositionRow = startPosition.Row;
-            startPositionColumn = startPosition.Column;
-            this.headline = new List<string>();
-            this.content = new List<List<string>>();
-        }
 
+        //********************************************** Konstruktoren ************************************************************
 
-        //Allgemeine Funktionen
+        //********************************************** Allgemeine Funktionen ****************************************************
 
         public int getDrawPositionOfColumn(int column)
         {
@@ -98,7 +112,7 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         public int getContentCount()
         {
-                return content.Count;
+            return content.Count;
         }
 
         public List<int> getColumnsToDraw()
@@ -139,7 +153,21 @@ namespace AQM_Algo_Trading_Addin_CGR
             worksheet.Name = worksheetName;
         }
 
-        //Observer-Pattern
+        public void initDrawPosition()
+        {
+            drawPosition = startPositionRow;
+        }
+
+        public void initStartPosition()
+        {
+            startPositionRow = startPosition.Row;
+            startPositionColumn = startPosition.Column;
+        }
+
+        //********************************************** Allgemeine Funktionen ****************************************************
+
+        //********************************************** Observer-Pattern *********************************************************
+
         public void updateSubscribers()
         {
             foreach(DiagramObject subscriber in listOfSubscribers)
@@ -157,18 +185,100 @@ namespace AQM_Algo_Trading_Addin_CGR
         {
             headline = newRecord.getHeadlineAsList();
             content.Add(newRecord.getLineAsList());
-            //TODO: nicht alles neu zeichnen, sondern nur letzte Zeile!
-            draw();
+
+            if (headlineVisible == false)
+                drawHeadline();
+
+            drawRecord(newRecord);
             updateSubscribers();
         }
 
+        //********************************************** Observer-Pattern *********************************************************
 
-        //Draw-Funktionen
+        //********************************************** Draw-Funktionen **********************************************************
 
-        //varible relevantColumns prüfen auf inhalt
+
+        public void draw(bool delete)
+        {
+            if (delete)
+                deleteHeadline();
+            else
+                drawHeadline();
+
+            for (int i = 0; i < content.Count; i++)
+            {
+                if (delete)
+                    deleteLine();
+                else
+                    drawLine(content[i]);
+            }
+        }
+
+        public void deleteAll()
+        {
+            draw(true);
+        }
+
+        public void drawAll()
+        {
+            draw(false);
+        }
+
+        public void drawLine(List<string> line)
+        {
+            int space = 0;
+            int columnIndex;
+            string cellContent;     
+
+            for (int j = 0; j < columnsToDraw.Count; j++)
+            {
+                columnIndex = columnsToDraw[j];
+
+                try
+                {
+                    if (line[columnIndex - 1] != null)
+                        cellContent = line[columnIndex - 1].Replace(',', '.');
+                    else
+                        cellContent = "";
+                    
+                    worksheet.Cells[drawPosition, startPositionColumn + space] = cellContent;
+                    space++;
+                }
+                catch (Exception e)
+                {
+                    j--;
+                }
+            }
+
+            drawPosition++;
+        }
+
+        public void drawRecord(StockDataTransferObject record)
+        {
+            drawLine(record.getLineAsList());
+        }
+
+        public void deleteLine()
+        {
+            drawLine(null);
+        }
+
+        public void deleteHeadline()
+        {
+            initDrawPosition();
+            drawLine(null);
+            headlineVisible = false;
+        }
+
+        public void drawHeadline()
+        {
+            initDrawPosition();
+            drawLine(headline);
+            headlineVisible = true;
+        }
 
         public void drawHeaderline()
-        {
+        {/*
             drawPosition = startPositionRow;
 
             for(int i = 0; i < headline.Count; i++)
@@ -182,11 +292,13 @@ namespace AQM_Algo_Trading_Addin_CGR
                     i--;
                 }
             }
-            drawPosition++;
+            drawPosition++;*/
+            drawHeadline();
         }
 
         public void drawOnlyRelevantHeadlineColumns()
         {
+            /*
             drawPosition = startPositionRow;
             int space = 0;
 
@@ -201,15 +313,14 @@ namespace AQM_Algo_Trading_Addin_CGR
                 {
                     continue;
                 }
-
             }
-
-            drawPosition++;
+            drawPosition++;*/
+            drawHeadline();
         }
 
         public void deleteOnlyRelevantHeadlineColumns()
         {
-            drawPosition = startPositionRow;
+            /*drawPosition = startPositionRow;
             int space = 0;
 
             foreach (int i in columnsToDraw)
@@ -224,12 +335,12 @@ namespace AQM_Algo_Trading_Addin_CGR
                     continue;
                 }
             }
-
-            drawPosition++;
+            drawPosition++;*/
+            deleteHeadline();
         }
 
         public void deleteHeaderline()
-        {
+        {/*
             drawPosition = startPositionRow;
 
             for (int i = 0; i < headline.Count; i++)
@@ -243,13 +354,13 @@ namespace AQM_Algo_Trading_Addin_CGR
                     i--;
                 } 
             }
-
-            drawPosition++;
+            drawPosition++;*/
+            deleteHeadline();
         }
-
 
         public void draw()
         {
+            /*
             List<string> line;
 
             Logger.log("draw START");
@@ -272,15 +383,15 @@ namespace AQM_Algo_Trading_Addin_CGR
                         i--;
                     }
                 }
-
                 drawPosition++;
             }
-
-            Logger.log("draw END");
+            Logger.log("draw END");*/
+            drawAll();
         }
 
         public void drawOnlyRelevantColumns()
         {
+            /*
             List<string> line;
 
             drawOnlyRelevantHeadlineColumns();
@@ -301,15 +412,14 @@ namespace AQM_Algo_Trading_Addin_CGR
                     {
                         continue;
                     }
-
                 }
-
                 drawPosition++;
-            }
+            }*/
+            drawAll();
         }
 
         public void deleteOnlyRelevantColumns()
-        {
+        {/*
             List<string> line;
 
             deleteOnlyRelevantHeadlineColumns();
@@ -331,13 +441,13 @@ namespace AQM_Algo_Trading_Addin_CGR
                         continue;
                     }
                 }
-
                 drawPosition++;
-            }
+            }*/
+            deleteAll();
         }
 
         public void deleteDraw()
-        {
+        {/*
             List<string> line;
 
             deleteHeaderline();
@@ -355,20 +465,18 @@ namespace AQM_Algo_Trading_Addin_CGR
                     catch (Exception e)
                     {
                         i--;
-                    }
-                    
+                    } 
                 }
-
                 drawPosition++;
-            }
+            }*/
+            deleteAll();
         }
 
         public void drawAtPosition(Worksheet worksheet, Excel.Range startPosition)
         {
             this.worksheet = worksheet;
             this.startPosition = startPosition;
-            startPositionRow = startPosition.Row;
-            startPositionColumn = startPosition.Column;
+            initStartPosition();
             draw();
         }
 
@@ -376,17 +484,8 @@ namespace AQM_Algo_Trading_Addin_CGR
         {
             this.worksheet = worksheet;
             this.startPosition = startPosition;
-            startPositionRow = startPosition.Row;
-            startPositionColumn = startPosition.Column;
+            initStartPosition();
             drawOnlyRelevantColumns();
         }
-
-
-
-
-
     }
-
-
-
 }

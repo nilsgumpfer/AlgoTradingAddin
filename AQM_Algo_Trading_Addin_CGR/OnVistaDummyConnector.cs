@@ -7,6 +7,7 @@ using System.Web;
 using System.Net;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace AQM_Algo_Trading_Addin_CGR
 {
@@ -30,6 +31,8 @@ namespace AQM_Algo_Trading_Addin_CGR
         private string url;
 
         private bool checkMetaData = true;
+        private double trend;
+        private double trendAbs;
 
         private OnVistaDummyConnector()
         {
@@ -44,7 +47,7 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         public StockDataTransferObject getStockData()
         {
-            Logger.log("getStockData() START");
+            Thread.Sleep(750);
 
             initWebClient();
             loadHtmlData();
@@ -89,7 +92,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             stdTransferObject.suffix_onvista        = extractUrlSuffix();
 
             newRecord = stdTransferObject;
-            Logger.log("getStockData() END");
+
             return stdTransferObject;
         }
 
@@ -189,12 +192,12 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         private string extractTrendAbs()
         {
-            return getRandomTrend(1,1);
+            return trendAbs.ToString();
         }
 
         private string extractTrendPerc()
         {
-            return getRandomTrend(1, 1) + "%";
+            return trend.ToString() + "%";
         }
 
         private string extractTimestampPrice()
@@ -306,35 +309,16 @@ namespace AQM_Algo_Trading_Addin_CGR
                 result = lastGeneratedPrice - (minusFactor * deviation);
             }
 
-            if (runCount < -5)
-                runCount = 5;
+            if (runCount < -2)
+                runCount = 0;
 
-            if (runCount > 5)
-                runCount = -5;
+            if (runCount > 2)
+                runCount = 0;
+
+            trend = (lastGeneratedPrice / result) - 1;
+            trendAbs = result - lastGeneratedPrice;
 
             lastGeneratedPrice = result;
-
-            return result.ToString();
-        }
-        public string getRandomTrend(double plus, double minus)
-        {
-            Random rand = new Random();
-            double result;
-            double pos_ten = rand.Next(0, 10);              //0-9
-            double pos_one = rand.Next(0, 10) / 10.0;       //0-0,9
-            double deviation = (pos_one + pos_ten) / 10.0;  //0-0,99
-
-            int neg = rand.Next();                          //some number
-            int positive_or_negative = neg % 2;             //without rest dividable by 2? 50/50-chance
-
-            if (positive_or_negative == 0)
-            {
-                result = plus * deviation;
-            }
-            else
-            {
-                result = - (minus * deviation);
-            }
 
             return result.ToString();
         }

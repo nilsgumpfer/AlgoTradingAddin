@@ -10,6 +10,7 @@ namespace AQM_Algo_Trading_Addin_CGR
     class StockDataTransferObject
     {
         private List<string> headline = new List<string>();
+
         public static int posISIN               = 1;
         public static int posWKN                = 2;
         public static int posSymbol             = 3;
@@ -58,6 +59,36 @@ namespace AQM_Algo_Trading_Addin_CGR
             headline.Add("Name");
             headline.Add("Currency");
             headline.Add("Schlusskurs");
+        }
+
+        public static List<int> getStandardColumnsToDraw()
+        {
+            List<int> columnList = new List<int>();
+
+            columnList.Add(posISIN);
+            columnList.Add(posWKN);
+            columnList.Add(posSymbol);
+            columnList.Add(posSector);
+            columnList.Add(posPrice);
+            columnList.Add(posVolume);
+            columnList.Add(posTrendAbs);
+            columnList.Add(posTrendPerc);
+            columnList.Add(posOpen);
+            columnList.Add(posPreDayClose);
+            columnList.Add(posAdjClose);
+            columnList.Add(posHigh);
+            columnList.Add(posHigh);
+            columnList.Add(posTotalVolume);
+            columnList.Add(posTimestampPrice);
+            columnList.Add(posTimestampVolume);
+            columnList.Add(posTimestampOther);
+            columnList.Add(posProvider);
+            columnList.Add(posTradingFloor);
+            columnList.Add(posName);
+            columnList.Add(posCurrency);
+            columnList.Add(posClose);
+
+            return columnList;
         }
         public string isin { get; set; }
         public string wkn { get; set; }

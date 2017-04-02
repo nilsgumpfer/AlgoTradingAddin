@@ -14,6 +14,7 @@ namespace AQM_Algo_Trading_Addin_CGR
         public String symbol { get; }
         private bool doThreading = false;
         private Thread thread;
+        private bool doPause = false;
 
         private PushWorker()
         {
@@ -52,10 +53,11 @@ namespace AQM_Algo_Trading_Addin_CGR
             {
                 StockDataTransferObject sdtObject = liveConnector.getStockData();
 
-                Logger.log("updateSubscribers START");
                 if (liveConnector.checkChange())
                     updateSubscribers(sdtObject);
-                Logger.log("updateSubscribers END");
+
+                while (doPause)
+                    Thread.Sleep(1000);
             }
         }
 
@@ -75,6 +77,7 @@ namespace AQM_Algo_Trading_Addin_CGR
                 thread = new Thread(this.doWork);
                 thread.Name = "PushWorker (" + symbol + ")";
                 thread.Start();
+                Logger.log("Started PushWorker (" + symbol + ")");
             }
         }
 
@@ -84,6 +87,16 @@ namespace AQM_Algo_Trading_Addin_CGR
             {
                 subscriber.updateMeWithNewData(record);
             }
+        }
+
+        internal void pauseWork()
+        {
+            doPause = !doPause;
+
+            if(doPause)
+                Logger.log("Paused PushWorker (" + symbol + ")");
+            else
+                Logger.log("Resumed PushWorker (" + symbol + ")");
         }
     }
 }

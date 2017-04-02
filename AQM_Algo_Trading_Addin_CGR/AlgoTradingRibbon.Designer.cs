@@ -77,6 +77,8 @@
             this.checkBox3 = this.Factory.CreateRibbonCheckBox();
             this.BTN_Test1 = this.Factory.CreateRibbonButton();
             this.checkBox1 = this.Factory.CreateRibbonCheckBox();
+            this.onLoadPause = this.Factory.CreateRibbonButton();
+            this.onStopLoad = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.group1.SuspendLayout();
             this.group3.SuspendLayout();
@@ -248,6 +250,8 @@
             this.group8.Items.Add(this.button6);
             this.group8.Items.Add(this.button7);
             this.group8.Items.Add(this.button9);
+            this.group8.Items.Add(this.onLoadPause);
+            this.group8.Items.Add(this.onStopLoad);
             this.group8.Label = "Test";
             this.group8.Name = "group8";
             // 
@@ -367,6 +371,17 @@
             // 
             this.checkBox1.Label = "DummyDaten";
             this.checkBox1.Name = "checkBox1";
+            // onLoadPause
+            // 
+            this.onLoadPause.Label = "Pausiere Laden";
+            this.onLoadPause.Name = "onLoadPause";
+            this.onLoadPause.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.onLoadPause_Click);
+            // 
+            // onStopLoad
+            // 
+            this.onStopLoad.Label = "Stoppe Laden";
+            this.onStopLoad.Name = "onStopLoad";
+            this.onStopLoad.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.onStopLoad_Click);
             // 
             // AlgoTradingRibbon
             // 
@@ -441,6 +456,8 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonLabel lblKS_Saldo;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button9;
         internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox checkBox1;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton onLoadPause;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton onStopLoad;
     }
 
     partial class ThisRibbonCollection

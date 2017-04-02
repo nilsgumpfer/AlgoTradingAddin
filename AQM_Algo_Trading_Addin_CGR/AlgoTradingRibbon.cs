@@ -1120,7 +1120,15 @@ namespace AQM_Algo_Trading_Addin_CGR
             logView.Show();
         }
 
-        
+        private void onLoadPause_Click(object sender, RibbonControlEventArgs e)
+        {
+            DataManager.getInstance().pausePushWorkers();
+        }
+
+        private void onStopLoad_Click(object sender, RibbonControlEventArgs e)
+        {
+            DataManager.getInstance().stopPushWorkers();
+        }
     }
 }
  

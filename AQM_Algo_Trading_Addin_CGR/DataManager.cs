@@ -107,5 +107,24 @@ namespace AQM_Algo_Trading_Addin_CGR
             //if never found, return null
             return null;
         }
+
+        public void pausePushWorkers()
+        {
+            foreach (PushWorker worker in listOfPushWorkers)
+            {
+                worker.pauseWork();
+            }
+        }
+
+        public void stopPushWorkers()
+        {
+            foreach (PushWorker worker in listOfPushWorkers)
+            {
+                worker.stopWork();
+            }
+
+            listOfPushWorkers.Clear();
+            listOfDBUpdaters.Clear();
+        }
     }
 }
