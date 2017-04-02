@@ -1106,12 +1106,8 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         private void button9_Click(object sender, RibbonControlEventArgs e)
         {
-            OnVistaDummyConnector dummy = new OnVistaDummyConnector("");
-
-            while (true)
-            {
-                MessageBox.Show(dummy.getRandomPrice(1, 1));
-            }
+            LogView logView = new LogView();
+            logView.Show();
         }
 
         

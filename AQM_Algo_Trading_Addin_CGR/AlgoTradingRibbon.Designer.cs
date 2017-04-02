@@ -66,6 +66,7 @@
             this.button5 = this.Factory.CreateRibbonButton();
             this.button6 = this.Factory.CreateRibbonButton();
             this.button7 = this.Factory.CreateRibbonButton();
+            this.button9 = this.Factory.CreateRibbonButton();
             this.group9 = this.Factory.CreateRibbonGroup();
             this.button8 = this.Factory.CreateRibbonButton();
             this.lblKontostand = this.Factory.CreateRibbonLabel();
@@ -75,7 +76,6 @@
             this.group2 = this.Factory.CreateRibbonGroup();
             this.checkBox3 = this.Factory.CreateRibbonCheckBox();
             this.BTN_Test1 = this.Factory.CreateRibbonButton();
-            this.button9 = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.group1.SuspendLayout();
             this.group3.SuspendLayout();
@@ -303,6 +303,12 @@
             this.button7.Name = "button7";
             this.button7.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button7_Click);
             // 
+            // button9
+            // 
+            this.button9.Label = "ShowLogs";
+            this.button9.Name = "button9";
+            this.button9.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button9_Click);
+            // 
             // group9
             // 
             this.group9.Items.Add(this.button8);
@@ -354,12 +360,6 @@
             this.BTN_Test1.Label = "Tabelle bei aktiver Zelle einfügen";
             this.BTN_Test1.Name = "BTN_Test1";
             this.BTN_Test1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.BTN_Test_Click);
-            // 
-            // button9
-            // 
-            this.button9.Label = "button9";
-            this.button9.Name = "button9";
-            this.button9.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button9_Click);
             // 
             // AlgoTradingRibbon
             // 
