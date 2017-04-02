@@ -19,19 +19,17 @@ namespace AQM_Algo_Trading_Addin_CGR
         private string timestampFormat  = "yyyy-MM-dd HH:mm:ss";
         private string errorPlaceholder = "N/A";
         private double lastVolume       = 0.0;
+        private double lastGeneratedPrice  = 85.0;
+        private int lastGeneratedVolume = 0;
+        private double lastGeneratedTrend = 0.0;
         private int totalVolume = 0;
+        private int runCount = 5;
         private StockDataTransferObject lastRecord = new StockDataTransferObject();
         private StockDataTransferObject newRecord = new StockDataTransferObject();
 
         private string url;
 
         private bool checkMetaData = true;
-
-        private WebClient webClient;
-
-        private string sourceHTML;
-
-        private string onVista_stockID;
 
         private OnVistaDummyConnector()
         {
@@ -85,6 +83,8 @@ namespace AQM_Algo_Trading_Addin_CGR
             stdTransferObject.trading_floor         = extractTradingFloor();
             stdTransferObject.currency              = extractCurrency();
             stdTransferObject.provider              = provider;
+
+            stdTransferObject.suffix_onvista        = extractUrlSuffix();
 
             newRecord = stdTransferObject;
 
@@ -147,12 +147,12 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         private string extractPrice()
         {
-            return getRandomPrice(85, 1, 1);
+            return getRandomPrice(1, 1);
         }
 
         private string extractVolume()
         {
-            return getRandomVolume(0,1000);
+            return getRandomVolume();
         }
 
         private string extractDayVolume()
@@ -275,7 +275,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             return changed;
         }
 
-        public string getRandomPrice(double center, double plus, double minus)
+        public string getRandomPrice(double plusFactor, double minusFactor)
         {
             Random rand = new Random();
             double result;
@@ -288,12 +288,29 @@ namespace AQM_Algo_Trading_Addin_CGR
 
             if(positive_or_negative == 0)
             {
-                result = center + (plus * deviation);
+                runCount++;
             }
             else
             {
-                result = center - (minus * deviation);
+                runCount--;
             }
+
+            if(runCount >= 0)
+            {
+                result = lastGeneratedPrice + (plusFactor * deviation);
+            }
+            else
+            {
+                result = lastGeneratedPrice - (minusFactor * deviation);
+            }
+
+            if (runCount < -5)
+                runCount = 5;
+
+            if (runCount > 5)
+                runCount = -5;
+
+            lastGeneratedPrice = result;
 
             return result.ToString();
         }
@@ -320,10 +337,10 @@ namespace AQM_Algo_Trading_Addin_CGR
             return result.ToString();
         }
 
-        public string getRandomVolume(int min, int max)
+        public string getRandomVolume()
         {
             Random rand = new Random();
-            int result = rand.Next(min, max);
+            int result = 1000 / rand.Next(1, 8);
 
             totalVolume += result;
             

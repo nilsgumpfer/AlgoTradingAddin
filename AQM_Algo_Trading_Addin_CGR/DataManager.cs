@@ -9,12 +9,12 @@ namespace AQM_Algo_Trading_Addin_CGR
     class DataManager 
     {
         private List<PushWorker> listOfPushWorkers = new List<PushWorker>();
-        private List<MySQLConnector> listOfMySQLConnectors = new List<MySQLConnector>();
+        private List<DBUpdater> listOfDBUpdaters = new List<DBUpdater>();
         private static DataManager instance;
 
         public static DataManager getInstance()
         {
-            //implements singleton
+            //implement singleton
             if (instance == null)
                 instance = new DataManager();
 
@@ -36,6 +36,13 @@ namespace AQM_Algo_Trading_Addin_CGR
             YahooFinanceAPIConnector yahooFinanceAPIConnector = new YahooFinanceAPIConnector();
 
             return yahooFinanceAPIConnector.getHistoricalStockData(stockSymbol, dateFrom, dateTo, resolution);
+        }
+
+        public List<StockDataTransferObject> getLocallySavedStockData(string stockSymbol, DateTime dateFrom, DateTime dateTo)
+        {
+            MySQLConnector mySQLConnector = new MySQLConnector();
+
+            return mySQLConnector.getHistoricalStockData(stockSymbol, dateFrom, dateTo);
         }
 
         public List<int> getColumnsToDraw_forHistoricalStockData()
@@ -69,14 +76,14 @@ namespace AQM_Algo_Trading_Addin_CGR
                 //****************************************************************************************************************
                 //**********************************************!!!TESTING!!!*****************************************************
 
-                MySQLConnector mySQLConnector = new MySQLConnector();
+                DBUpdater dbUpdater = new DBUpdater();
 
                 //stash objects for later use
                 listOfPushWorkers.Add(worker);
-                listOfMySQLConnectors.Add(mySQLConnector);
+                listOfDBUpdaters.Add(dbUpdater);
 
                 //subscribe dedicated mySQL-Connector to keep DB up-to-date
-                worker.subscribe(mySQLConnector);
+                worker.subscribe(dbUpdater);
                 //initialize worker, tell him to load
                 worker.startWork();
             }

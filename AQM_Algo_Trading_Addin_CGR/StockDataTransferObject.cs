@@ -81,6 +81,8 @@ namespace AQM_Algo_Trading_Addin_CGR
         public string name { get; set; }
         public string currency { get; set; }
         public string close { get; set; }
+        public string suffix_onvista { get; set; }
+
 
         public List<string> getHeadlineAsList()
         {
