@@ -9,7 +9,7 @@ namespace AQM_Algo_Trading_Addin_CGR
     class DataManager 
     {
         private List<PushWorker> listOfPushWorkers = new List<PushWorker>();
-        private List<MySQLConnector> listOfMySQLConnectors = new List<MySQLConnector>();
+        private List<DBUpdater> listOfDBUpdaters = new List<DBUpdater>();
         private static DataManager instance;
 
         public static DataManager getInstance()
@@ -69,14 +69,14 @@ namespace AQM_Algo_Trading_Addin_CGR
                 //****************************************************************************************************************
                 //**********************************************!!!TESTING!!!*****************************************************
 
-                MySQLConnector mySQLConnector = new MySQLConnector();
+                DBUpdater dbUpdater = new DBUpdater();
 
                 //stash objects for later use
                 listOfPushWorkers.Add(worker);
-                listOfMySQLConnectors.Add(mySQLConnector);
+                listOfDBUpdaters.Add(dbUpdater);
 
                 //subscribe dedicated mySQL-Connector to keep DB up-to-date
-                worker.subscribe(mySQLConnector);
+                worker.subscribe(dbUpdater);
                 //initialize worker, tell him to load
                 worker.startWork();
             }

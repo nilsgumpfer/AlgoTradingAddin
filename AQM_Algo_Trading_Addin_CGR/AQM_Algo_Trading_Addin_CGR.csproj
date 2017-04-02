@@ -166,6 +166,7 @@
       <DependentUpon>AlgoTradingRibbon.cs</DependentUpon>
     </Compile>
     <Compile Include="DataManager.cs" />
+    <Compile Include="DBUpdater.cs" />
     <Compile Include="Enumerations.cs" />
     <Compile Include="Konfigurator.cs">
       <SubType>Form</SubType>
@@ -218,6 +219,7 @@
     <None Include="AQM_Algo_Trading_Addin_CGR_6_TemporaryKey.pfx" />
     <None Include="AQM_Algo_Trading_Addin_CGR_7_TemporaryKey.pfx" />
     <None Include="AQM_Algo_Trading_Addin_CGR_8_TemporaryKey.pfx" />
+    <None Include="AQM_Algo_Trading_Addin_CGR_9_TemporaryKey.pfx" />
     <None Include="AQM_Algo_Trading_Addin_CGR_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -247,10 +249,10 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>AQM_Algo_Trading_Addin_CGR_8_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>AQM_Algo_Trading_Addin_CGR_9_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>AA5ECA6DDFBBCE7B299D4954343B6957E26365F4</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>D7CAB8D29D078A6916BA6162EAC4CAB58F53F53A</ManifestCertificateThumbprint>
   </PropertyGroup>
   <!-- Include the build rules for a C# project. -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -86,6 +86,8 @@ namespace AQM_Algo_Trading_Addin_CGR
             stdTransferObject.currency              = extractCurrency();
             stdTransferObject.provider              = provider;
 
+            stdTransferObject.suffix_onvista        = extractUrlSuffix();
+
             newRecord = stdTransferObject;
 
             return stdTransferObject;
