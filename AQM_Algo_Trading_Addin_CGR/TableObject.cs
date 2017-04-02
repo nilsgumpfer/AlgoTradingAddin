@@ -23,11 +23,8 @@ namespace AQM_Algo_Trading_Addin_CGR
         private List<string> headline;
         private List<List<string>> content;
         private List<DiagramObject> listOfSubscribers = new List<DiagramObject>();
-<<<<<<< Updated upstream
         private string selectedDropDownTicker;
-=======
         private bool headlineVisible = false;
->>>>>>> Stashed changes
 
         //********************************************** Konstruktoren ************************************************************
 
