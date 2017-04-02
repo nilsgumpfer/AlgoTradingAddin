@@ -1065,7 +1065,7 @@ namespace AQM_Algo_Trading_Addin_CGR
                                         dataManager.getColumnsToDraw_forHistoricalStockData()
                                       );
 
-                //historicalDataTable.createNewWorksheet("Historische Daten");
+                historicalDataTable.createNewWorksheet("Historische Daten");
 
                 progress.progressBar1.Value = 80;
 
@@ -1083,7 +1083,8 @@ namespace AQM_Algo_Trading_Addin_CGR
                                     Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet),
                                 Globals.ThisAddIn.Application.Cells[1, 1]);
 
-                liveDataTable.changeWorkbookName("OnVista-Livedaten");
+            //liveDataTable.changeWorkbookName("OnVista-Livedaten");
+            liveDataTable.createNewWorksheet("OnVista-Livedaten");
             dataManager.subscribeForLiveConnection("", liveDataTable);
 
             DiagramObject myDiagram = new DiagramObject(liveDataTable);

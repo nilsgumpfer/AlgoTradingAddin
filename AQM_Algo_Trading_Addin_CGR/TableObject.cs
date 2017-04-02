@@ -159,6 +159,8 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         //Draw-Funktionen
 
+        //varible relevantColumns prüfen auf inhalt
+
         public void drawHeaderline()
         {
             drawPosition = startPositionRow;
