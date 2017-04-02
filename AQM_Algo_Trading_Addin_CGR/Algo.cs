@@ -31,7 +31,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             letzterwert = aktuelleraktienwert;
             aktuelleraktienwert = Convert.ToDouble(newRecord.price);
 
-            if (letzterwert != 0 & aktuelleraktienwert > letzterwert)
+            if (letzterwert != 0 && aktuelleraktienwert > letzterwert)
             {
                 initStart = initStart + 1;
                 zahlVerlust = 0;
@@ -44,7 +44,7 @@ namespace AQM_Algo_Trading_Addin_CGR
                 }
                 if (initStart > 2)
                 {
-                    double gewinn = ((aktuelleraktienwert - startaktienwert) / startaktienwert) * 100;
+                    gewinn = ((aktuelleraktienwert - startaktienwert) / startaktienwert) * 100;
                     kontostand = kontostand + (aktuelleraktienwert - startaktienwert);
                     status = "Behalten";
                     setDataInRibbon(gewinn, kontostand);
@@ -52,25 +52,21 @@ namespace AQM_Algo_Trading_Addin_CGR
                 }
             }
 
-            if (letzterwert != 0 & aktuelleraktienwert < letzterwert)
+            if (letzterwert != 0 && aktuelleraktienwert < letzterwert)
             {
                 if (initStart >= 2)
                 {
                     zahlVerlust = zahlVerlust + 1;
-                    double gewinn = ((aktuelleraktienwert - startaktienwert) / startaktienwert) * 100;
-                    if (gewinn < 2 & zahlVerlust >= 3)
+                    gewinn = ((aktuelleraktienwert - startaktienwert) / startaktienwert) * 100;
+                    kontostand = kontostand + (aktuelleraktienwert - startaktienwert);
+                    setDataInRibbon(gewinn, kontostand);
+
+                    if (gewinn < 2 && zahlVerlust >= 3 || gewinn > 2 && zahlVerlust >= 5)
                     {
                         status = "Verkaufen";
-                        kontostand = kontostand + (aktuelleraktienwert - startaktienwert);
                         setDataInRibbon(gewinn, kontostand);
                     }
-                    else if (gewinn > 2 & zahlVerlust >= 5)
-                    {
-                        status = "Verkaufen";
-                        kontostand = kontostand + (aktuelleraktienwert - startaktienwert);
-                        setDataInRibbon(gewinn, kontostand);
-                    }
-                    
+                                     
                 }
                 else
                 {

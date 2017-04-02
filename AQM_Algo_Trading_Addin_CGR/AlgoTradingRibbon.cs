@@ -1024,18 +1024,62 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         private void button7_Click(object sender, RibbonControlEventArgs e)
         {
-            DataManager dataManager = DataManager.getInstance();
-            TableObject myTable = new TableObject(
+            ////Historische Daten auswählen
+            //Konfigurator view = new Konfigurator();
+            //view.ShowDialog();
+
+            //ProgressIndicator progress = new ProgressIndicator();
+            //progress.progressBar1.Maximum = 100;
+            //progress.progressBar1.Minimum = 0;
+            //progress.progressBar1.Value = 20;
+            //progress.Show();
+            //progress.progressBar1.Value = 30;
+
+            //if (view.hasBeenCancelled == false)
+            //{
+                DataManager dataManager = DataManager.getInstance();
+
+                //progress.progressBar1.Value = 40;
+
+                //TableObject historicalDataTable = new TableObject(
+                //                        Globals.Factory.GetVstoObject
+                //                        (
+                //                            Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet
+                //                        ),
+                //                        Globals.ThisAddIn.Application.Cells[1, 1],
+                //                        dataManager.getHistoricalStockData
+                //                        (
+                //                            view.comboBox1.SelectedItem.ToString(),
+                //                            view.dateTimePicker1.Value,
+                //                            view.dateTimePicker2.Value,
+                //                            YahooFinanceAPI_Resolution.Daily
+                //                        ),
+                //                        dataManager.getColumnsToDraw_forHistoricalStockData()
+                //                      );
+
+                //historicalDataTable.createNewWorksheet("Historische Daten");
+
+                //progress.progressBar1.Value = 80;
+
+                //historicalDataTable.drawOnlyRelevantColumns();
+
+                //progress.progressBar1.Value = 100;
+                //progress.Close();
+
+                //Livedaten
+                TableObject liveDataTable = new TableObject(
                                 Globals.Factory.GetVstoObject(
                                     Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet),
                                 Globals.ThisAddIn.Application.Cells[1, 1]);
-   
-            myTable.changeWorkbookName("OnVista-Livedaten");
-            dataManager.subscribeForLiveConnection("", myTable);
+
+                liveDataTable.changeWorkbookName("OnVista-Livedaten");
+            dataManager.subscribeForLiveConnection("", liveDataTable);
 
             //Thread.Sleep(2000);
 
-            DiagramObject myDiagram = new DiagramObject(myTable);
+            DiagramObject myDiagram = new DiagramObject(liveDataTable);
+
+            //}
         }
 
         private void button8_Click(object sender, RibbonControlEventArgs e)

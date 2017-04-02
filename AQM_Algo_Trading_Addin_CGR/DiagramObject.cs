@@ -50,6 +50,9 @@ namespace AQM_Algo_Trading_Addin_CGR
             updateDiagram(wsLiveData, chartPageAktienkurs, StockDataTransferObject.posPrice, tableobject.getContentCount());
             //Update Volumendiagramm
             updateDiagram(wsLiveData, chartPageVolumen, StockDataTransferObject.posVolume, tableobject.getContentCount());
+           
+            
+            //Kann wohl raus//
             //Update Historiendiagramm
             //updateDiagram(wsLiveData, chartPageAktienkurs, 5, tableobject.getContentCount());
         }
@@ -74,8 +77,8 @@ namespace AQM_Algo_Trading_Addin_CGR
 
             //Tabellenblatt, aus welchem die Daten gezogen werden aus Table-Object auslesen
             wsLiveData = (Excel.Worksheet)workbook.Worksheets["OnVista-Livedaten"];
-            //Excel.Worksheet wsLiveData = (Excel.Worksheet)tableobject.getWorksheetOfTableObject();
 
+            //Zu Beginn einmal Updaten
             updateDiagram(wsLiveData, chartPageAktienkurs, foundColumn, tableobject.getContentCount());
 
 
@@ -103,16 +106,16 @@ namespace AQM_Algo_Trading_Addin_CGR
 
 
             ////Historische Daten
-            //Microsoft.Office.Interop.Excel.Range chartRangeHistoDaten;
-            //Microsoft.Office.Interop.Excel.ChartObjects xlChartsHistoDaten =
-            //    (Excel.ChartObjects)worksheet.ChartObjects(Type.Missing);
-            //Microsoft.Office.Interop.Excel.ChartObject myChartHistoDaten =
-            //    (Excel.ChartObject)xlChartsHistoDaten.Add(10, 300, 1020, 270);
-            //Microsoft.Office.Interop.Excel.Chart chartPageHistoDaten = myChartHistoDaten.Chart;
+            Microsoft.Office.Interop.Excel.Range chartRangeHistoDaten;
+            Microsoft.Office.Interop.Excel.ChartObjects xlChartsHistoDaten =
+                (Excel.ChartObjects)worksheet.ChartObjects(Type.Missing);
+            Microsoft.Office.Interop.Excel.ChartObject myChartHistoDaten =
+                (Excel.ChartObject)xlChartsHistoDaten.Add(10, 300, 1020, 270);
+            Microsoft.Office.Interop.Excel.Chart chartPageHistoDaten = myChartHistoDaten.Chart;
 
-            //chartRangeHistoDaten = wsLiveData.get_Range("F1", "F30");
-            //chartPageHistoDaten.SetSourceData(chartRangeHistoDaten, misValue);
-            //chartPageHistoDaten.ChartType = Excel.XlChartType.xlColumnClustered;
+            chartRangeHistoDaten = wsLiveData.get_Range("F1", "F30");
+            chartPageHistoDaten.SetSourceData(chartRangeHistoDaten, misValue);
+            chartPageHistoDaten.ChartType = Excel.XlChartType.xlColumnClustered;
 
 
         }

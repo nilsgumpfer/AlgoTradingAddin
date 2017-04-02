@@ -45,6 +45,14 @@ namespace AQM_Algo_Trading_Addin_CGR
                 return content.Count;
         }
 
+        public void createNewWorksheet(string worksheetName)
+        {
+            workbook = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook);
+            worksheet = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook.Worksheets.Add());
+            worksheet.Name = worksheetName;
+        }
+
+
         public Worksheet getWorksheetOfTableObject()
         {
             return worksheet;
