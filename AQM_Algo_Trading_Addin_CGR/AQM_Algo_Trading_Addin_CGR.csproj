@@ -168,6 +168,7 @@
     <Compile Include="DataManager.cs" />
     <Compile Include="DBUpdater.cs" />
     <Compile Include="Enumerations.cs" />
+    <Compile Include="ExceptionHandler.cs" />
     <Compile Include="Konfigurator.cs">
       <SubType>Form</SubType>
     </Compile>

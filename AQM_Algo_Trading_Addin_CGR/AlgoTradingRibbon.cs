@@ -928,12 +928,18 @@ namespace AQM_Algo_Trading_Addin_CGR
                                             Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet
                                         ),
                                         Globals.ThisAddIn.Application.ActiveCell,
-                                        dataManager.getHistoricalStockData
+                                        /*dataManager.getHistoricalStockData
                                         (
                                             view.comboBox1.SelectedItem.ToString(),
                                             view.dateTimePicker1.Value, 
                                             view.dateTimePicker2.Value, 
                                             YahooFinanceAPI_Resolution.Daily
+                                        ),*/
+                                        dataManager.getLocallySavedStockData
+                                        (
+                                            view.comboBox1.SelectedItem.ToString(),
+                                            view.dateTimePicker1.Value,
+                                            view.dateTimePicker2.Value
                                         ),
                                         dataManager.getColumnsToDraw_forHistoricalStockData()
                                       );

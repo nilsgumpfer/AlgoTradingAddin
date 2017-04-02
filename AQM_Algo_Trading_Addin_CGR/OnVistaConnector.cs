@@ -335,7 +335,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             }
             catch (Exception e)
             {
-                MessageBox.Show("Tag cannot be found in HTML-source: \"" + endTag);
+                ExceptionHandler.handle(new Exception("Tag cannot be found in HTML-source: \"" + endTag));
                 return errorPlaceholder;
             }
         }

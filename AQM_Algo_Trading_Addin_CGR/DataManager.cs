@@ -14,7 +14,7 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         public static DataManager getInstance()
         {
-            //implements singleton
+            //implement singleton
             if (instance == null)
                 instance = new DataManager();
 
@@ -36,6 +36,13 @@ namespace AQM_Algo_Trading_Addin_CGR
             YahooFinanceAPIConnector yahooFinanceAPIConnector = new YahooFinanceAPIConnector();
 
             return yahooFinanceAPIConnector.getHistoricalStockData(stockSymbol, dateFrom, dateTo, resolution);
+        }
+
+        public List<StockDataTransferObject> getLocallySavedStockData(string stockSymbol, DateTime dateFrom, DateTime dateTo)
+        {
+            MySQLConnector mySQLConnector = new MySQLConnector();
+
+            return mySQLConnector.getHistoricalStockData(stockSymbol, dateFrom, dateTo);
         }
 
         public List<int> getColumnsToDraw_forHistoricalStockData()
