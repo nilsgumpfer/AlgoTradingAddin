@@ -44,6 +44,8 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         public StockDataTransferObject getStockData()
         {
+            Logger.log("getStockData() START");
+
             initWebClient();
             loadHtmlData();
             lastRecord = newRecord;
@@ -87,7 +89,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             stdTransferObject.suffix_onvista        = extractUrlSuffix();
 
             newRecord = stdTransferObject;
-
+            Logger.log("getStockData() END");
             return stdTransferObject;
         }
 

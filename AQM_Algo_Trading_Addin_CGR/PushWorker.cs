@@ -52,8 +52,10 @@ namespace AQM_Algo_Trading_Addin_CGR
             {
                 StockDataTransferObject sdtObject = liveConnector.getStockData();
 
+                Logger.log("updateSubscribers START");
                 if (liveConnector.checkChange())
                     updateSubscribers(sdtObject);
+                Logger.log("updateSubscribers END");
             }
         }
 

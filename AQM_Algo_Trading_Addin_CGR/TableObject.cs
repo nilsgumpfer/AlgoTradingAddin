@@ -252,6 +252,8 @@ namespace AQM_Algo_Trading_Addin_CGR
         {
             List<string> line;
 
+            Logger.log("draw START");
+
             drawHeaderline();
 
             for (int j = 0; j < content.Count; j++)
@@ -273,6 +275,8 @@ namespace AQM_Algo_Trading_Addin_CGR
 
                 drawPosition++;
             }
+
+            Logger.log("draw END");
         }
 
         public void drawOnlyRelevantColumns()
