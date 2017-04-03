@@ -14,25 +14,21 @@ namespace AQM_Algo_Trading_Addin_CGR
     class OnVistaDummyConnector : LiveConnector
     {
         private string symbol;
-        private string provider         = "OnVista.de";
-        private string urlMainPart      = "http://www.onvista.de/aktien/";
-        private string urlSuffix;
-        private string timestampFormat  = "yyyy-MM-dd HH:mm:ss";
-        private string errorPlaceholder = "N/A";
-        private double lastVolume       = 0.0;
-        private double lastGeneratedPrice  = 85.0;
-        private int lastGeneratedVolume = 0;
-        private double lastGeneratedTrend = 0.0;
-        private int totalVolume = 0;
-        private int runCount = 5;
-        private StockDataTransferObject lastRecord = new StockDataTransferObject();
-        private StockDataTransferObject newRecord = new StockDataTransferObject();
-
-        private string url;
-
-        private bool checkMetaData = true;
+        private string isin;
+        private string wkn;
+        private string sector;
+        private string name;
+        private string provider                     = "OnVista.de";
+        private string urlMainPart                  = "http://www.onvista.de/aktien/";
+        private string urlSuffix                    = "";
+        private string timestampFormat              = "yyyy-MM-dd HH:mm:ss";
+        private double lastGeneratedPrice           = 85.0;
+        private int totalVolume                     = 0;
+        private int runCount                        = 5;
         private double trend;
         private double trendAbs;
+        private StockDataTransferObject lastRecord  = new StockDataTransferObject();
+        private StockDataTransferObject newRecord   = new StockDataTransferObject();
 
         private OnVistaDummyConnector()
         {
@@ -49,15 +45,7 @@ namespace AQM_Algo_Trading_Addin_CGR
         {
             Thread.Sleep(750);
 
-            initWebClient();
-            loadHtmlData();
             lastRecord = newRecord;
-
-            if(checkMetaData)
-            {
-                updateMetaData();
-                checkMetaData = false;
-            }
 
             StockDataTransferObject stdTransferObject = new StockDataTransferObject();
 
@@ -99,17 +87,34 @@ namespace AQM_Algo_Trading_Addin_CGR
         private void init()
         {
             loadMetaData();
-            url = urlMainPart + urlSuffix;
-            initWebClient();
-        }
-
-        private void initWebClient()
-        {
         }
 
         private void loadMetaData()
         {
-            urlSuffix = "BMW-Aktie-DE0005190003";
+            try
+            {
+                MySQLConnector mySQLConnector = new MySQLConnector();
+                StockDataTransferObject record = mySQLConnector.getMasterDataForSymbol(symbol);
+
+                if (record == null)
+                    throw new Exception("Es konnten keine Stammdaten für dieses Symbol in Ihrer Datenbank gefunden werden. Bitte laden Sie diese zunächst nach und versuchen es dann erneut.");
+
+                urlSuffix   = record.suffix_onvista;
+                isin        = record.isin;
+                wkn         = record.wkn;
+                name        = record.name;
+                sector      = record.sector;
+
+            }
+            catch (Exception e)
+            {
+                ExceptionHandler.handle(e);
+                urlSuffix   = "";
+                isin        = "";
+                wkn         = "";
+                name        = "";
+                sector      = "";
+            }
         }
 
         private void updateMetaData()
@@ -122,32 +127,32 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         private string extractIsin()
         {
-            return "DE0005190003";
+            return isin;
         }
 
         private string extractWkn()
         {
-            return "519000";
+            return wkn;
         }
 
         private string extractSymbol()
         {
-            return "BMW";
+            return symbol;
         }
 
         private string extractName()
         {
-            return "BMW Aktie";
+            return name;
         }
 
         private string extractSector()
         {
-            return "Automobilindustrie";
+            return sector;
         }
 
         private string extractUrlSuffix()
         {
-            return url.Substring(urlMainPart.Length);
+            return urlSuffix;
         }
 
         private string extractPrice()
@@ -228,13 +233,6 @@ namespace AQM_Algo_Trading_Addin_CGR
         private string extractCurrency()
         {
             return "EUR";
-        }
-
-        public void grabMetaDataAndFillDatabase(string url)
-        {
-            this.url = url;
-            loadHtmlData();
-            updateMetaData();
         }
 
         public bool checkChange()

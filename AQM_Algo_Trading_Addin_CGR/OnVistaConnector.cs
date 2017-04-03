@@ -12,23 +12,19 @@ namespace AQM_Algo_Trading_Addin_CGR
 {
     class OnVistaConnector : LiveConnector
     {
-        private string symbol;
-        private string provider         = "OnVista.de";
-        private string urlMainPart      = "http://www.onvista.de/aktien/";
-        private string urlSuffix        = "";
-        private string timestampFormat  = "yyyy-MM-dd HH:mm:ss";
-        private string errorPlaceholder = "N/A";
-        private int lastVolume          = 0;
-        private StockDataTransferObject lastRecord = new StockDataTransferObject();
-        private StockDataTransferObject newRecord = new StockDataTransferObject();
-
         private string url;
-
         private WebClient webClient;
-
         private string sourceHTML;
-
         private string onVista_stockID;
+        private string symbol;
+        private string provider                     = "OnVista.de";
+        private string urlMainPart                  = "http://www.onvista.de/aktien/";
+        private string urlSuffix                    = "";
+        private string timestampFormat              = "yyyy-MM-dd HH:mm:ss";
+        private string errorPlaceholder             = "N/A";
+        private int lastVolume                      = 0;
+        private StockDataTransferObject lastRecord  = new StockDataTransferObject();
+        private StockDataTransferObject newRecord   = new StockDataTransferObject();
 
         public OnVistaConnector()
         {
@@ -156,7 +152,6 @@ namespace AQM_Algo_Trading_Addin_CGR
         private void loadHtmlData()
         {
             sourceHTML = webClient.DownloadString(url);
-            //replace specialities like &auml with ä, etc.
             sourceHTML = HttpUtility.HtmlDecode(sourceHTML);
         }
 
@@ -271,6 +266,8 @@ namespace AQM_Algo_Trading_Addin_CGR
         {
             //return useExtractionVariant1("data-push=", ":high:1:1:Stock> " + extractDayHigh() + " /", " <");
             //return useExtractionVariant2();
+
+            //TODO: Extract Low-Price
             return "LOW";
         }
 

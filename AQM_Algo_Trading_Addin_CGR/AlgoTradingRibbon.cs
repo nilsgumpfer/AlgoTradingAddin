@@ -811,7 +811,7 @@ namespace AQM_Algo_Trading_Addin_CGR
                                 Globals.ThisAddIn.Application.ActiveCell,
                                 dataManager.getColumnsToDraw_forOnVistaLiveStockData());
 
-            dataManager.subscribeForLiveConnection("BMW",myTable,LiveConnectors.OnVistaDummy);
+            dataManager.subscribeForLiveConnection("LHA",myTable,LiveConnectors.OnVista);
         }
 
         private void button5_Click(object sender, RibbonControlEventArgs e)
@@ -1047,6 +1047,11 @@ namespace AQM_Algo_Trading_Addin_CGR
         private void onLoadPause_Click(object sender, RibbonControlEventArgs e)
         {
             DataManager.getInstance().pausePushWorkers();
+
+            if(onLoadPause.Label == "Pausiere Laden")
+                onLoadPause.Label = "Weiter laden";
+            else
+                onLoadPause.Label = "Pausiere Laden";
         }
 
         private void onStopLoad_Click(object sender, RibbonControlEventArgs e)
