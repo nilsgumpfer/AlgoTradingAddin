@@ -153,6 +153,9 @@ namespace AQM_Algo_Trading_Addin_CGR
             string endRangeColumn = "";
             string startRangeTimestamp = "";
             string endRangeTimpestamp = "";
+
+            Excel.Range rng = (Excel.Range)wsLiveData.Cells[1, foundColumn];
+            //string address = rng.Address[false, false, XlReferenceStyle.xlA1];
             Microsoft.Office.Interop.Excel.Range chartRangeAktienkurs =
             wsLiveData.get_Range("RangeColumn, TimestampColumn");
 
