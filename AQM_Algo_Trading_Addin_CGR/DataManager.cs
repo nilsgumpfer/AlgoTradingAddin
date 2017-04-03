@@ -79,19 +79,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             //create worker only in case of new symbol
             if(worker == null)
             {
-<<<<<<< HEAD
                 worker = new PushWorker(variant, symbol);                                 
-=======
-                //**********************************************!!!TESTING!!!*****************************************************
-                //****************************************************************************************************************
-
-                worker = new PushWorker(LiveConnectors.OnVistaDummy, symbol); //TODO: This is just for development and test-usage!
-                //worker = new PushWorker(LiveConnectors.OnVista, symbol);
-
-                //****************************************************************************************************************
-                //**********************************************!!!TESTING!!!*****************************************************
-
->>>>>>> master
                 DBUpdater dbUpdater = new DBUpdater();
 
                 //stash objects for later use
