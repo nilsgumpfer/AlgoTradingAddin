@@ -14,7 +14,7 @@ namespace AQM_Algo_Trading_Addin_CGR
     {
 
         public CustomTaskPane SharePane { get; private set; }
-        public AlgoControl ac = new AlgoControl();
+        public AlgoControlPanel ac = new AlgoControlPanel();
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
             new AlgoTradingRibbon();

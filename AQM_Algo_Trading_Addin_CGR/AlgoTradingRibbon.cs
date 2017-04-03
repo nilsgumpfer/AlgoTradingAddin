@@ -63,140 +63,6 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         }
 
-
-
-        //private void button1_Click(object sender, RibbonControlEventArgs e)
-        //{
-        //    String aktiensymbole_eingabe = Microsoft.VisualBasic.Interaction.InputBox("Bitte Aktienwerte mit Leerzeichen getrennt eingeben!", "Aktienwerte eingeben", "");
-
-        //    aktienSymbole = null;
-        //    aktienSymbole = aktiensymbole_eingabe.Split(' ');
-        //    generiereAktienwerte();
-        //    erstelleWorkerThreads();
-        //    starteWorkerThreads();
-        //}
-
-        ////private void button1_Click(object sender, RibbonControlEventArgs e)
-        ////{
-        ////    String aktiensymbole_eingabe = Microsoft.VisualBasic.Interaction.InputBox("Bitte Aktienwerte mit Leerzeichen getrennt eingeben!", "Aktienwerte eingeben", "");
-
-        ////    aktienSymbole = null;
-        ////    aktienSymbole = aktiensymbole_eingabe.Split(' ');
-        ////    generiereAktienwerte();
-        ////    erstelleWorkerThreads();
-        ////    starteWorkerThreads();
-        ////}
-
-        //private void generiereAktienwerte()
-        //{
-        //    aktuelleAktienwerte.Clear();
-
-        //    foreach (var item in aktienSymbole)
-        //    {
-        //        Aktienwert aktienwert = new Aktienwert(item, false);
-        //        aktuelleAktienwerte.Add(aktienwert);
-        //    }
-        //}
-
-        //private void erstelleWorkerThreads()
-        //{
-        //    workerObjects.Clear();
-        //    workerThreads.Clear();
-
-        //    foreach (var item in aktuelleAktienwerte)
-        //    {
-        //        MySQLStockDataConnector dbConnection = new MySQLStockDataConnector();
-        //        BackgroundCrawler worker = new BackgroundCrawler(item);
-        //        Thread thread = new Thread(worker.loadStockData);
-        //        thread.Name = item.getAktienSymbol();
-        //        dbConnections.Add(dbConnection);
-        //        workerObjects.Add(worker);
-        //        workerThreads.Add(thread);
-        //        //worker.subscribe(this);
-        //        worker.subscribe(dbConnection);
-        //    }
-        //}
-
-        //private void starteWorkerThreads()
-        //{
-        //    foreach (var item in workerThreads)
-        //    {
-        //        item.Start();
-        //    }
-        //}
-
-        //private void stoppeWorkerThreads()
-        //{
-        //    foreach (var item in workerObjects)
-        //    {
-        //        item.stopWork();
-        //    }
-        //}
-        //public void notify(Observable<Aktienwert> caller)
-        //{
-        //    Aktienwert aktie = caller.getMessage();
-
-        //    foreach (var item in aktuelleAktienwerte)
-        //    {
-        //        if (item.getAktienSymbol() == aktie.getAktienSymbol())
-        //        {
-        //            item.setAktienKurs(aktie.getAktienKurs());
-        //            //Control.Invoke(new UpdateListViewItem(updateListViewItem), new object[] { aktie });
-        //            break;
-        //        }
-        //    }
-        //}
-
-        //private void updateListViewItem(Aktienwert aktie)
-        //{
-        //    bool found = false;
-        //    int iAktienSymbol = 0;
-        //    int iAktienName = 1;
-        //    int iAktienKurs = 2;
-        //    int iVolumen = 3;
-        //    int iTimestampGehandelt = 4;
-        //    int iHandelsPlatz = 5;
-        //    int iProvider = 6;
-        //    /*
-        //    foreach (ListViewItem item in listView1.Items)
-        //    {
-        //        if (item.SubItems[iAktienSymbol].Text == aktie.getAktienSymbol())
-        //        {
-        //            found = true;
-        //            item.SubItems[iAktienSymbol].Text = aktie.getAktienSymbol();
-        //            item.SubItems[iAktienName].Text = aktie.getAktienName();
-        //            item.SubItems[iAktienKurs].Text = aktie.getAktienKurs();
-        //            item.SubItems[iVolumen].Text = aktie.getAktienVolumen();
-        //            item.SubItems[iTimestampGehandelt].Text = aktie.getTimestampGehandelt();
-        //            item.SubItems[iHandelsPlatz].Text = aktie.getHandelsPlatz();
-        //            item.SubItems[iProvider].Text = aktie.getProvider();
-        //            break;
-        //        }
-        //    }
-
-        //    if (found == false)
-        //        listView1.Items.Add(new ListViewItem(new string[]
-        //        {
-        //            aktie.getAktienSymbol(),
-        //            aktie.getAktienName(),
-        //            aktie.getAktienKurs(),
-        //            aktie.getAktienVolumen(),
-        //            aktie.getTimestampGehandelt(),
-        //            aktie.getHandelsPlatz(),
-        //            aktie.getProvider()
-        //        }));
-
-        //    listView1.Update();*/
-        //}
-
-
-
-        private void verbindungAufbauen(string datasource, string port, string username, string password)
-        {
-            string verbindungsParameter = "datasource=" + datasource + ";port=" + port + ";username=" + username + ";password=" + password;
-            mySQLVerbindung = new MySqlConnection(verbindungsParameter);
-        }
-
         private void CB_Typ_Live_Click(object sender, RibbonControlEventArgs e)
         {
             if (CB_Quelle_Lokal.Checked == true)
@@ -532,16 +398,117 @@ namespace AQM_Algo_Trading_Addin_CGR
             }
             if (selectedOptions == 3)
             {
-                //    //DataManager erzeugen
-                }
+                Konfigurator view = new Konfigurator();
+                view.ShowDialog();
 
-                //Aktives Tabellenblatt}
-                else {
-                    MessageBox.Show("Es sind nicht alle nötigen Optionen ausgefüllt! Bitte Auswahl überprüfen!");
-                    return;
+                Workbook workBook;
+                Worksheet workSheet = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet);
+                Excel.Range position = Globals.ThisAddIn.Application.Cells[1, 1];
 
+                //TODO: Hier vielleicht noch nachbessern :)
+                string stockSymbol = view.comboBox1.SelectedItem.ToString();
+                DateTime dateFrom = view.dateTimePicker1.Value;
+                DateTime dateTo = view.dateTimePicker2.Value;
+
+                DataManager dataManager = DataManager.getInstance();
+                TableObject tableObject = null;
+                LiveConnectors liveVariant = LiveConnectors.OnVistaDummy;
+
+                List<int> columnsToDraw = null;
+                List<StockDataTransferObject> listOfRecords = null;
+
+                if (view.hasBeenCancelled == false)
+                {
+                    //************************* Position *************************************
+                    //Aktive Zelle
+                    if (CB_Ziel_Cursor.Checked)
+                    {
+                        position = Globals.ThisAddIn.Application.ActiveCell;
+                    }
+
+                    //Aktuelles Tabellenblatt
+                    else if (CB_Ziel_AktuellesTB.Checked)
+                    {
+                        //nutze Standards
+                    }
+
+                    //Neues Tabellenblatt
+                    else if (CB_Ziel_NeuesTB.Checked)
+                    {
+                        workBook = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook);
+                        String tabellenblattName = Microsoft.VisualBasic.Interaction.InputBox("Bitte Tabellenblattnamen eingeben!", "Tabellenblattname eingeben", "");
+                        foreach (Excel.Worksheet sheet in workBook.Worksheets)
+                        {
+                            if (sheet.Name.ToString() == tabellenblattName)
+                            {
+                                MessageBox.Show("Tabellenblattname bereits vorhanden! Bitte erneut ausführen!");
+                                return;
+                            }
+                        }
+                        workSheet = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook.Worksheets.Add());
+                        workSheet.Name = tabellenblattName;
+                    }
+                    //************************* Position *************************************
+
+                    //************************* Historisch ***********************************
+                    
+                    //Yahoo API
+                    if (CB_Quelle_Yahoo.Checked)
+                    {
+                        listOfRecords = dataManager.getHistoricalStockData(stockSymbol, dateFrom, dateTo, YahooFinanceAPI_Resolution.Daily);
+                        columnsToDraw = dataManager.getColumnsToDraw_forYahooHistoricalData();
+                    }
+
+                    //Lokale Daten
+                    else if(CB_Quelle_Lokal.Checked)
+                    {
+                        listOfRecords = dataManager.getLocallySavedStockData(stockSymbol, dateFrom, dateTo);
+                        columnsToDraw = dataManager.getColumnsToDraw_Standard();
+                    }
+
+                    //************************* Historisch ***********************************
+
+                    //************************* Live *****************************************
+
+                    //OnVista Live
+                    if (CB_Quelle_Onvista.Checked)
+                    {
+                        liveVariant = LiveConnectors.OnVista; 
+                    }
+
+                    //Dummy Live
+                    else if(CB_Quelle_Dummy.Checked)
+                    {
+                        liveVariant = LiveConnectors.OnVistaDummy;
+                    }
+
+                    //************************* Live *****************************************
+
+                    //************************* Zusammenführung ******************************
+
+                    //Zusammenführung für historische Variante
+                    if (CB_Quelle_Yahoo.Checked || CB_Quelle_Lokal.Checked)
+                    {
+                        tableObject = new TableObject(workSheet, position, listOfRecords, columnsToDraw);
+                        tableObject.drawAll();
+                    }
+
+                    //Zusammenführung für Live-Variante
+                    else if (CB_Quelle_Onvista.Checked || CB_Quelle_Dummy.Checked)
+                    {
+                        tableObject = new TableObject(workSheet, position, dataManager.getColumnsToDraw_LiveStockData());
+                        dataManager.subscribeForLiveConnection(stockSymbol, tableObject, liveVariant);
+                        tableObject.drawAll();
+                    }
+
+                    //************************* Zusammenführung ******************************
                 }
             }
+            else
+            {
+                MessageBox.Show("Es sind nicht alle nötigen Optionen ausgefüllt! Bitte Auswahl überprüfen!");
+            }
+        }
 
         private void BTN_Test_Click(object sender, RibbonControlEventArgs e)
         {
@@ -570,7 +537,7 @@ namespace AQM_Algo_Trading_Addin_CGR
 
             try
             {
-                verbindungAufbauen("localhost", "3306", "root", "");
+                //verbindungAufbauen("localhost", "3306", "root", "");
                 mySQLVerbindung.Open();
 
                 mySQLCommand = new MySqlCommand(select_aktienwert_Query, mySQLVerbindung);
@@ -622,7 +589,7 @@ namespace AQM_Algo_Trading_Addin_CGR
 
             try
             {
-                verbindungAufbauen("localhost", "3306", "root", "");
+                //verbindungAufbauen("localhost", "3306", "root", "");
                 mySQLVerbindung.Open();
 
                 mySQLCommand = new MySqlCommand(select_aktienwert_Query, mySQLVerbindung);
@@ -683,7 +650,7 @@ namespace AQM_Algo_Trading_Addin_CGR
 
             try
             {
-                verbindungAufbauen("localhost", "3306", "root", "");
+                //verbindungAufbauen("localhost", "3306", "root", "");
                 mySQLVerbindung.Open();
 
                 mySQLCommand = new MySqlCommand(select_aktienwert_Query, mySQLVerbindung);
@@ -809,7 +776,7 @@ namespace AQM_Algo_Trading_Addin_CGR
                                 Globals.Factory.GetVstoObject(
                                     Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet),
                                 Globals.ThisAddIn.Application.ActiveCell,
-                                dataManager.getColumnsToDraw_forOnVistaLiveStockData());
+                                dataManager.getColumnsToDraw_LiveStockData());
 
             dataManager.subscribeForLiveConnection("LHA",myTable,LiveConnectors.OnVista);
         }
@@ -861,7 +828,7 @@ namespace AQM_Algo_Trading_Addin_CGR
                                                 view.dateTimePicker1.Value,
                                                 view.dateTimePicker2.Value
                                             ),*/
-                                            dataManager.getColumnsToDraw_forHistoricalStockData()
+                                            dataManager.getColumnsToDraw_forYahooHistoricalData()
                                           );
 
                     progress.progressBar1.Value = 80;
@@ -979,7 +946,7 @@ namespace AQM_Algo_Trading_Addin_CGR
                                             view.dateTimePicker2.Value,
                                             YahooFinanceAPI_Resolution.Daily
                                         ),
-                                        dataManager.getColumnsToDraw_forHistoricalStockData()
+                                        dataManager.getColumnsToDraw_forYahooHistoricalData()
                                       );
 
 
@@ -1007,18 +974,21 @@ namespace AQM_Algo_Trading_Addin_CGR
 
             progress.progressBar1.Value = 80;
             dataManager.subscribeForLiveConnection(view.comboBox1.SelectedItem.ToString(), liveDataTableObject, LiveConnectors.OnVistaDummy);
-
+            dataManager.pausePushWorkers(); //lege Worker schlafen
             progress.progressBar1.Value = 85;
 
             DiagramObject myDiagram = new DiagramObject(liveDataTableObject, historicalDataTableObject, view.comboBox1.SelectedItem.ToString());
 
                 progress.progressBar1.Value = 90;
-                //Algo algorithmus = new Algo(Globals.ThisAddIn.ac, view.comboBox1.SelectedItem.ToString());
-                //Globals.ThisAddIn.SharePane.Visible = true;
+                
+                Algo algorithmus = new Algo(Globals.ThisAddIn.ac, view.comboBox1.SelectedItem.ToString(), LiveConnectors.OnVistaDummy);
+                Globals.ThisAddIn.SharePane.Visible = true;
 
                 progress.progressBar1.Value = 95;
                 progress.progressBar1.Value = 100;
             progress.Close();
+
+                dataManager.pausePushWorkers(); //wecke Worker wieder auf
 
             }
         }
@@ -1033,7 +1003,7 @@ namespace AQM_Algo_Trading_Addin_CGR
                                 Globals.ThisAddIn.Application.Cells[1, 1]);
 
             dataManager.subscribeForLiveConnection("BMW", myTable, LiveConnectors.OnVistaDummy);
-            Algo algorithmus = new Algo(Globals.ThisAddIn.ac, "BMW");
+            Algo algorithmus = new Algo(Globals.ThisAddIn.ac, "BMW", LiveConnectors.OnVistaDummy);
             Globals.ThisAddIn.SharePane.Visible = true;
 
         }

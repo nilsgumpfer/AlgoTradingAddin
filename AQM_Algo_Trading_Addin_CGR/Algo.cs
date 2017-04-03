@@ -8,12 +8,12 @@ namespace AQM_Algo_Trading_Addin_CGR
 {
     class Algo : LiveConnectionSubscriber
     {
-        public Algo(AlgoControl ac, string symbol)
+        public Algo(AlgoControlPanel algoControlPanel, string symbol, LiveConnectors variant)
         {
             DataManager dataManager = DataManager.getInstance();
-            dataManager.subscribeForLiveConnection("BMW", this, LiveConnectors.OnVistaDummy);
-            this.ac = ac;
-            ac.lblKS_Saldo.Text = (Convert.ToString(kontostand));
+            dataManager.subscribeForLiveConnection(symbol, this, variant);
+            this.algoControlPanel = algoControlPanel;
+            algoControlPanel.lblKS_Saldo.Text = (Convert.ToString(kontostand));
         }
 
         private double startaktienwert = 0;
@@ -23,14 +23,14 @@ namespace AQM_Algo_Trading_Addin_CGR
         private int zahlVerlust = 0;
         private int initStart = 0;
         private string status;
-        private AlgoControl ac;
+        private AlgoControlPanel algoControlPanel;
         private double kontostand = 10000.00;
 
         public void updateMeWithNewData(StockDataTransferObject newRecord)
         {
             letzterwert = aktuelleraktienwert;
             aktuelleraktienwert = Convert.ToDouble(newRecord.price);
-
+            
             if (letzterwert != 0 && aktuelleraktienwert > letzterwert)
             {
                 initStart = initStart + 1;
@@ -78,12 +78,12 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         private void setDataInRibbon(double aktuellergewinn, double aktuellerkontostand, System.Drawing.Color statusfarbe)
         {
-            ac.lblAlgoStatus.Text = status;
-            ac.lblAlgoStatus.ForeColor = statusfarbe;
+            algoControlPanel.lblAlgoStatus.Text = status;
+            algoControlPanel.lblAlgoStatus.ForeColor = statusfarbe;
 
-            ac.lblGewinn.Text = aktuellergewinn.ToString("0.000") + " %";
-            ac.lblKS_Saldo.Text = aktuellerkontostand.ToString("0.00") + " €";
-            ac.lbl_EinstPreis.Text = startaktienwert.ToString() + " €";
+            algoControlPanel.lblGewinn.Text = aktuellergewinn.ToString("0.000") + " %";
+            algoControlPanel.lblKS_Saldo.Text = aktuellerkontostand.ToString("0.00") + " €";
+            algoControlPanel.lbl_EinstPreis.Text = startaktienwert.ToString() + " €";
         }
     }
 }

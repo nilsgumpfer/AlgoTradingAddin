@@ -45,7 +45,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             return mySQLConnector.getHistoricalStockData(stockSymbol, dateFrom, dateTo);
         }
 
-        public List<int> getColumnsToDraw_forHistoricalStockData()
+        public List<int> getColumnsToDraw_forYahooHistoricalData()
         {
             List<int> columnsToDraw = new List<int>();
 
@@ -59,7 +59,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             return columnsToDraw;
         }
 
-        public List<int> getColumnsToDraw_forOnVistaLiveStockData()
+        public List<int> getColumnsToDraw_LiveStockData()
         {
             List<int> columnsToDraw = StockDataTransferObject.getStandardColumnsToDraw();
             
@@ -135,6 +135,11 @@ namespace AQM_Algo_Trading_Addin_CGR
         {
             MySQLConnector mySQLConnector = new MySQLConnector();
             return mySQLConnector.getAvailableSymbols();
+        }
+
+        public List<int> getColumnsToDraw_Standard()
+        {
+            return StockDataTransferObject.getStandardColumnsToDraw();
         }
     }
 }

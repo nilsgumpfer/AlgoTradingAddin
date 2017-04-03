@@ -9,8 +9,6 @@ namespace AQM_Algo_Trading_Addin_CGR
 {
     class StockDataTransferObject
     {
-        private List<string> headline = new List<string>();
-
         public static int posISIN               = 1;
         public static int posWKN                = 2;
         public static int posSymbol             = 3;
@@ -36,29 +34,6 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         public StockDataTransferObject()
         {
-            //this order has to be kept equal to data-export/column-order!
-            headline.Add("ISIN");
-            headline.Add("WKN");
-            headline.Add("Symbol");
-            headline.Add("Sektor");
-            headline.Add("Kurs");
-            headline.Add("Volumen");
-            headline.Add("Trend (abs.)");
-            headline.Add("Trend (%)");
-            headline.Add("Eröffnungskurs");
-            headline.Add("Schlusskurs Vortag");
-            headline.Add("Adj.Close");
-            headline.Add("Hoch");
-            headline.Add("Tief");
-            headline.Add("Volumen gesamt");
-            headline.Add("Timestamp Kurs");
-            headline.Add("Timestamp Volumen");
-            headline.Add("Timestamp");
-            headline.Add("Provider");
-            headline.Add("Handelsplatz");
-            headline.Add("Name");
-            headline.Add("Currency");
-            headline.Add("Schlusskurs");
         }
 
         public static List<int> getStandardColumnsToDraw()
@@ -115,9 +90,35 @@ namespace AQM_Algo_Trading_Addin_CGR
         public string suffix_onvista { get; set; }
 
 
-        public List<string> getHeadlineAsList()
+        public static List<string> getHeadlineAsList()
         {
-           return headline;
+            List<string> headline = new List<string>();
+
+            //this order has to be kept equal to data-export/column-order!
+            headline.Add("ISIN");
+            headline.Add("WKN");
+            headline.Add("Symbol");
+            headline.Add("Sektor");
+            headline.Add("Kurs");
+            headline.Add("Volumen");
+            headline.Add("Trend (abs.)");
+            headline.Add("Trend (%)");
+            headline.Add("Eröffnungskurs");
+            headline.Add("Schlusskurs Vortag");
+            headline.Add("Adj.Close");
+            headline.Add("Hoch");
+            headline.Add("Tief");
+            headline.Add("Volumen gesamt");
+            headline.Add("Timestamp Kurs");
+            headline.Add("Timestamp Volumen");
+            headline.Add("Timestamp");
+            headline.Add("Provider");
+            headline.Add("Handelsplatz");
+            headline.Add("Name");
+            headline.Add("Currency");
+            headline.Add("Schlusskurs");
+
+            return headline;
         }
 
         public List<string> getLineAsList()

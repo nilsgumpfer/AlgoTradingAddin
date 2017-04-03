@@ -1,6 +1,6 @@
 ﻿namespace AQM_Algo_Trading_Addin_CGR
 {
-    partial class AlgoControl
+    partial class AlgoControlPanel
     {
         /// <summary> 
         /// Erforderliche Designervariable.

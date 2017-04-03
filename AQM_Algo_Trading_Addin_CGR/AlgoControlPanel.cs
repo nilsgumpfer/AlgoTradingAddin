@@ -10,10 +10,10 @@ using System.Windows.Forms;
 
 namespace AQM_Algo_Trading_Addin_CGR
 {
-    public partial class AlgoControl : UserControl
+    public partial class AlgoControlPanel : UserControl
     {
 
-        public AlgoControl()
+        public AlgoControlPanel()
         {
             InitializeComponent();
         }

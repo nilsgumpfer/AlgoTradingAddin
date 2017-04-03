@@ -80,7 +80,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             this.startPosition = startPosition;
             initStartPosition();
             if(records.Count>0)
-                this.headline = records[0].getHeadlineAsList();
+                this.headline = StockDataTransferObject.getHeadlineAsList();
             else
                 this.headline = new List<string>();
             this.content = new List<List<string>>();
@@ -95,6 +95,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             this.worksheet = worksheet;
             this.startPosition = startPosition;
             initStartPosition();
+            this.headline = StockDataTransferObject.getHeadlineAsList();
             this.columnsToDraw = columnsToDraw;
             this.content = new List<List<string>>();
         }
@@ -193,7 +194,7 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         public void updateMeWithNewData(StockDataTransferObject newRecord)
         {
-            headline = newRecord.getHeadlineAsList();
+            headline = StockDataTransferObject.getHeadlineAsList();
             content.Add(newRecord.getLineAsList());
 
             if (headlineVisible == false)
@@ -208,7 +209,7 @@ namespace AQM_Algo_Trading_Addin_CGR
         //********************************************** Draw-Funktionen **********************************************************
 
 
-        public void draw(bool delete)
+        private void draw(bool delete)
         {
             if (delete)
                 deleteHeadline();

@@ -159,11 +159,11 @@
   -->
   <ItemGroup>
     <Compile Include="Algo.cs" />
-    <Compile Include="AlgoControl.cs">
+    <Compile Include="AlgoControlPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="AlgoControl.Designer.cs">
-      <DependentUpon>AlgoControl.cs</DependentUpon>
+    <Compile Include="AlgoControlPanel.Designer.cs">
+      <DependentUpon>AlgoControlPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="AlgoTradingRibbon.cs">
       <SubType>Component</SubType>
@@ -213,8 +213,8 @@
     <Compile Include="DiagramObject.cs" />
     <Compile Include="TableObject.cs" />
     <Compile Include="YahooFinanceAPIConnector.cs" />
-    <EmbeddedResource Include="AlgoControl.resx">
-      <DependentUpon>AlgoControl.cs</DependentUpon>
+    <EmbeddedResource Include="AlgoControlPanel.resx">
+      <DependentUpon>AlgoControlPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AlgoTradingRibbon.resx">
       <DependentUpon>AlgoTradingRibbon.cs</DependentUpon>
@@ -247,6 +247,7 @@
     <None Include="AQM_Algo_Trading_Addin_CGR_14_TemporaryKey.pfx" />
     <None Include="AQM_Algo_Trading_Addin_CGR_15_TemporaryKey.pfx" />
     <None Include="AQM_Algo_Trading_Addin_CGR_16_TemporaryKey.pfx" />
+    <None Include="AQM_Algo_Trading_Addin_CGR_17_TemporaryKey.pfx" />
     <None Include="AQM_Algo_Trading_Addin_CGR_1_TemporaryKey.pfx" />
     <None Include="AQM_Algo_Trading_Addin_CGR_2_TemporaryKey.pfx" />
     <None Include="AQM_Algo_Trading_Addin_CGR_3_TemporaryKey.pfx" />
@@ -285,10 +286,10 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>AQM_Algo_Trading_Addin_CGR_16_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>AQM_Algo_Trading_Addin_CGR_17_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>79269908139908BA304138D6672B2D624A4D4851</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>FBB3268D8BAB0C56A2D3F113F52172DD030B9FA5</ManifestCertificateThumbprint>
   </PropertyGroup>
   <!-- Include the build rules for a C# project. -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

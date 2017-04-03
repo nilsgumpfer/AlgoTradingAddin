@@ -16,6 +16,7 @@ namespace AQM_Algo_Trading_Addin_CGR
         private Thread thread;
         private bool doPause = false;
         public LiveConnectors variant { get; }
+        private int debugCount = 0;
 
         private PushWorker()
         {
@@ -53,13 +54,13 @@ namespace AQM_Algo_Trading_Addin_CGR
         {
             while (doThreading)
             {
+                while (doPause)
+                    Thread.Sleep(1000);
+
                 StockDataTransferObject sdtObject = liveConnector.getStockData();
 
                 if (liveConnector.checkChange())
                     updateSubscribers(sdtObject);
-
-                while (doPause)
-                    Thread.Sleep(1000);
             }
         }
 
@@ -87,11 +88,13 @@ namespace AQM_Algo_Trading_Addin_CGR
         {
             foreach(LiveConnectionSubscriber subscriber in listOfSubscribers)
             {
+                debugCount++;
+                Logger.log("UpdateSubscribers: " + debugCount);
                 subscriber.updateMeWithNewData(record);
             }
         }
 
-        internal void pauseWork()
+        public void pauseWork()
         {
             doPause = !doPause;
 
