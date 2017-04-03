@@ -50,11 +50,23 @@ namespace AQM_Algo_Trading_Addin_CGR
             List<int> columnsToDraw = new List<int>();
 
             columnsToDraw.Add(StockDataTransferObject.posHigh);
-            //columnsToDraw.Add(StockDataTransferObject.posTotalVolume);
             columnsToDraw.Add(StockDataTransferObject.posAdjClose);
             columnsToDraw.Add(StockDataTransferObject.posLow);
             columnsToDraw.Add(StockDataTransferObject.posClose);
             columnsToDraw.Add(StockDataTransferObject.posOpen);
+
+            return columnsToDraw;
+        }
+
+        public List<int> getColumnsToDraw_forOnVistaLiveStockData()
+        {
+            List<int> columnsToDraw = StockDataTransferObject.getStandardColumnsToDraw();
+            
+            columnsToDraw.Remove(StockDataTransferObject.posLow);
+            columnsToDraw.Remove(StockDataTransferObject.posAdjClose);
+            columnsToDraw.Remove(StockDataTransferObject.posTimestampPrice);
+            columnsToDraw.Remove(StockDataTransferObject.posTimestampVolume);
+            columnsToDraw.Remove(StockDataTransferObject.posClose);
 
             return columnsToDraw;
         }
@@ -70,8 +82,8 @@ namespace AQM_Algo_Trading_Addin_CGR
                 //**********************************************!!!TESTING!!!*****************************************************
                 //****************************************************************************************************************
 
-                worker = new PushWorker(LiveConnectors.OnVistaDummy, symbol); //TODO: This is just for development and test-usage!
-                //worker = new PushWorker(LiveConnectors.OnVista, symbol);
+                //worker = new PushWorker(LiveConnectors.OnVistaDummy, symbol); //TODO: This is just for development and test-usage!
+                worker = new PushWorker(LiveConnectors.OnVista, symbol);
 
                 //****************************************************************************************************************
                 //**********************************************!!!TESTING!!!*****************************************************

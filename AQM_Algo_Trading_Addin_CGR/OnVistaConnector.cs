@@ -18,7 +18,7 @@ namespace AQM_Algo_Trading_Addin_CGR
         private string urlSuffix;
         private string timestampFormat  = "yyyy-MM-dd HH:mm:ss";
         private string errorPlaceholder = "N/A";
-        private double lastVolume       = 0.0;
+        private int lastVolume       = 0;
         private StockDataTransferObject lastRecord = new StockDataTransferObject();
         private StockDataTransferObject newRecord = new StockDataTransferObject();
 
@@ -168,14 +168,14 @@ namespace AQM_Algo_Trading_Addin_CGR
         {
             try
             {
-                if (lastVolume == 0.0)
+                if (lastVolume == 0)
                 {
-                    lastVolume = Convert.ToDouble(extractDayVolume());
+                    lastVolume = Convert.ToInt32(extractDayVolume());
                     return errorPlaceholder;
                 }
                 else
                 {
-                    double deltaVolume = Convert.ToDouble(extractDayVolume()) - lastVolume;
+                    int deltaVolume = Convert.ToInt32(extractDayVolume()) - lastVolume;
                     return deltaVolume.ToString();
                 }
             }
@@ -187,7 +187,7 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         private string extractDayVolume()
         {
-            return useExtractionVariant1("totalVolume");
+            return useExtractionVariant1("totalVolume").Replace(".","");
         }
 
         private string useExtractionVariant1(string keyWord)
@@ -296,7 +296,7 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         private string extractTimestampVolume()
         {
-            return DateTime.Now.ToString(timestampFormat);
+            return parseDateTimeToTimestamp(extractDataAndTimeGeneral());
         }
 
         private string extractTimestampOtherData()

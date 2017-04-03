@@ -77,7 +77,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             columnList.Add(posPreDayClose);
             columnList.Add(posAdjClose);
             columnList.Add(posHigh);
-            columnList.Add(posHigh);
+            columnList.Add(posLow);
             columnList.Add(posTotalVolume);
             columnList.Add(posTimestampPrice);
             columnList.Add(posTimestampVolume);

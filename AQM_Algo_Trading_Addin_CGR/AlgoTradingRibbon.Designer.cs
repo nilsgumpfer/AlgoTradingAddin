@@ -44,6 +44,7 @@
             this.CB_Quelle_Lokal = this.Factory.CreateRibbonCheckBox();
             this.CB_Quelle_Onvista = this.Factory.CreateRibbonCheckBox();
             this.CB_Quelle_Yahoo = this.Factory.CreateRibbonCheckBox();
+            this.checkBox1 = this.Factory.CreateRibbonCheckBox();
             this.group4 = this.Factory.CreateRibbonGroup();
             this.CB_Ziel_NeuesTB = this.Factory.CreateRibbonCheckBox();
             this.CB_Ziel_AktuellesTB = this.Factory.CreateRibbonCheckBox();
@@ -67,6 +68,8 @@
             this.button6 = this.Factory.CreateRibbonButton();
             this.button7 = this.Factory.CreateRibbonButton();
             this.button9 = this.Factory.CreateRibbonButton();
+            this.onLoadPause = this.Factory.CreateRibbonButton();
+            this.onStopLoad = this.Factory.CreateRibbonButton();
             this.group9 = this.Factory.CreateRibbonGroup();
             this.button8 = this.Factory.CreateRibbonButton();
             this.lblKontostand = this.Factory.CreateRibbonLabel();
@@ -76,9 +79,6 @@
             this.group2 = this.Factory.CreateRibbonGroup();
             this.checkBox3 = this.Factory.CreateRibbonCheckBox();
             this.BTN_Test1 = this.Factory.CreateRibbonButton();
-            this.checkBox1 = this.Factory.CreateRibbonCheckBox();
-            this.onLoadPause = this.Factory.CreateRibbonButton();
-            this.onStopLoad = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.group1.SuspendLayout();
             this.group3.SuspendLayout();
@@ -110,7 +110,7 @@
             this.group1.Items.Add(this.CB_Typ_Live);
             this.group1.Items.Add(this.button1);
             this.group1.Items.Add(this.button2);
-            this.group1.Label = "group1";
+            this.group1.Label = "Datenart";
             this.group1.Name = "group1";
             // 
             // CB_Typ_Historisch
@@ -161,6 +161,11 @@
             this.CB_Quelle_Yahoo.Label = "YahooFinance";
             this.CB_Quelle_Yahoo.Name = "CB_Quelle_Yahoo";
             this.CB_Quelle_Yahoo.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.CB_Quelle_Yahoo_Click);
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.Label = "DummyDaten";
+            this.checkBox1.Name = "checkBox1";
             // 
             // group4
             // 
@@ -315,6 +320,18 @@
             this.button9.Name = "button9";
             this.button9.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button9_Click);
             // 
+            // onLoadPause
+            // 
+            this.onLoadPause.Label = "Pausiere Laden";
+            this.onLoadPause.Name = "onLoadPause";
+            this.onLoadPause.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.onLoadPause_Click);
+            // 
+            // onStopLoad
+            // 
+            this.onStopLoad.Label = "Stoppe Laden";
+            this.onStopLoad.Name = "onStopLoad";
+            this.onStopLoad.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.onStopLoad_Click);
+            // 
             // group9
             // 
             this.group9.Items.Add(this.button8);
@@ -366,22 +383,6 @@
             this.BTN_Test1.Label = "Tabelle bei aktiver Zelle einfügen";
             this.BTN_Test1.Name = "BTN_Test1";
             this.BTN_Test1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.BTN_Test_Click);
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.Label = "DummyDaten";
-            this.checkBox1.Name = "checkBox1";
-            // onLoadPause
-            // 
-            this.onLoadPause.Label = "Pausiere Laden";
-            this.onLoadPause.Name = "onLoadPause";
-            this.onLoadPause.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.onLoadPause_Click);
-            // 
-            // onStopLoad
-            // 
-            this.onStopLoad.Label = "Stoppe Laden";
-            this.onStopLoad.Name = "onStopLoad";
-            this.onStopLoad.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.onStopLoad_Click);
             // 
             // AlgoTradingRibbon
             // 

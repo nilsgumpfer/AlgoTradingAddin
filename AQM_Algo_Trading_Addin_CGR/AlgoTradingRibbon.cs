@@ -900,9 +900,10 @@ namespace AQM_Algo_Trading_Addin_CGR
             TableObject myTable = new TableObject(
                                 Globals.Factory.GetVstoObject(
                                     Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet),
-                                Globals.ThisAddIn.Application.ActiveCell);
+                                Globals.ThisAddIn.Application.ActiveCell,
+                                dataManager.getColumnsToDraw_forOnVistaLiveStockData());
 
-            dataManager.subscribeForLiveConnection("",myTable);
+            dataManager.subscribeForLiveConnection("BMW",myTable);
         }
 
         private void button5_Click(object sender, RibbonControlEventArgs e)
@@ -929,19 +930,19 @@ namespace AQM_Algo_Trading_Addin_CGR
                                             Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet
                                         ),
                                         Globals.ThisAddIn.Application.ActiveCell,
-                                        /*dataManager.getHistoricalStockData
+                                        dataManager.getHistoricalStockData
                                         (
                                             view.comboBox1.SelectedItem.ToString(),
                                             view.dateTimePicker1.Value, 
                                             view.dateTimePicker2.Value, 
                                             YahooFinanceAPI_Resolution.Daily
-                                        ),*/
+                                        ),/*
                                         dataManager.getLocallySavedStockData
                                         (
                                             view.comboBox1.SelectedItem.ToString(),
                                             view.dateTimePicker1.Value,
                                             view.dateTimePicker2.Value
-                                        ),
+                                        ),*/
                                         dataManager.getColumnsToDraw_forHistoricalStockData()
                                       );
 

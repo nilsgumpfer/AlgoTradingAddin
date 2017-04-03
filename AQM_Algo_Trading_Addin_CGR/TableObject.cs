@@ -86,6 +86,16 @@ namespace AQM_Algo_Trading_Addin_CGR
                 content.Add(record.getLineAsList());
         }
 
+        //Variante 6: Position, ColumnsToDraw
+        public TableObject(Worksheet worksheet, Excel.Range startPosition, List<int> columnsToDraw)
+        {
+            this.worksheet = worksheet;
+            this.startPosition = startPosition;
+            initStartPosition();
+            this.columnsToDraw = columnsToDraw;
+            this.content = new List<List<string>>();
+        }
+
         //********************************************** Konstruktoren ************************************************************
 
         //********************************************** Allgemeine Funktionen ****************************************************
