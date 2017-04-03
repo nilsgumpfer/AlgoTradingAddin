@@ -80,7 +80,7 @@
             // 
             this.lblGewinn.AutoSize = true;
             this.lblGewinn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblGewinn.Location = new System.Drawing.Point(104, 79);
+            this.lblGewinn.Location = new System.Drawing.Point(104, 81);
             this.lblGewinn.Name = "lblGewinn";
             this.lblGewinn.Size = new System.Drawing.Size(11, 13);
             this.lblGewinn.TabIndex = 4;
@@ -89,7 +89,7 @@
             // label_Gewinn
             // 
             this.label_Gewinn.AutoSize = true;
-            this.label_Gewinn.Location = new System.Drawing.Point(3, 79);
+            this.label_Gewinn.Location = new System.Drawing.Point(3, 81);
             this.label_Gewinn.Name = "label_Gewinn";
             this.label_Gewinn.Size = new System.Drawing.Size(46, 13);
             this.label_Gewinn.TabIndex = 5;
@@ -98,7 +98,7 @@
             // label_Einstiegspreis
             // 
             this.label_Einstiegspreis.AutoSize = true;
-            this.label_Einstiegspreis.Location = new System.Drawing.Point(3, 61);
+            this.label_Einstiegspreis.Location = new System.Drawing.Point(3, 59);
             this.label_Einstiegspreis.Name = "label_Einstiegspreis";
             this.label_Einstiegspreis.Size = new System.Drawing.Size(74, 13);
             this.label_Einstiegspreis.TabIndex = 6;
@@ -108,7 +108,7 @@
             // 
             this.lbl_EinstPreis.AutoSize = true;
             this.lbl_EinstPreis.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_EinstPreis.Location = new System.Drawing.Point(104, 61);
+            this.lbl_EinstPreis.Location = new System.Drawing.Point(104, 59);
             this.lbl_EinstPreis.Name = "lbl_EinstPreis";
             this.lbl_EinstPreis.Size = new System.Drawing.Size(11, 13);
             this.lbl_EinstPreis.TabIndex = 7;

@@ -44,7 +44,7 @@
             this.CB_Quelle_Lokal = this.Factory.CreateRibbonCheckBox();
             this.CB_Quelle_Onvista = this.Factory.CreateRibbonCheckBox();
             this.CB_Quelle_Yahoo = this.Factory.CreateRibbonCheckBox();
-            this.checkBox1 = this.Factory.CreateRibbonCheckBox();
+            this.CB_Quelle_Dummy = this.Factory.CreateRibbonCheckBox();
             this.group4 = this.Factory.CreateRibbonGroup();
             this.CB_Ziel_NeuesTB = this.Factory.CreateRibbonCheckBox();
             this.CB_Ziel_AktuellesTB = this.Factory.CreateRibbonCheckBox();
@@ -140,7 +140,7 @@
             this.group3.Items.Add(this.CB_Quelle_Lokal);
             this.group3.Items.Add(this.CB_Quelle_Onvista);
             this.group3.Items.Add(this.CB_Quelle_Yahoo);
-            this.group3.Items.Add(this.checkBox1);
+            this.group3.Items.Add(this.CB_Quelle_Dummy);
             this.group3.Label = "Datenquelle";
             this.group3.Name = "group3";
             // 
@@ -161,11 +161,11 @@
             this.CB_Quelle_Yahoo.Label = "YahooFinance";
             this.CB_Quelle_Yahoo.Name = "CB_Quelle_Yahoo";
             this.CB_Quelle_Yahoo.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.CB_Quelle_Yahoo_Click);
+            //
+            // CB_Quelle_Dummy
             // 
-            // checkBox1
-            // 
-            this.checkBox1.Label = "DummyDaten";
-            this.checkBox1.Name = "checkBox1";
+            this.CB_Quelle_Dummy.Label = "DummyDaten";
+            this.CB_Quelle_Dummy.Name = "CB_Quelle_Dummy";
             // 
             // group4
             // 
@@ -456,7 +456,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonLabel lblKontostand;
         internal Microsoft.Office.Tools.Ribbon.RibbonLabel lblKS_Saldo;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button9;
-        internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox checkBox1;
+        internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox CB_Quelle_Dummy;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton onLoadPause;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton onStopLoad;
     }
