@@ -941,7 +941,10 @@ namespace AQM_Algo_Trading_Addin_CGR
             Konfigurator view = new Konfigurator();
             view.ShowDialog();
 
-            ProgressIndicator progress = new ProgressIndicator();
+            if (view.hasBeenCancelled == false)
+            {
+
+                ProgressIndicator progress = new ProgressIndicator();
             progress.progressBar1.Maximum = 100;
             progress.progressBar1.Minimum = 0;
             progress.progressBar1.Value = 20;
@@ -949,9 +952,6 @@ namespace AQM_Algo_Trading_Addin_CGR
             progress.progressBar1.Value = 25;
 
             DataManager dataManager = DataManager.getInstance();
-
-            if (view.hasBeenCancelled == false)
-            {
 
                 progress.progressBar1.Value = 30;
 
@@ -983,9 +983,6 @@ namespace AQM_Algo_Trading_Addin_CGR
                 progress.progressBar1.Value = 60;
                 
             
-
-            //Thread.Sleep(2000);
-
             //Livedaten
             TableObject liveDataTableObject = new TableObject(
                                 Globals.Factory.GetVstoObject(
@@ -997,14 +994,21 @@ namespace AQM_Algo_Trading_Addin_CGR
             //liveDataTable.changeWorkbookName("OnVista-Livedaten");
             liveDataTableObject.createNewWorksheet("OnVista-Livedaten");
 
-            progress.progressBar1.Value = 85;
-            dataManager.subscribeForLiveConnection("", liveDataTableObject);
+            progress.progressBar1.Value = 80;
+            dataManager.subscribeForLiveConnection(view.comboBox1.SelectedItem.ToString(), liveDataTableObject);
 
-            progress.progressBar1.Value = 95;
+            progress.progressBar1.Value = 85;
 
             DiagramObject myDiagram = new DiagramObject(liveDataTableObject, historicalDataTableObject, view.comboBox1.SelectedItem.ToString());
-            progress.progressBar1.Value = 100;
+
+                progress.progressBar1.Value = 90;
+                //Algo algorithmus = new Algo(Globals.ThisAddIn.ac, view.comboBox1.SelectedItem.ToString());
+                //Globals.ThisAddIn.SharePane.Visible = true;
+
+                progress.progressBar1.Value = 95;
+                progress.progressBar1.Value = 100;
             progress.Close();
+
             }
         }
 
@@ -1015,10 +1019,10 @@ namespace AQM_Algo_Trading_Addin_CGR
             TableObject myTable = new TableObject(
                                 Globals.Factory.GetVstoObject(
                                     Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet),
-                                Globals.ThisAddIn.Application.ActiveCell);
+                                Globals.ThisAddIn.Application.Cells[1, 1]);
 
-            dataManager.subscribeForLiveConnection("", myTable);
-            Algo algorithmus = new Algo(Globals.ThisAddIn.ac);
+            dataManager.subscribeForLiveConnection("BMW", myTable);
+            Algo algorithmus = new Algo(Globals.ThisAddIn.ac, "BMW");
             Globals.ThisAddIn.SharePane.Visible = true;
 
         }

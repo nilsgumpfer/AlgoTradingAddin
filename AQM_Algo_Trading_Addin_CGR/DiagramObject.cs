@@ -22,7 +22,9 @@ namespace AQM_Algo_Trading_Addin_CGR
         private List<List<string>> tableContent;
         private TableObject tableobject;
         private object misValue = System.Reflection.Missing.Value;
-        int foundColumn = 0;
+        private int foundColumnKurs = 0;
+        private int foundColumnVolumen = 0;
+        private int foundColumnTimestamp = 0;
         //Tabellenblatt, aus welchem die Daten gezogen werden aus Table-Object auslesen
         private Excel.Worksheet wsLiveData;
         private Microsoft.Office.Interop.Excel.Chart chartPageAktienkurs;
@@ -57,18 +59,21 @@ namespace AQM_Algo_Trading_Addin_CGR
         public void updateMeWithNewData()
         {   
             //Update Aktienkursdiagramm
-            updateDiagram(wsLiveData, chartPageAktienkurs, StockDataTransferObject.posPrice, tableobject.getContentCount());
+            updateDiagram(wsLiveData, chartPageAktienkurs, StockDataTransferObject.posTimestampOther, StockDataTransferObject.posPrice, tableobject.getContentCount());
             //Update Volumendiagramm
-            updateDiagram(wsLiveData, chartPageVolumen, StockDataTransferObject.posVolume, tableobject.getContentCount());
+            updateDiagram(wsLiveData, chartPageVolumen, StockDataTransferObject.posTimestampOther, StockDataTransferObject.posVolume, tableobject.getContentCount());
         }
 
 
         public void initDiagram()
         {
+            //Column für Timestamp setzen
+            foundColumnTimestamp = StockDataTransferObject.posTimestampOther;
+
             //Aktienkurs
 
             //Spalte Aktienkurs setzen
-            foundColumn = StockDataTransferObject.posPrice;
+            foundColumnKurs = StockDataTransferObject.posPrice;
             
             //Diagramm erstellen
             Microsoft.Office.Interop.Excel.ChartObjects xlChartsAktienkurs =
@@ -80,39 +85,44 @@ namespace AQM_Algo_Trading_Addin_CGR
 
             chartPageAktienkurs.ChartType = Excel.XlChartType.xlLine;
 
+            //Titel für Aktienkursdiagramm setzen
+            myChartAktienkurs.Chart.HasTitle = true;
+            myChartAktienkurs.Chart.ChartTitle.Text = "Akienkurs der " + selectedTicker + " Aktie";
+
             //Tabellenblatt, aus welchem die Daten gezogen werden aus Table-Object auslesen
             wsLiveData = (Excel.Worksheet)workbook.Worksheets["OnVista-Livedaten"];
 
-            //Zu Beginn einmal Updaten
-            updateDiagram(wsLiveData, chartPageAktienkurs, foundColumn, tableobject.getContentCount());
+            //Aktienkursdiagramm zu Beginn einmal updaten
+            updateDiagram(wsLiveData, chartPageAktienkurs, foundColumnTimestamp, foundColumnKurs, tableobject.getContentCount());
 
 
 
             //Volumen
 
             //Spalte Aktienkurs setzen
-            foundColumn = StockDataTransferObject.posVolume;
+            foundColumnVolumen = StockDataTransferObject.posVolume;
 
             //Diagramm erstellen
             Microsoft.Office.Interop.Excel.ChartObjects xlChartsVolumen =
                 (Excel.ChartObjects)worksheet.ChartObjects(Type.Missing);
             Microsoft.Office.Interop.Excel.ChartObject myChartVolumen =
                 (Excel.ChartObject)xlChartsVolumen.Add(530, 10, 500, 280);
-            //Microsoft.Office.Interop.Excel.Chart chartPageAktienkurs = myChartAktienkurs.Chart;
             chartPageVolumen = myChartVolumen.Chart;
 
             chartPageVolumen.ChartType = Excel.XlChartType.xlColumnClustered;
 
+            //Titel für Volumendiagramm setzen
+            myChartVolumen.Chart.HasTitle = true;
+            myChartVolumen.Chart.ChartTitle.Text = "Volumen der " + selectedTicker + " Aktie";
+
             //Tabellenblatt, aus welchem die Daten gezogen werden aus Table-Object auslesen
             wsLiveData = (Excel.Worksheet)workbook.Worksheets["OnVista-Livedaten"];
-            //Excel.Worksheet wsLiveData = (Excel.Worksheet)tableobject.getWorksheetOfTableObject();
 
-            updateDiagram(wsLiveData, chartPageVolumen, foundColumn, tableobject.getContentCount());
-
-
-            ////Historische Daten
+            //Volumendiagramm zu Beginn einmal updaten
+            updateDiagram(wsLiveData, chartPageVolumen, foundColumnTimestamp, foundColumnVolumen, tableobject.getContentCount());
 
 
+            //Historische Daten
             Microsoft.Office.Interop.Excel.Range chartRangeHistoDaten;
             Microsoft.Office.Interop.Excel.ChartObjects xlChartsHistoDaten =
                 (Excel.ChartObjects)worksheet.ChartObjects(Type.Missing);
@@ -128,27 +138,30 @@ namespace AQM_Algo_Trading_Addin_CGR
             chartPageHistoDaten.SetSourceData(chartRangeHistoDaten, misValue);
             chartPageHistoDaten.ChartType = Excel.XlChartType.xlLine;
 
-            //TODO: Titel setzen
-            //myChartHistoDaten.Chart.Name = "Historische Daten der " + selectedTicker + " Aktie.";
-             
-
-
+            //Titel das Diagramms für historische Daten setzen
+                myChartHistoDaten.Chart.HasTitle = true;
+                myChartHistoDaten.Chart.ChartTitle.Text = "Historische Daten der " + selectedTicker + " Aktie";
+         
+          
         }
 
-        public void updateDiagram(Excel.Worksheet wsLiveData, Microsoft.Office.Interop.Excel.Chart chartPageAktienkurs, int foundColumn, int ColumnCount)
+        public void updateDiagram(Excel.Worksheet wsLiveData, Microsoft.Office.Interop.Excel.Chart chartPageAktienkurs, int foundColumnTimestamp, int foundColumn, int ColumnCount)
         {
-            Microsoft.Office.Interop.Excel.Range chartRangeAktienkurs = wsLiveData.Range[wsLiveData.Cells[1, foundColumn], wsLiveData.Cells[ColumnCount+1, foundColumn]];
-            chartPageAktienkurs.SetSourceData(chartRangeAktienkurs, misValue);
+            string startRangeColumn = wsLiveData.Cells.Address[1, foundColumn];
+            MessageBox.Show(startRangeColumn);
 
-            //evtl. noch in try-catch
-            //try
-            //{
-            //    chartPageAktienkurs.SetSourceData(chartRangeAktienkurs, misValue);
-            //}
-            //catch (Exception e)
-            //{
-            //}
-            
+            string endRangeColumn = "";
+            string startRangeTimestamp = "";
+            string endRangeTimpestamp = "";
+            Microsoft.Office.Interop.Excel.Range chartRangeAktienkurs =
+            wsLiveData.get_Range("RangeColumn, TimestampColumn");
+
+            //Microsoft.Office.Interop.Excel.Range chartRangeAktienkurs =
+            //wsLiveData.Range[wsLiveData.Cells[1, foundColumn], wsLiveData.Cells[ColumnCount+1, foundColumn]];
+
+
+
+            chartPageAktienkurs.SetSourceData(chartRangeAktienkurs, misValue);           
         }
 
     }

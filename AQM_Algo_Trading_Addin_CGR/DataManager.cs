@@ -49,6 +49,7 @@ namespace AQM_Algo_Trading_Addin_CGR
         {
             List<int> columnsToDraw = new List<int>();
 
+            columnsToDraw.Add(StockDataTransferObject.posTimestampOther);
             columnsToDraw.Add(StockDataTransferObject.posHigh);
             columnsToDraw.Add(StockDataTransferObject.posAdjClose);
             columnsToDraw.Add(StockDataTransferObject.posLow);
@@ -82,8 +83,8 @@ namespace AQM_Algo_Trading_Addin_CGR
                 //**********************************************!!!TESTING!!!*****************************************************
                 //****************************************************************************************************************
 
-                //worker = new PushWorker(LiveConnectors.OnVistaDummy, symbol); //TODO: This is just for development and test-usage!
-                worker = new PushWorker(LiveConnectors.OnVista, symbol);
+                worker = new PushWorker(LiveConnectors.OnVistaDummy, symbol); //TODO: This is just for development and test-usage!
+                //worker = new PushWorker(LiveConnectors.OnVista, symbol);
 
                 //****************************************************************************************************************
                 //**********************************************!!!TESTING!!!*****************************************************
