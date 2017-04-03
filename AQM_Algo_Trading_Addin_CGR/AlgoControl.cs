@@ -20,28 +20,7 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         private void AlgoControl_Load(object sender, EventArgs e)
         {
-            Control.CheckForIllegalCrossThreadCalls = false;
-        }
-
-        public void setKontostand (String kontostand)
-        {
-            lblKS_Saldo.Text = kontostand;
-        }
-
-        public void setGewinn(String gewinn)
-        {
-            lblGewinn.Text = gewinn;  
-        }
-
-        public void setStartwert(String startwert)
-        {
-           lbl_EinstPreis.Text = startwert;  
-        }
-
-        public void setStatus(String status, System.Drawing.Color farbe)
-        {
-            lblAlgoStatus.Text = status;
-            lblAlgoStatus.ForeColor = farbe;
+           Control.CheckForIllegalCrossThreadCalls = false;
         }
     }
 }
