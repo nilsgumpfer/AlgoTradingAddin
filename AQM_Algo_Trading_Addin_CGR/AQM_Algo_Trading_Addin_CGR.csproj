@@ -287,7 +287,7 @@
     <ManifestKeyFile>AQM_Algo_Trading_Addin_CGR_15_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>0B6FF86C07621A85D61C1B4CC49F4AB816253DFB</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>B3E1CFCB11BAFF06C3832D077984F5E33D1966A4</ManifestCertificateThumbprint>
   </PropertyGroup>
   <!-- Include the build rules for a C# project. -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
