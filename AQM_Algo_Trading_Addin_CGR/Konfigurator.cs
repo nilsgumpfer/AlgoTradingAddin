@@ -17,14 +17,22 @@ namespace AQM_Algo_Trading_Addin_CGR
         {
             InitializeComponent();
 
-            //TODO: Fill Dropdown with Data from database.. only available symbols can be selected!
+            comboBox1.DataSource = DataManager.getInstance().getAvailableSymbols();
             comboBox1.SelectedIndex = 0;
         }
 
         private void submit_Click(object sender, EventArgs e)
         {
+            TimeSpan span = dateTimePicker2.Value - dateTimePicker1.Value;
+            int tage = 40;
+
             if (dateTimePicker1.Value <= dateTimePicker2.Value)
-                this.Close();
+            {
+                //if (span.Days > tage)
+                    this.Close();
+                //else
+                    //MessageBox.Show("Zwischen Start- und Endzeitpunkt müssen mindestens " + tage + " Tage liegen!");
+            }
             else
             {
                 MessageBox.Show("Der Startzeitpunkt muss vor dem Endzeitpunkt liegen!");

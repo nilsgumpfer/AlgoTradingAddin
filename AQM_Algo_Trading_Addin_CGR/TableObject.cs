@@ -79,7 +79,10 @@ namespace AQM_Algo_Trading_Addin_CGR
             this.worksheet = worksheet;
             this.startPosition = startPosition;
             initStartPosition();
-            this.headline = records[0].getHeadlineAsList();
+            if(records.Count>0)
+                this.headline = records[0].getHeadlineAsList();
+            else
+                this.headline = new List<string>();
             this.content = new List<List<string>>();
             this.columnsToDraw = columnsToDraw;
             foreach (StockDataTransferObject record in records)
@@ -235,29 +238,32 @@ namespace AQM_Algo_Trading_Addin_CGR
         {
             int space = 0;
             int columnIndex;
-            string cellContent;     
+            string cellContent;
 
-            for (int j = 0; j < columnsToDraw.Count; j++)
+            if (line.Count > 0)
             {
-                columnIndex = columnsToDraw[j];
+                for (int j = 0; j < columnsToDraw.Count; j++)
+                {
+                    columnIndex = columnsToDraw[j];
 
-                try
-                {
-                    if (line[columnIndex - 1] != null)
-                        cellContent = line[columnIndex - 1].Replace(',', '.');
-                    else
-                        cellContent = "";
-                    
-                    worksheet.Cells[drawPosition, startPositionColumn + space] = cellContent;
-                    space++;
+                    try
+                    {
+                        if (line[columnIndex - 1] != null)
+                            cellContent = line[columnIndex - 1].Replace(',', '.');
+                        else
+                            cellContent = "";
+
+                        worksheet.Cells[drawPosition, startPositionColumn + space] = cellContent;
+                        space++;
+                    }
+                    catch (Exception e)
+                    {
+                        j--;
+                    }
                 }
-                catch (Exception e)
-                {
-                    j--;
-                }
+
+                drawPosition++;
             }
-
-            drawPosition++;
         }
 
         public void drawRecord(StockDataTransferObject record)
