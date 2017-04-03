@@ -78,12 +78,9 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         private void setDataInRibbon(double aktuellergewinn, double aktuellerkontostand, System.Drawing.Color statusfarbe)
         {
-            String gewinnForLbl = aktuellergewinn.ToString("0.000") + " %";
-            String kontostand_saldo = aktuellerkontostand.ToString("0.00") + " €";
-
             ac.setStatus(status, statusfarbe);
-            ac.setGewinn(gewinnForLbl);
-            ac.setKontostand(kontostand_saldo);
+            ac.setGewinn(aktuellergewinn.ToString("0.000") + " %");
+            ac.setKontostand(aktuellerkontostand.ToString("0.00") + " €");
             ac.setStartwert(startaktienwert.ToString() + " €");
         }
     }
