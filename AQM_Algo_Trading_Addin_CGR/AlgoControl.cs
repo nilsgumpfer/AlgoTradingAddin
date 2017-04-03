@@ -13,13 +13,6 @@ namespace AQM_Algo_Trading_Addin_CGR
     public partial class AlgoControl : UserControl
     {
 
-        /*private delegate void setKontostandCallback(String kontostand);
-        private delegate void setGewinnCallback(String gewinn);
-        private delegate void setStartwertCallback(String startwert);
-        private delegate void setStatusCallback(String status, System.Drawing.Color farbe);*/
-
-        public String gewStatus;
-
         public AlgoControl()
         {
             InitializeComponent();
@@ -33,21 +26,16 @@ namespace AQM_Algo_Trading_Addin_CGR
         public void setKontostand (String kontostand)
         {
             lblKS_Saldo.Text = kontostand;
-            
-            
         }
 
         public void setGewinn(String gewinn)
         {
-            lblGewinn.Text = gewinn;
-            
+            lblGewinn.Text = gewinn;  
         }
 
         public void setStartwert(String startwert)
         {
-           lbl_EinstPreis.Text = startwert;
-            
-            
+           lbl_EinstPreis.Text = startwert;  
         }
 
         public void setStatus(String status, System.Drawing.Color farbe)
@@ -55,8 +43,5 @@ namespace AQM_Algo_Trading_Addin_CGR
             lblAlgoStatus.Text = status;
             lblAlgoStatus.ForeColor = farbe;
         }
-            
-           
-        
     }
 }
