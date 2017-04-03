@@ -52,14 +52,11 @@ namespace AQM_Algo_Trading_Addin_CGR
             //Checkboxen deaktivieren
             CB_Quelle_Onvista.Enabled = false;
             CB_Quelle_Yahoo.Enabled = false;
+            CB_Quelle_Dummy.Enabled = false;
             CB_Quelle_Lokal.Enabled = false;
             CB_Ziel_AktuellesTB.Enabled = false;
             CB_Ziel_NeuesTB.Enabled = false;
             CB_Ziel_Cursor.Enabled = false;
-            CB_Visualisierung_Diagramm.Enabled = false;
-            CB_Visualisierung_Tabelle.Enabled = false;
-            CB_Algo_Trend_Kurs.Enabled = false;
-            CB_Algo_Trend_Volumen.Enabled = false;
 
             //Button deaktivieren
             BTN_Aktionen_Ausfuehren.Enabled = false;
@@ -211,31 +208,42 @@ namespace AQM_Algo_Trading_Addin_CGR
             {
                 CB_Typ_Historisch.Enabled = false;
                 CB_Quelle_Lokal.Enabled = false;
+                selectedOptions = selectedOptions + 1;
                 if (CB_Quelle_Onvista.Checked == true)
                 {
+                    CB_Quelle_Onvista.Enabled = true;
                     CB_Quelle_Yahoo.Enabled = false;
+                    CB_Quelle_Dummy.Enabled = false;
                 }
-                else
+                else if (CB_Quelle_Yahoo.Checked == true)
                 {
                     CB_Quelle_Yahoo.Enabled = true;
-                }
-                if (CB_Quelle_Yahoo.Checked == true)
-                {
                     CB_Quelle_Onvista.Enabled = false;
+                    CB_Quelle_Dummy.Enabled = false;
                 }
-                else
+               
+                else if (CB_Quelle_Dummy.Checked == true)
                 {
-                    CB_Quelle_Onvista.Enabled = true;
+                    CB_Quelle_Dummy.Enabled = true;
+                    CB_Quelle_Onvista.Enabled = false;
+                    CB_Quelle_Yahoo.Enabled = false;
                 }
-                selectedOptions = selectedOptions + 1;
+                
+                
+            else {
+                CB_Quelle_Dummy.Enabled = true;
+                CB_Quelle_Onvista.Enabled = true;
+                CB_Quelle_Yahoo.Enabled = true;
             }
-
+            }
+                        
             else
             {
                 CB_Typ_Historisch.Enabled = true;
                 CB_Quelle_Lokal.Enabled = false;
                 CB_Quelle_Onvista.Enabled = false;
                 CB_Quelle_Yahoo.Enabled = false;
+                CB_Quelle_Dummy.Enabled = false;
                 selectedOptions = selectedOptions - 1;
             }
 
@@ -247,20 +255,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             {
                 CB_Ziel_AktuellesTB.Enabled = false;
                 CB_Ziel_Cursor.Enabled = false;
-                if(CB_Visualisierung_Diagramm.Checked == true)
-                {
-                    CB_Visualisierung_Diagramm.Enabled = true;
-                }
-                else if(CB_Visualisierung_Tabelle.Checked == true)
-                {
-                    CB_Visualisierung_Tabelle.Enabled = true;
-                }
-                else
-                {
-                    CB_Visualisierung_Tabelle.Enabled = true;
-                    CB_Visualisierung_Diagramm.Enabled = true;
-                }
-                
+                BTN_Aktionen_Ausfuehren.Enabled = true;        
                 selectedOptions = selectedOptions + 1;
 
 
@@ -269,8 +264,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             {
                 CB_Ziel_AktuellesTB.Enabled = true;
                 CB_Ziel_Cursor.Enabled = true;
-                CB_Visualisierung_Tabelle.Enabled = false;
-                CB_Visualisierung_Diagramm.Enabled = false;
+                BTN_Aktionen_Ausfuehren.Enabled = false;
                 selectedOptions = selectedOptions - 1;
 
 
@@ -283,19 +277,20 @@ namespace AQM_Algo_Trading_Addin_CGR
             {
                 CB_Ziel_NeuesTB.Enabled = false;
                 CB_Ziel_Cursor.Enabled = false;
-                if (CB_Visualisierung_Diagramm.Checked == true)
-                {
-                    CB_Visualisierung_Diagramm.Enabled = true;
-                }
-                else if (CB_Visualisierung_Tabelle.Checked == true)
-                {
-                    CB_Visualisierung_Tabelle.Enabled = true;
-                }
-                else
-                {
-                    CB_Visualisierung_Tabelle.Enabled = true;
-                    CB_Visualisierung_Diagramm.Enabled = true;
-                }
+                BTN_Aktionen_Ausfuehren.Enabled = true;
+                //if (CB_Visualisierung_Diagramm.Checked == true)
+                //{
+                //    CB_Visualisierung_Diagramm.Enabled = true;
+                //}
+                //else if (CB_Visualisierung_Tabelle.Checked == true)
+                //{
+                //    CB_Visualisierung_Tabelle.Enabled = true;
+                //}
+                //else
+                //{
+                //    CB_Visualisierung_Tabelle.Enabled = true;
+                //    CB_Visualisierung_Diagramm.Enabled = true;
+                //}
                 selectedOptions = selectedOptions + 1;
 
 
@@ -304,8 +299,9 @@ namespace AQM_Algo_Trading_Addin_CGR
             {
                 CB_Ziel_NeuesTB.Enabled = true;
                 CB_Ziel_Cursor.Enabled = true;
-                CB_Visualisierung_Tabelle.Enabled = false;
-                CB_Visualisierung_Diagramm.Enabled = false;
+                BTN_Aktionen_Ausfuehren.Enabled = false;
+                //CB_Visualisierung_Tabelle.Enabled = false;
+                //CB_Visualisierung_Diagramm.Enabled = false;
                 selectedOptions = selectedOptions - 1;
 
 
@@ -365,18 +361,21 @@ namespace AQM_Algo_Trading_Addin_CGR
                     CB_Ziel_AktuellesTB.Enabled = true;
                     CB_Ziel_NeuesTB.Enabled = false;
                     CB_Ziel_Cursor.Enabled = false;
+                    BTN_Aktionen_Ausfuehren.Enabled = true;
                 }
                 else if (CB_Ziel_NeuesTB.Checked == true)
                 {
                     CB_Ziel_NeuesTB.Enabled = true;
                     CB_Ziel_Cursor.Enabled = false;
                     CB_Ziel_AktuellesTB.Enabled = false;
+                    BTN_Aktionen_Ausfuehren.Enabled = true;
                 }
                 else if (CB_Ziel_Cursor.Checked == true)
                 {
                     CB_Ziel_Cursor.Enabled = true;
                     CB_Ziel_AktuellesTB.Enabled = false;
                     CB_Ziel_NeuesTB.Enabled = false;
+                    BTN_Aktionen_Ausfuehren.Enabled = true;
                 }
                 else {
                     CB_Ziel_AktuellesTB.Enabled = true;
@@ -404,23 +403,27 @@ namespace AQM_Algo_Trading_Addin_CGR
             {
                 CB_Quelle_Yahoo.Enabled = false;
                 CB_Quelle_Lokal.Enabled = false;
+                CB_Quelle_Dummy.Enabled = false;
                 if (CB_Ziel_AktuellesTB.Checked == true)
                 {
                     CB_Ziel_AktuellesTB.Enabled = true;
                     CB_Ziel_NeuesTB.Enabled = false;
                     CB_Ziel_Cursor.Enabled = false;
+                    BTN_Aktionen_Ausfuehren.Enabled = true;
                 }
                 else if (CB_Ziel_NeuesTB.Checked == true)
                 {
                     CB_Ziel_NeuesTB.Enabled = true;
                     CB_Ziel_Cursor.Enabled = false;
                     CB_Ziel_AktuellesTB.Enabled = false;
+                    BTN_Aktionen_Ausfuehren.Enabled = true;
                 }
                 else if (CB_Ziel_Cursor.Checked == true)
                 {
                     CB_Ziel_Cursor.Enabled = true;
                     CB_Ziel_AktuellesTB.Enabled = false;
                     CB_Ziel_NeuesTB.Enabled = false;
+                    BTN_Aktionen_Ausfuehren.Enabled = true;
                 }
                 else {
                     CB_Ziel_AktuellesTB.Enabled = true;
@@ -432,6 +435,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             else
             {
                 CB_Quelle_Yahoo.Enabled = true;
+                CB_Quelle_Dummy.Enabled = true;
                 if (CB_Typ_Historisch.Checked == true)
                 {
                     CB_Quelle_Lokal.Enabled = true;
@@ -450,28 +454,32 @@ namespace AQM_Algo_Trading_Addin_CGR
             {
                 CB_Quelle_Lokal.Enabled = false;
                 CB_Quelle_Onvista.Enabled = false;
+                CB_Quelle_Dummy.Enabled = false;
                 if (CB_Ziel_AktuellesTB.Checked == true)
                 {
                     CB_Ziel_AktuellesTB.Enabled = true;
                     CB_Ziel_NeuesTB.Enabled = false;
                     CB_Ziel_Cursor.Enabled = false;
+                    BTN_Aktionen_Ausfuehren.Enabled = true;
                 }
                 else if (CB_Ziel_NeuesTB.Checked == true)
                 {
                     CB_Ziel_NeuesTB.Enabled = true;
                     CB_Ziel_Cursor.Enabled = false;
                     CB_Ziel_AktuellesTB.Enabled = false;
+                    BTN_Aktionen_Ausfuehren.Enabled = true;
                 }
                 else if (CB_Ziel_Cursor.Checked == true)
                 {
                     CB_Ziel_Cursor.Enabled = true;
                     CB_Ziel_AktuellesTB.Enabled = false;
                     CB_Ziel_NeuesTB.Enabled = false;
+                    BTN_Aktionen_Ausfuehren.Enabled = true;
                 }
                 else {
                     CB_Ziel_AktuellesTB.Enabled = true;
                     CB_Ziel_NeuesTB.Enabled = true;
-                    CB_Ziel_Cursor.Enabled = true;
+                    CB_Ziel_Cursor.Enabled = true;   
                 }
                 selectedOptions = selectedOptions + 1;
             }
@@ -485,6 +493,7 @@ namespace AQM_Algo_Trading_Addin_CGR
                 else
                 {
                     CB_Quelle_Onvista.Enabled = true;
+                    CB_Quelle_Dummy.Enabled = true;
                 }
                 CB_Ziel_AktuellesTB.Enabled = false;
                 CB_Ziel_NeuesTB.Enabled = false;
@@ -499,19 +508,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             {
                 CB_Ziel_AktuellesTB.Enabled = false;
                 CB_Ziel_NeuesTB.Enabled = false;
-                if (CB_Visualisierung_Diagramm.Checked == true)
-                {
-                    CB_Visualisierung_Diagramm.Enabled = true;
-                }
-                else if (CB_Visualisierung_Tabelle.Checked == true)
-                {
-                    CB_Visualisierung_Tabelle.Enabled = true;
-                }
-                else
-                {
-                    CB_Visualisierung_Tabelle.Enabled = true;
-                    CB_Visualisierung_Diagramm.Enabled = true;
-                }
+                BTN_Aktionen_Ausfuehren.Enabled = true;
                 selectedOptions = selectedOptions + 1;
 
 
@@ -520,120 +517,31 @@ namespace AQM_Algo_Trading_Addin_CGR
             {
                 CB_Ziel_AktuellesTB.Enabled = true;
                 CB_Ziel_NeuesTB.Enabled = true;
-                CB_Visualisierung_Tabelle.Enabled = false;
-                CB_Visualisierung_Diagramm.Enabled = false;
-                selectedOptions = selectedOptions - 1;
-            }
-        }
-
-        private void CB_Visualisierung_Diagramm_Click(object sender, RibbonControlEventArgs e)
-        {
-            if (CB_Visualisierung_Diagramm.Checked == true)
-            {
-                CB_Visualisierung_Tabelle.Enabled = false;
-                if (CB_Algo_Trend_Kurs.Checked == true)
-                {
-                    CB_Algo_Trend_Kurs.Enabled = true;
-                }
-                else if (CB_Algo_Trend_Volumen.Checked == true)
-                {
-                    CB_Algo_Trend_Volumen.Enabled = true;
-                }
-                else
-                {
-                    CB_Algo_Trend_Kurs.Enabled = true;
-                    CB_Algo_Trend_Volumen.Enabled = true;
-                }
-                selectedOptions = selectedOptions + 1;
-            }
-            else
-            {
-                CB_Visualisierung_Tabelle.Enabled = true;
-                CB_Algo_Trend_Kurs.Enabled = false;
-                CB_Algo_Trend_Volumen.Enabled = false;
-                selectedOptions = selectedOptions - 1;
-            }
-        }
-
-        private void CB_Visualisierung_Tabelle_Click(object sender, RibbonControlEventArgs e)
-        {
-            if (CB_Visualisierung_Tabelle.Checked == true)
-            {
-                CB_Visualisierung_Diagramm.Enabled = false;
-                if (CB_Algo_Trend_Kurs.Checked == true)
-                {
-                    CB_Algo_Trend_Kurs.Enabled = true;
-                }
-                else if (CB_Algo_Trend_Volumen.Checked == true)
-                {
-                    CB_Algo_Trend_Volumen.Enabled = true;
-                }
-                else
-                {
-                    CB_Algo_Trend_Kurs.Enabled = true;
-                    CB_Algo_Trend_Volumen.Enabled = true;
-                }
-                selectedOptions = selectedOptions + 1;
-            }
-            else
-            {
-                CB_Visualisierung_Diagramm.Enabled = true;
-                CB_Algo_Trend_Kurs.Enabled = false;
-                CB_Algo_Trend_Volumen.Enabled = false;
-                selectedOptions = selectedOptions - 1;
-            }
-        }
-
-        private void CB_Algo_Trend_Kurs_Click(object sender, RibbonControlEventArgs e)
-        {
-            if (CB_Algo_Trend_Kurs.Checked == true)
-            {
-                CB_Algo_Trend_Volumen.Enabled = false;
-                BTN_Aktionen_Ausfuehren.Enabled = true;
-                selectedOptions = selectedOptions + 1;
-            }
-            else
-            {
-                CB_Algo_Trend_Volumen.Enabled = true;
                 BTN_Aktionen_Ausfuehren.Enabled = false;
                 selectedOptions = selectedOptions - 1;
             }
         }
 
-        private void CB_Algo_Trend_Volumen_Click(object sender, RibbonControlEventArgs e)
-        {
-            if (CB_Algo_Trend_Volumen.Checked == true)
-            {
-                CB_Algo_Trend_Kurs.Enabled = false;
-                BTN_Aktionen_Ausfuehren.Enabled = true;
-                selectedOptions = selectedOptions + 1;
-            }
-            else
-            {
-                CB_Algo_Trend_Kurs.Enabled = true;
-                BTN_Aktionen_Ausfuehren.Enabled = false;
-                selectedOptions = selectedOptions - 1;
-            }
-        }
+       
 
         private void button2_Click(object sender, RibbonControlEventArgs e)
         {
-            if (CB_Algo_Trend_Kurs.Enabled == false & CB_Algo_Trend_Volumen.Enabled == false)
+            if (CB_Ziel_NeuesTB.Enabled == false & CB_Ziel_AktuellesTB.Enabled == false & CB_Ziel_Cursor.Enabled == false)
             {
                 BTN_Aktionen_Ausfuehren.Enabled = false;
             }
-            if (selectedOptions == 5)
+            if (selectedOptions == 3)
             {
-                //DataManager erzeugen
-            }
+                //    //DataManager erzeugen
+                }
 
-            //Aktives Tabellenblatt}
-            else {
-                MessageBox.Show("Es sind nicht alle nötigen Optionen ausgefüllt! Bitte Auswahl überprüfen!");
-                return;
+                //Aktives Tabellenblatt}
+                else {
+                    MessageBox.Show("Es sind nicht alle nötigen Optionen ausgefüllt! Bitte Auswahl überprüfen!");
+                    return;
 
+                }
             }
-        }
 
         private void BTN_Test_Click(object sender, RibbonControlEventArgs e)
         {
@@ -1129,6 +1037,57 @@ namespace AQM_Algo_Trading_Addin_CGR
         private void onStopLoad_Click(object sender, RibbonControlEventArgs e)
         {
             DataManager.getInstance().stopPushWorkers();
+        }
+
+        private void CB_Quelle_Dummy_Click(object sender, RibbonControlEventArgs e)
+        {
+            if (CB_Quelle_Dummy.Checked == true)
+            {
+                CB_Quelle_Yahoo.Enabled = false;
+                CB_Quelle_Lokal.Enabled = false;
+                CB_Quelle_Onvista.Enabled = false;
+                if (CB_Ziel_AktuellesTB.Checked == true)
+                {
+                    CB_Ziel_AktuellesTB.Enabled = true;
+                    CB_Ziel_NeuesTB.Enabled = false;
+                    CB_Ziel_Cursor.Enabled = false;
+                    BTN_Aktionen_Ausfuehren.Enabled = true;
+                }
+                else if (CB_Ziel_NeuesTB.Checked == true)
+                {
+                    CB_Ziel_NeuesTB.Enabled = true;
+                    CB_Ziel_Cursor.Enabled = false;
+                    CB_Ziel_AktuellesTB.Enabled = false;
+                    BTN_Aktionen_Ausfuehren.Enabled = true;
+                }
+                else if (CB_Ziel_Cursor.Checked == true)
+                {
+                    CB_Ziel_Cursor.Enabled = true;
+                    CB_Ziel_AktuellesTB.Enabled = false;
+                    CB_Ziel_NeuesTB.Enabled = false;
+                    BTN_Aktionen_Ausfuehren.Enabled = true;
+                }
+                else {
+                    CB_Ziel_AktuellesTB.Enabled = true;
+                    CB_Ziel_NeuesTB.Enabled = true;
+                    CB_Ziel_Cursor.Enabled = true;
+                }
+                selectedOptions = selectedOptions + 1;
+            }
+            else
+            {
+                CB_Quelle_Yahoo.Enabled = true;
+                CB_Quelle_Onvista.Enabled = true;
+                if (CB_Typ_Historisch.Checked == true)
+                {
+                    CB_Quelle_Lokal.Enabled = true;
+                }
+                //CB_Quelle_Lokal.Enabled = true;
+                CB_Ziel_AktuellesTB.Enabled = false;
+                CB_Ziel_NeuesTB.Enabled = false;
+                CB_Ziel_Cursor.Enabled = false;
+                selectedOptions = selectedOptions - 1;
+            }
         }
     }
 }

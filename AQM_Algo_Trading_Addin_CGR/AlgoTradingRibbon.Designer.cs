@@ -49,12 +49,6 @@
             this.CB_Ziel_NeuesTB = this.Factory.CreateRibbonCheckBox();
             this.CB_Ziel_AktuellesTB = this.Factory.CreateRibbonCheckBox();
             this.CB_Ziel_Cursor = this.Factory.CreateRibbonCheckBox();
-            this.group5 = this.Factory.CreateRibbonGroup();
-            this.CB_Visualisierung_Diagramm = this.Factory.CreateRibbonCheckBox();
-            this.CB_Visualisierung_Tabelle = this.Factory.CreateRibbonCheckBox();
-            this.group6 = this.Factory.CreateRibbonGroup();
-            this.CB_Algo_Trend_Kurs = this.Factory.CreateRibbonCheckBox();
-            this.CB_Algo_Trend_Volumen = this.Factory.CreateRibbonCheckBox();
             this.group7 = this.Factory.CreateRibbonGroup();
             this.BTN_Aktionen_Ausfuehren = this.Factory.CreateRibbonButton();
             this.group8 = this.Factory.CreateRibbonGroup();
@@ -83,8 +77,6 @@
             this.group1.SuspendLayout();
             this.group3.SuspendLayout();
             this.group4.SuspendLayout();
-            this.group5.SuspendLayout();
-            this.group6.SuspendLayout();
             this.group7.SuspendLayout();
             this.group8.SuspendLayout();
             this.group9.SuspendLayout();
@@ -96,8 +88,6 @@
             this.tab1.Groups.Add(this.group1);
             this.tab1.Groups.Add(this.group3);
             this.tab1.Groups.Add(this.group4);
-            this.tab1.Groups.Add(this.group5);
-            this.tab1.Groups.Add(this.group6);
             this.tab1.Groups.Add(this.group7);
             this.tab1.Groups.Add(this.group8);
             this.tab1.Groups.Add(this.group9);
@@ -166,6 +156,7 @@
             // 
             this.CB_Quelle_Dummy.Label = "DummyDaten";
             this.CB_Quelle_Dummy.Name = "CB_Quelle_Dummy";
+            this.CB_Quelle_Dummy.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.CB_Quelle_Dummy_Click);
             // 
             // group4
             // 
@@ -192,44 +183,6 @@
             this.CB_Ziel_Cursor.Label = "Cursorposition";
             this.CB_Ziel_Cursor.Name = "CB_Ziel_Cursor";
             this.CB_Ziel_Cursor.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.CB_Ziel_Cursor_Click);
-            // 
-            // group5
-            // 
-            this.group5.Items.Add(this.CB_Visualisierung_Diagramm);
-            this.group5.Items.Add(this.CB_Visualisierung_Tabelle);
-            this.group5.Label = "Visualisierung";
-            this.group5.Name = "group5";
-            // 
-            // CB_Visualisierung_Diagramm
-            // 
-            this.CB_Visualisierung_Diagramm.Label = "Diagramm";
-            this.CB_Visualisierung_Diagramm.Name = "CB_Visualisierung_Diagramm";
-            this.CB_Visualisierung_Diagramm.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.CB_Visualisierung_Diagramm_Click);
-            // 
-            // CB_Visualisierung_Tabelle
-            // 
-            this.CB_Visualisierung_Tabelle.Label = "Tabelle";
-            this.CB_Visualisierung_Tabelle.Name = "CB_Visualisierung_Tabelle";
-            this.CB_Visualisierung_Tabelle.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.CB_Visualisierung_Tabelle_Click);
-            // 
-            // group6
-            // 
-            this.group6.Items.Add(this.CB_Algo_Trend_Kurs);
-            this.group6.Items.Add(this.CB_Algo_Trend_Volumen);
-            this.group6.Label = "Algorithmus";
-            this.group6.Name = "group6";
-            // 
-            // CB_Algo_Trend_Kurs
-            // 
-            this.CB_Algo_Trend_Kurs.Label = "Trend (Kurs)";
-            this.CB_Algo_Trend_Kurs.Name = "CB_Algo_Trend_Kurs";
-            this.CB_Algo_Trend_Kurs.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.CB_Algo_Trend_Kurs_Click);
-            // 
-            // CB_Algo_Trend_Volumen
-            // 
-            this.CB_Algo_Trend_Volumen.Label = "Trend (Volumen)";
-            this.CB_Algo_Trend_Volumen.Name = "CB_Algo_Trend_Volumen";
-            this.CB_Algo_Trend_Volumen.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.CB_Algo_Trend_Volumen_Click);
             // 
             // group7
             // 
@@ -398,10 +351,6 @@
             this.group3.PerformLayout();
             this.group4.ResumeLayout(false);
             this.group4.PerformLayout();
-            this.group5.ResumeLayout(false);
-            this.group5.PerformLayout();
-            this.group6.ResumeLayout(false);
-            this.group6.PerformLayout();
             this.group7.ResumeLayout(false);
             this.group7.PerformLayout();
             this.group8.ResumeLayout(false);
@@ -424,17 +373,11 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox CB_Quelle_Onvista;
         internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox CB_Quelle_Yahoo;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group4;
-        internal Microsoft.Office.Tools.Ribbon.RibbonGroup group5;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group2;
         internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox checkBox3;
         internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox CB_Ziel_NeuesTB;
         internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox CB_Ziel_AktuellesTB;
         internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox CB_Ziel_Cursor;
-        internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox CB_Visualisierung_Diagramm;
-        internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox CB_Visualisierung_Tabelle;
-        internal Microsoft.Office.Tools.Ribbon.RibbonGroup group6;
-        internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox CB_Algo_Trend_Kurs;
-        internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox CB_Algo_Trend_Volumen;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group7;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group8;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton BTN_1;
