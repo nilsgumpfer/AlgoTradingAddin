@@ -64,6 +64,7 @@
             this.button9 = this.Factory.CreateRibbonButton();
             this.onLoadPause = this.Factory.CreateRibbonButton();
             this.onStopLoad = this.Factory.CreateRibbonButton();
+            this.button10 = this.Factory.CreateRibbonButton();
             this.group9 = this.Factory.CreateRibbonGroup();
             this.button8 = this.Factory.CreateRibbonButton();
             this.lblKontostand = this.Factory.CreateRibbonLabel();
@@ -73,8 +74,6 @@
             this.group2 = this.Factory.CreateRibbonGroup();
             this.checkBox3 = this.Factory.CreateRibbonCheckBox();
             this.BTN_Test1 = this.Factory.CreateRibbonButton();
-            this.button10 = this.Factory.CreateRibbonButton();
-            this.editBox1 = this.Factory.CreateRibbonEditBox();
             this.tab1.SuspendLayout();
             this.group1.SuspendLayout();
             this.group3.SuspendLayout();
@@ -213,7 +212,6 @@
             this.group8.Items.Add(this.onLoadPause);
             this.group8.Items.Add(this.onStopLoad);
             this.group8.Items.Add(this.button10);
-            this.group8.Items.Add(this.editBox1);
             this.group8.Label = "Test";
             this.group8.Name = "group8";
             // 
@@ -289,6 +287,12 @@
             this.onStopLoad.Name = "onStopLoad";
             this.onStopLoad.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.onStopLoad_Click);
             // 
+            // button10
+            // 
+            this.button10.Label = "Stammdaten laden";
+            this.button10.Name = "button10";
+            this.button10.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button10_Click);
+            // 
             // group9
             // 
             this.group9.Items.Add(this.button8);
@@ -340,17 +344,6 @@
             this.BTN_Test1.Label = "Tabelle bei aktiver Zelle einfügen";
             this.BTN_Test1.Name = "BTN_Test1";
             this.BTN_Test1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.BTN_Test_Click);
-            // 
-            // button10
-            // 
-            this.button10.Label = "button10";
-            this.button10.Name = "button10";
-            this.button10.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button10_Click);
-            // 
-            // editBox1
-            // 
-            this.editBox1.Label = "editBox1";
-            this.editBox1.Name = "editBox1";
             // 
             // AlgoTradingRibbon
             // 
@@ -418,7 +411,6 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton onLoadPause;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton onStopLoad;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button10;
-        internal Microsoft.Office.Tools.Ribbon.RibbonEditBox editBox1;
     }
 
     partial class ThisRibbonCollection
