@@ -79,6 +79,8 @@
             this.group2 = this.Factory.CreateRibbonGroup();
             this.checkBox3 = this.Factory.CreateRibbonCheckBox();
             this.BTN_Test1 = this.Factory.CreateRibbonButton();
+            this.button10 = this.Factory.CreateRibbonButton();
+            this.editBox1 = this.Factory.CreateRibbonEditBox();
             this.tab1.SuspendLayout();
             this.group1.SuspendLayout();
             this.group3.SuspendLayout();
@@ -161,7 +163,7 @@
             this.CB_Quelle_Yahoo.Label = "YahooFinance";
             this.CB_Quelle_Yahoo.Name = "CB_Quelle_Yahoo";
             this.CB_Quelle_Yahoo.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.CB_Quelle_Yahoo_Click);
-            //
+            // 
             // CB_Quelle_Dummy
             // 
             this.CB_Quelle_Dummy.Label = "DummyDaten";
@@ -257,6 +259,8 @@
             this.group8.Items.Add(this.button9);
             this.group8.Items.Add(this.onLoadPause);
             this.group8.Items.Add(this.onStopLoad);
+            this.group8.Items.Add(this.button10);
+            this.group8.Items.Add(this.editBox1);
             this.group8.Label = "Test";
             this.group8.Name = "group8";
             // 
@@ -384,6 +388,17 @@
             this.BTN_Test1.Name = "BTN_Test1";
             this.BTN_Test1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.BTN_Test_Click);
             // 
+            // button10
+            // 
+            this.button10.Label = "button10";
+            this.button10.Name = "button10";
+            this.button10.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button10_Click);
+            // 
+            // editBox1
+            // 
+            this.editBox1.Label = "editBox1";
+            this.editBox1.Name = "editBox1";
+            // 
             // AlgoTradingRibbon
             // 
             this.Name = "AlgoTradingRibbon";
@@ -459,6 +474,8 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox CB_Quelle_Dummy;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton onLoadPause;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton onStopLoad;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton button10;
+        internal Microsoft.Office.Tools.Ribbon.RibbonEditBox editBox1;
     }
 
     partial class ThisRibbonCollection

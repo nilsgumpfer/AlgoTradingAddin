@@ -41,12 +41,12 @@ namespace AQM_Algo_Trading_Addin_CGR
             mySQLConnection = new MySqlConnection(parameters);
         }
 
-        public void updateMasterData(StockDataTransferObject record)
+        public int updateMasterData(StockDataTransferObject record)
         {
             if (getStockID(record) == null)
-                insertNewMasterData(record);
+                return insertNewMasterData(record);
             else
-                updateExistingMasterData(record);
+                return updateExistingMasterData(record);
         }
 
         private int updateExistingMasterData(StockDataTransferObject record)
@@ -270,12 +270,12 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         private string getStockIDByWKN(StockDataTransferObject record)
         {
-            return getStockIDByX("at_wkn", record.wkn);
+            return getStockIDByWKN(record.wkn);
         }
 
         private string getStockIDByISIN(StockDataTransferObject record)
         {
-            return getStockIDByX("at_isin", record.isin);
+            return getStockIDByISIN(record.isin);
         }
 
         private string getStockIDBySymbol(StockDataTransferObject record)
@@ -286,6 +286,16 @@ namespace AQM_Algo_Trading_Addin_CGR
         private string getStockIDBySymbol(string symbol)
         {
             return getStockIDByX("at_symbol", symbol);
+        }
+
+        private string getStockIDByWKN(string wkn)
+        {
+            return getStockIDByX("at_wkn", wkn);
+        }
+
+        private string getStockIDByISIN(string isin)
+        {
+            return getStockIDByX("at_isin", isin);
         }
 
         private string getStockIDByX(string column, string parameter)
@@ -376,6 +386,61 @@ namespace AQM_Algo_Trading_Addin_CGR
                             "')";
 
             return executeQueryStandalone(query);
+        }
+
+        public StockDataTransferObject getMasterDataForISIN(string isin)
+        {
+            return getMasterDataForX(getStockIDByISIN(isin));
+        }
+
+        public StockDataTransferObject getMasterDataForWKN(string wkn)
+        {
+            return getMasterDataForX(getStockIDByWKN(wkn));
+        }
+
+        public StockDataTransferObject getMasterDataForSymbol(string symbol)
+        {
+            return getMasterDataForX(getStockIDBySymbol(symbol));
+        }
+
+        private StockDataTransferObject getMasterDataForX(string stockID)
+        {
+            if (stockID == null)
+                return null;
+
+            StockDataTransferObject record = new StockDataTransferObject();
+            string query =
+                            "SELECT " +
+                                "at_isin, " +
+                                "at_wkn, " +
+                                "at_symbol, " +
+                                "at_name, " +
+                                "at_suffix_onvista, " +
+                                "at_sector " +
+                            "FROM " +
+                                "aqm.tbl_stock_masterdata " +
+                            "WHERE " +
+                                "pk_id " +
+                                "= " +
+                                "'" +
+                                stockID +
+                                "'";
+            openConnection();
+            executeQuery(query);
+
+            if (mySQLDataReader.Read())
+            {
+                record.isin = mySQLDataReader.GetString("at_isin");
+                record.wkn = mySQLDataReader.GetString("at_wkn");
+                record.symbol = mySQLDataReader.GetString("at_symbol");
+                record.name = mySQLDataReader.GetString("at_name");
+                record.suffix_onvista = mySQLDataReader.GetString("at_suffix_onvista");
+                record.sector = mySQLDataReader.GetString("at_sector");
+            }
+
+            closeConnection();
+
+            return record;
         }
 
         private int executeQuery(string query)

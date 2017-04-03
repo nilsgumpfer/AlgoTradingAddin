@@ -21,14 +21,24 @@ namespace AQM_Algo_Trading_Addin_CGR
         {
             try
             {
-                mySQLConnector.updateMasterData(newRecord);
-                mySQLConnector.enrichTransactionData(newRecord);
+                updateMasterData(newRecord);
+                updateTransactionData(newRecord);
             }
             catch (Exception e)
             {
                 mySQLConnector.closeConnection();
                 ExceptionHandler.handle(e);
             }
+        }
+
+        public int updateMasterData(StockDataTransferObject newRecord)
+        {
+            return mySQLConnector.updateMasterData(newRecord);
+        }
+
+        public void updateTransactionData(StockDataTransferObject newRecord)
+        {
+            mySQLConnector.enrichTransactionData(newRecord);
         }
     }
 }

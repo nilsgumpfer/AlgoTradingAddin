@@ -1130,6 +1130,12 @@ namespace AQM_Algo_Trading_Addin_CGR
         {
             DataManager.getInstance().stopPushWorkers();
         }
+
+        private void button10_Click(object sender, RibbonControlEventArgs e)
+        {
+            MasterDataDialog mdDialog = new MasterDataDialog();
+            mdDialog.ShowDialog();
+        }
     }
 }
  

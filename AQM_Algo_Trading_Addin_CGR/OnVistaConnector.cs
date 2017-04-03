@@ -15,16 +15,14 @@ namespace AQM_Algo_Trading_Addin_CGR
         private string symbol;
         private string provider         = "OnVista.de";
         private string urlMainPart      = "http://www.onvista.de/aktien/";
-        private string urlSuffix;
+        private string urlSuffix        = "";
         private string timestampFormat  = "yyyy-MM-dd HH:mm:ss";
         private string errorPlaceholder = "N/A";
-        private int lastVolume       = 0;
+        private int lastVolume          = 0;
         private StockDataTransferObject lastRecord = new StockDataTransferObject();
         private StockDataTransferObject newRecord = new StockDataTransferObject();
 
         private string url;
-
-        private bool checkMetaData = true;
 
         private WebClient webClient;
 
@@ -32,9 +30,9 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         private string onVista_stockID;
 
-        private OnVistaConnector()
+        public OnVistaConnector()
         {
-            //no public constructor without parameters available!
+            initWebClient();
         }
 
         public OnVistaConnector(string symbol)
@@ -45,49 +43,46 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         public StockDataTransferObject getStockData()
         {
-            initWebClient();
-            loadHtmlData();
-            lastRecord = newRecord;
-
-            if(checkMetaData)
-            {
-                updateMetaData();
-                checkMetaData = false;
-            }
-
             StockDataTransferObject stdTransferObject = new StockDataTransferObject();
 
-            stdTransferObject.isin                  = extractIsin();
-            stdTransferObject.wkn                   = extractWkn();
-            stdTransferObject.symbol                = extractSymbol();
-            stdTransferObject.name                  = extractName();
-            stdTransferObject.sector                = extractSector();
+            if (urlSuffix != "")
+            {
+                initWebClient();
+                loadHtmlData();
+                lastRecord = newRecord;
 
-            stdTransferObject.price                 = extractPrice();
-            stdTransferObject.timestamp_price       = extractTimestampPrice();
+                stdTransferObject.isin = extractIsin();
+                stdTransferObject.wkn = extractWkn();
+                stdTransferObject.symbol = extractSymbol();
+                stdTransferObject.name = extractName();
+                stdTransferObject.sector = extractSector();
 
-            stdTransferObject.volume                = extractVolume();
-            stdTransferObject.timestamp_volume      = extractTimestampVolume();
+                stdTransferObject.price = extractPrice();
+                stdTransferObject.timestamp_price = extractTimestampPrice();
 
-            stdTransferObject.high                  = extractDayHigh();
-            stdTransferObject.low                   = extractDayLow();
-            stdTransferObject.open                  = extractDayOpen();
+                stdTransferObject.volume = extractVolume();
+                stdTransferObject.timestamp_volume = extractTimestampVolume();
 
-            stdTransferObject.preday_close          = extractPredayClose();
-            stdTransferObject.total_volume          = extractDayVolume();
-            
-            stdTransferObject.trend_abs             = extractTrendAbs();
-            stdTransferObject.trend_perc            = extractTrendPerc();
+                stdTransferObject.high = extractDayHigh();
+                stdTransferObject.low = extractDayLow();
+                stdTransferObject.open = extractDayOpen();
 
-            stdTransferObject.timestamp_otherdata   = extractTimestampOtherData();
+                stdTransferObject.preday_close = extractPredayClose();
+                stdTransferObject.total_volume = extractDayVolume();
 
-            stdTransferObject.trading_floor         = extractTradingFloor();
-            stdTransferObject.currency              = extractCurrency();
-            stdTransferObject.provider              = provider;
+                stdTransferObject.trend_abs = extractTrendAbs();
+                stdTransferObject.trend_perc = extractTrendPerc();
 
-            stdTransferObject.suffix_onvista        = extractUrlSuffix();
+                stdTransferObject.timestamp_otherdata = extractTimestampOtherData();
 
-            newRecord = stdTransferObject;
+                stdTransferObject.trading_floor = extractTradingFloor();
+                stdTransferObject.currency = extractCurrency();
+                stdTransferObject.provider = provider;
+
+                stdTransferObject.suffix_onvista = extractUrlSuffix();
+
+                newRecord = stdTransferObject;
+            }
 
             return stdTransferObject;
         }
@@ -107,19 +102,55 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         private void loadMetaData()
         {
-            //TODO: search for symbol in db, assign wkn, isin, name, sector and url-suffix
+            if (urlSuffix == "")
+            {
+                try
+                {
+                    MySQLConnector mySQLConnector = new MySQLConnector();
+                    StockDataTransferObject record = mySQLConnector.getMasterDataForSymbol(symbol);
 
-            /*if (notfound)
-                throw new Exception("No data available for this symbol! Please update your database first.");
-            else {*/
+                    if (record == null)
+                        throw new Exception("Es konnten keine Stammdaten für dieses Symbol in Ihrer Datenbank gefunden werden. Bitte laden Sie diese zunächst nach und versuchen es dann erneut.");
 
-            urlSuffix = "BMW-Aktie-DE0005190003";
+                    urlSuffix = record.suffix_onvista;
+                }
+                catch (Exception e)
+                {
+                    ExceptionHandler.handle(e);
+                    urlSuffix = "";
+                }
+            }
         }
 
-        private void updateMetaData()
+        private void updateMasterData(StockDataTransferObject record)
         {
-            //TODO: compare db-data (isin, etc.) to loaded data from website
-            //TODO: if not actual or not present, update data in database
+            DBUpdater updater = new DBUpdater();
+
+            if (updater.updateMasterData(record) > 0)
+                MessageBox.Show(
+                                "Folgende Stammdaten wurden gespeichert: " + 
+                                '\n' +
+                                "ISIN: " +
+                                record.isin +
+                                '\n' +
+                                "WKN: " +
+                                record.wkn +
+                                '\n' +
+                                "Symbol: " +
+                                record.symbol +
+                                '\n' +
+                                "Name: " +
+                                record.name +
+                                '\n' +
+                                "Sektor: " +
+                                record.sector +
+                                '\n' +
+                                "URL-Suffix: " +
+                                record.suffix_onvista
+                                );
+            else
+                MessageBox.Show("Stammdaten für " + record.name + " konnten nicht gespeichert werden.");
+
         }
 
         private void loadHtmlData()
@@ -254,7 +285,6 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         private string extractPredayVolume()
         {
-            //TODO: Extract Data from HTML Stream
             return "PREDAYVOLUME";
         }
 
@@ -348,8 +378,8 @@ namespace AQM_Algo_Trading_Addin_CGR
         public void grabMetaDataAndFillDatabase(string url)
         {
             this.url = url;
-            loadHtmlData();
-            updateMetaData();
+            urlSuffix = extractUrlSuffix();
+            updateMasterData(getStockData());
         }
 
         private string getItemUsingRegEx(string pattern)
@@ -377,6 +407,42 @@ namespace AQM_Algo_Trading_Addin_CGR
                 //maybe nothing was found and we get an index out of bounds exception or sth. - so we catch it, go on and pass back a placeholder
                 return errorPlaceholder;
             }
+        }
+
+        private string getItemsUsingRegEx(string source, string pattern)
+        {
+            string result = "";
+            Regex regex = new Regex(pattern, RegexOptions.Compiled);
+
+            //get matches (these are the substrings which match the pattern)
+            MatchCollection matches = regex.Matches(source);
+
+            try
+            {
+                //get groups (these are the RELEVANT substring out of the substrings above we want to extract basically)
+                foreach(Match match in matches)
+                {
+                    //skip first group
+                    for(int i = 1; i< match.Groups.Count; i++)
+                    {
+                        result += "http://www.onvista.de" + match.Groups[i].Value + '\n';
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                //maybe nothing was found
+            }
+
+            return result;
+        }
+
+        public string loadURLsFormSite(string url)
+        {
+            string pattern = "(\\/aktien\\/.*?)\"";
+            this.url = url;
+            loadHtmlData();
+            return getItemsUsingRegEx(sourceHTML, pattern);
         }
 
         public bool checkChange()
