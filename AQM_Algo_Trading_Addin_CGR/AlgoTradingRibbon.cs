@@ -811,7 +811,7 @@ namespace AQM_Algo_Trading_Addin_CGR
                                 Globals.ThisAddIn.Application.ActiveCell,
                                 dataManager.getColumnsToDraw_forOnVistaLiveStockData());
 
-            dataManager.subscribeForLiveConnection("BMW",myTable);
+            dataManager.subscribeForLiveConnection("BMW",myTable,LiveConnectors.OnVistaDummy);
         }
 
         private void button5_Click(object sender, RibbonControlEventArgs e)

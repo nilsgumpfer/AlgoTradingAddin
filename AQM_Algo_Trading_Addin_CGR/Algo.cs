@@ -11,7 +11,7 @@ namespace AQM_Algo_Trading_Addin_CGR
         public Algo(AlgoControl ac, string symbol)
         {
             DataManager dataManager = DataManager.getInstance();
-            dataManager.subscribeForLiveConnection(symbol, this);
+            dataManager.subscribeForLiveConnection("BMW", this, LiveConnectors.OnVistaDummy);
             this.ac = ac;
             ac.setKontostand(Convert.ToString(kontostand));
         }

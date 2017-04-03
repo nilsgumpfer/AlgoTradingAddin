@@ -26,9 +26,9 @@ namespace AQM_Algo_Trading_Addin_CGR
             //i´m a singleton! i have no public constructor.
         }
 
-        public void subscribeForLiveConnection(String symbol, LiveConnectionSubscriber subscriber)
+        public void subscribeForLiveConnection(String symbol, LiveConnectionSubscriber subscriber, LiveConnectors variant)
         {
-            findOrCreateWorker(symbol, subscriber);
+            findOrCreateWorker(symbol, subscriber, variant);
         }
 
         public List<StockDataTransferObject> getHistoricalStockData(string stockSymbol, DateTime dateFrom, DateTime dateTo, YahooFinanceAPI_Resolution resolution)
@@ -63,7 +63,6 @@ namespace AQM_Algo_Trading_Addin_CGR
         {
             List<int> columnsToDraw = StockDataTransferObject.getStandardColumnsToDraw();
             
-            columnsToDraw.Remove(StockDataTransferObject.posLow);
             columnsToDraw.Remove(StockDataTransferObject.posAdjClose);
             columnsToDraw.Remove(StockDataTransferObject.posTimestampPrice);
             columnsToDraw.Remove(StockDataTransferObject.posTimestampVolume);
@@ -72,23 +71,15 @@ namespace AQM_Algo_Trading_Addin_CGR
             return columnsToDraw;
         }
 
-        private void findOrCreateWorker(String symbol, LiveConnectionSubscriber subscriber)
+        private void findOrCreateWorker(String symbol, LiveConnectionSubscriber subscriber, LiveConnectors variant)
         {
             //search for worker which already loads the relevant data
-            PushWorker worker = findWorker(symbol);
+            PushWorker worker = findWorker(symbol, variant);
 
             //create worker only in case of new symbol
             if(worker == null)
             {
-                //**********************************************!!!TESTING!!!*****************************************************
-                //****************************************************************************************************************
-
-                worker = new PushWorker(LiveConnectors.OnVistaDummy, symbol); //TODO: This is just for development and test-usage!
-                //worker = new PushWorker(LiveConnectors.OnVista, symbol);
-
-                //****************************************************************************************************************
-                //**********************************************!!!TESTING!!!*****************************************************
-
+                worker = new PushWorker(variant, symbol);                                 
                 DBUpdater dbUpdater = new DBUpdater();
 
                 //stash objects for later use
@@ -105,12 +96,12 @@ namespace AQM_Algo_Trading_Addin_CGR
             worker.subscribe(subscriber);
         }
 
-        private PushWorker findWorker(String symbol)
+        private PushWorker findWorker(string symbol, LiveConnectors variant)
         {
             //search for worker
             foreach (PushWorker worker in listOfPushWorkers)
             {
-                if (worker.symbol == symbol)
+                if (worker.symbol == symbol && worker.variant == variant)
                 {
                     //return found worker
                     return worker;
