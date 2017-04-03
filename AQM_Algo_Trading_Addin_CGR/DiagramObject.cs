@@ -145,26 +145,50 @@ namespace AQM_Algo_Trading_Addin_CGR
           
         }
 
-        public void updateDiagram(Excel.Worksheet wsLiveData, Microsoft.Office.Interop.Excel.Chart chartPageAktienkurs, int foundColumnTimestamp, int foundColumn, int ColumnCount)
+        public void updateDiagram(Excel.Worksheet wsLiveData, Microsoft.Office.Interop.Excel.Chart chartPage, int foundColumnTimestamp, int foundColumn, int ColumnCount)
         {
-            string startRangeColumn = wsLiveData.Cells.Address[1, foundColumn];
-            MessageBox.Show(startRangeColumn);
+            //Startrangecolumn
+            Microsoft.Office.Interop.Excel.Range rng = (Excel.Range)wsLiveData.Cells[1, foundColumn];
+            string startrangecolumn = rng.Address.ToString();
+ 
+            //EndRangeColumn
+            Microsoft.Office.Interop.Excel.Range rng2 = (Excel.Range)wsLiveData.Cells[ColumnCount + 1, foundColumn];
+            string endRangeColumn = rng2.Address.ToString();
 
-            string endRangeColumn = "";
-            string startRangeTimestamp = "";
-            string endRangeTimpestamp = "";
+            //Zusammenbauen von Start- und Endrange für Column
+            Excel.Range rangeColumn = wsLiveData.get_Range(startrangecolumn, endRangeColumn);
 
-            Excel.Range rng = (Excel.Range)wsLiveData.Cells[1, foundColumn];
-            //string address = rng.Address[false, false, XlReferenceStyle.xlA1];
-            Microsoft.Office.Interop.Excel.Range chartRangeAktienkurs =
-            wsLiveData.get_Range("RangeColumn, TimestampColumn");
 
-            //Microsoft.Office.Interop.Excel.Range chartRangeAktienkurs =
+            //StartRangeTimestamp
+            Microsoft.Office.Interop.Excel.Range rng3 = (Excel.Range)wsLiveData.Cells[1, foundColumnTimestamp];
+            string startRangeTimestamp = rng3.Address.ToString();
+
+            //EndRangeTimpestamp
+            Microsoft.Office.Interop.Excel.Range rng4 = (Excel.Range)wsLiveData.Cells[ColumnCount + 1, foundColumnTimestamp];
+            string endRangeTimpestamp = rng4.Address.ToString();
+
+            //Zusammenbauen von Start- und Endrange für Timestamp
+            Excel.Range rangeColumn2 = wsLiveData.get_Range(startRangeTimestamp, endRangeTimpestamp);
+
+
+            //Zusammenbauen von Start- und Endrange für Timestamp
+            Excel.Range rangeColumn3 = wsLiveData.get_Range(rangeColumn, rangeColumn2);
+
+            //Excel.Range chartRangeAktienkurs =
+            //wsLiveData.get_Range("startrangecolumn, endRangeColumn, startRangeTimestamp, endRangeTimpestamp");
+
+
+            //Excel.Range chartRangeAktienkurs =
             //wsLiveData.Range[wsLiveData.Cells[1, foundColumn], wsLiveData.Cells[ColumnCount+1, foundColumn]];
 
 
+            //Excel.Range range = app.Union(rangeColumn, rangeColumn2);
+            //chartPage.SetSourceData(rangeColumn, misValue);
 
-            chartPageAktienkurs.SetSourceData(chartRangeAktienkurs, misValue);           
+
+            //Func<object, Excel.XlDataSeriesType, Excel.XlDataSeriesDate, object, object, object, dynamic> kursSeries = rangeColumn.DataSeries;
+            //chartPage.SeriesCollection.
+            chartPage.SetSourceData(rangeColumn, misValue);
         }
 
     }
