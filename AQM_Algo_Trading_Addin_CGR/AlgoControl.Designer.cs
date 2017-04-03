@@ -137,11 +137,11 @@
 
         private System.Windows.Forms.Label label_Status;
         private System.Windows.Forms.Label label_Kontostand;
-        private System.Windows.Forms.Label lblAlgoStatus;
-        private System.Windows.Forms.Label lblKS_Saldo;
-        private System.Windows.Forms.Label lblGewinn;
+        public System.Windows.Forms.Label lblAlgoStatus;
+        public System.Windows.Forms.Label lblKS_Saldo;
+        public System.Windows.Forms.Label lblGewinn;
         private System.Windows.Forms.Label label_Gewinn;
         private System.Windows.Forms.Label label_Einstiegspreis;
-        private System.Windows.Forms.Label lbl_EinstPreis;
+        public System.Windows.Forms.Label lbl_EinstPreis;
     }
 }

@@ -31,15 +31,20 @@ namespace AQM_Algo_Trading_Addin_CGR
 
             foreach(string item in list)
             {
-                DialogResult result = MessageBox.Show("Soll diese URL zur Extraktion von Stammdaten genutzt werden? " + item, "Bestätigung", MessageBoxButtons.YesNo);
-                switch (result)
+                if (checkBox1.Checked)
                 {
-                    case DialogResult.Yes:
-                        ovConnector.grabMetaDataAndFillDatabase(item);
-                        break;
-                    case DialogResult.No:
-                        break;
+                    DialogResult result = MessageBox.Show("Soll diese URL zur Extraktion von Stammdaten genutzt werden? " + item, "Bestätigung", MessageBoxButtons.YesNo);
+                    switch (result)
+                    {
+                        case DialogResult.Yes:
+                            ovConnector.grabMetaDataAndFillDatabase(item);
+                            break;
+                        case DialogResult.No:
+                            break;
+                    }
                 }
+                else
+                    ovConnector.grabMetaDataAndFillDatabase(item);
             }
         }
     }

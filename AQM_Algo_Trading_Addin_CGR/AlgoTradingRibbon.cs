@@ -811,7 +811,7 @@ namespace AQM_Algo_Trading_Addin_CGR
                                 Globals.ThisAddIn.Application.ActiveCell,
                                 dataManager.getColumnsToDraw_forOnVistaLiveStockData());
 
-            dataManager.subscribeForLiveConnection("BMW",myTable,LiveConnectors.OnVistaDummy);
+            dataManager.subscribeForLiveConnection("LHA",myTable,LiveConnectors.OnVista);
         }
 
         private void button5_Click(object sender, RibbonControlEventArgs e)
@@ -826,40 +826,51 @@ namespace AQM_Algo_Trading_Addin_CGR
             progress.Show();
             progress.progressBar1.Value = 30;
 
+
             if (view.hasBeenCancelled == false)
             {
                 DataManager dataManager = DataManager.getInstance();
-                
-                progress.progressBar1.Value = 40;
 
-                TableObject myTable = new TableObject(
-                                        Globals.Factory.GetVstoObject
-                                        (
-                                            Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet
-                                        ),
-                                        Globals.ThisAddIn.Application.ActiveCell,
-                                        dataManager.getHistoricalStockData
-                                        (
-                                            view.comboBox1.SelectedItem.ToString(),
-                                            view.dateTimePicker1.Value, 
-                                            view.dateTimePicker2.Value, 
-                                            YahooFinanceAPI_Resolution.Daily
-                                        ),/*
-                                        dataManager.getLocallySavedStockData
+                List<StockDataTransferObject> historicalRecords = dataManager.getHistoricalStockData
                                         (
                                             view.comboBox1.SelectedItem.ToString(),
                                             view.dateTimePicker1.Value,
-                                            view.dateTimePicker2.Value
-                                        ),*/
-                                        dataManager.getColumnsToDraw_forHistoricalStockData()
-                                      );
+                                            view.dateTimePicker2.Value,
+                                            YahooFinanceAPI_Resolution.Daily
+                                        );
 
-                progress.progressBar1.Value = 80;
+                if (historicalRecords == null)
+                {
+                    progress.Close();
+                }
+                else
+                {
+                    progress.progressBar1.Value = 40;
 
-                myTable.drawOnlyRelevantColumns();
+                    TableObject myTable = new TableObject(
+                                            Globals.Factory.GetVstoObject
+                                            (
+                                                Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet
+                                            ),
+                                            Globals.ThisAddIn.Application.ActiveCell,
+                                            historicalRecords,
+                                            /*
+                                            dataManager.getLocallySavedStockData
+                                            (
+                                                view.comboBox1.SelectedItem.ToString(),
+                                                view.dateTimePicker1.Value,
+                                                view.dateTimePicker2.Value
+                                            ),*/
+                                            dataManager.getColumnsToDraw_forHistoricalStockData()
+                                          );
 
-                progress.progressBar1.Value = 100;
-                progress.Close();
+                    progress.progressBar1.Value = 80;
+
+                    myTable.drawOnlyRelevantColumns();
+
+                    progress.progressBar1.Value = 100;
+                    progress.Close();
+                }
             }            
         }
 
@@ -1036,6 +1047,11 @@ namespace AQM_Algo_Trading_Addin_CGR
         private void onLoadPause_Click(object sender, RibbonControlEventArgs e)
         {
             DataManager.getInstance().pausePushWorkers();
+
+            if(onLoadPause.Label == "Pausiere Laden")
+                onLoadPause.Label = "Weiter laden";
+            else
+                onLoadPause.Label = "Pausiere Laden";
         }
 
         private void onStopLoad_Click(object sender, RibbonControlEventArgs e)

@@ -13,7 +13,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             DataManager dataManager = DataManager.getInstance();
             dataManager.subscribeForLiveConnection("BMW", this, LiveConnectors.OnVistaDummy);
             this.ac = ac;
-            ac.setKontostand(Convert.ToString(kontostand));
+            ac.lblKS_Saldo.Text = (Convert.ToString(kontostand));
         }
 
         private double startaktienwert = 0;
@@ -78,13 +78,12 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         private void setDataInRibbon(double aktuellergewinn, double aktuellerkontostand, System.Drawing.Color statusfarbe)
         {
-            String gewinnForLbl = aktuellergewinn.ToString("0.000") + " %";
-            String kontostand_saldo = aktuellerkontostand.ToString("0.00") + " €";
+            ac.lblAlgoStatus.Text = status;
+            ac.lblAlgoStatus.ForeColor = statusfarbe;
 
-            ac.setStatus(status, statusfarbe);
-            ac.setGewinn(gewinnForLbl);
-            ac.setKontostand(kontostand_saldo);
-            ac.setStartwert(startaktienwert.ToString() + " €");
+            ac.lblGewinn.Text = aktuellergewinn.ToString("0.000") + " %";
+            ac.lblKS_Saldo.Text = aktuellerkontostand.ToString("0.00") + " €";
+            ac.lbl_EinstPreis.Text = startaktienwert.ToString() + " €";
         }
     }
 }

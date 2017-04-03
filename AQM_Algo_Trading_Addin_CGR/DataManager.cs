@@ -130,5 +130,11 @@ namespace AQM_Algo_Trading_Addin_CGR
             listOfPushWorkers.Clear();
             listOfDBUpdaters.Clear();
         }
+
+        public List<string> getAvailableSymbols()
+        {
+            MySQLConnector mySQLConnector = new MySQLConnector();
+            return mySQLConnector.getAvailableSymbols();
+        }
     }
 }

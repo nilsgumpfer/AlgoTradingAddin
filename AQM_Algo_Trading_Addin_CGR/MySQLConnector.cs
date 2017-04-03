@@ -443,6 +443,28 @@ namespace AQM_Algo_Trading_Addin_CGR
             return record;
         }
 
+        public List<string> getAvailableSymbols()
+        {
+            List<string> result = new List<string>();
+
+            string query =
+                            "SELECT " +
+                                "at_symbol " +
+                            "FROM " +
+                                "aqm.tbl_stock_masterdata ";
+            openConnection();
+            executeQuery(query);
+
+            while (mySQLDataReader.Read())
+            {
+                result.Add(mySQLDataReader.GetString("at_symbol"));
+            }
+
+            closeConnection();
+
+            return result;
+        }
+
         private int executeQuery(string query)
         {
             createAndInvokeCommand(query);

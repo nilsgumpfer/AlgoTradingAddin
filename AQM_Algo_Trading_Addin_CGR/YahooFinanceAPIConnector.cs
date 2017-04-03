@@ -86,10 +86,10 @@ namespace AQM_Algo_Trading_Addin_CGR
             }
             return getHistoricalStockData(
                                             stockSymbol,
-                                            dateTo.Month.ToString(),
+                                            (dateTo.Month-1).ToString(),
                                             dateTo.Day.ToString(),
                                             dateTo.Year.ToString(),
-                                            dateFrom.Month.ToString(),
+                                            (dateFrom.Month-1).ToString(),
                                             dateFrom.Day.ToString(),
                                             dateFrom.Year.ToString(),
                                             resolution_s
@@ -108,7 +108,7 @@ namespace AQM_Algo_Trading_Addin_CGR
         /// <returns>List of party filled StockDataTransferObjects (only relevant fields are filled)</returns>
         public List<StockDataTransferObject> getHistoricalStockData(string sNameID, string dToMonth, string eToDay, string fToYear, string aFromMonth, string bFromDay, string cFromYear, string gFormat)
         {
-            string csvData;
+            string csvData = "";
             string ignoreString     = ".csv";    //escape sequence data
             string apiUrl           = "http://real-chart.finance.yahoo.com/table.csv?";
 
@@ -125,19 +125,26 @@ namespace AQM_Algo_Trading_Addin_CGR
              /// gFormat                 = "d";       //d = on daily basis, m = monthly, etc.           
             */
 
-            using (WebClient webClient = new WebClient())
-            {
-                apiUrl += "s="         + sNameID;
-                apiUrl += "&a="        + aFromMonth;
-                apiUrl += "&b="        + bFromDay;
-                apiUrl += "&c="        + cFromYear;
-                apiUrl += "&d="        + dToMonth;
-                apiUrl += "&e="        + eToDay;
-                apiUrl += "&f="        + fToYear;
-                apiUrl += "&g="        + gFormat;
-                apiUrl += "&ignore="   + ignoreString;
+            WebClient webClient = new WebClient();
+            
+            apiUrl += "s="         + sNameID;
+            apiUrl += "&a="        + aFromMonth;
+            apiUrl += "&b="        + bFromDay;
+            apiUrl += "&c="        + cFromYear;
+            apiUrl += "&d="        + dToMonth;
+            apiUrl += "&e="        + eToDay;
+            apiUrl += "&f="        + fToYear;
+            apiUrl += "&g="        + gFormat;
+            apiUrl += "&ignore="   + ignoreString;
 
+            try
+            {
                 csvData = webClient.DownloadString(apiUrl);
+            }
+            catch(Exception e)
+            {
+                ExceptionHandler.handle(e);
+                return null;
             }
 
             List<StockDataTransferObject> prices = parseHistoricData(csvData);
