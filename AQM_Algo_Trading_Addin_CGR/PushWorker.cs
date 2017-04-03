@@ -15,6 +15,7 @@ namespace AQM_Algo_Trading_Addin_CGR
         private bool doThreading = false;
         private Thread thread;
         private bool doPause = false;
+        public LiveConnectors variant { get; }
 
         private PushWorker()
         {
@@ -24,6 +25,7 @@ namespace AQM_Algo_Trading_Addin_CGR
         public PushWorker(LiveConnectors variant, String symbol)
         {
             this.symbol = symbol;
+            this.variant = variant;
 
             switch(variant)
             {

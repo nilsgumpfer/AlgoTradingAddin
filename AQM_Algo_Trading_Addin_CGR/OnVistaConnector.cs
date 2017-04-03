@@ -207,6 +207,7 @@ namespace AQM_Algo_Trading_Addin_CGR
                 else
                 {
                     int deltaVolume = Convert.ToInt32(extractDayVolume()) - lastVolume;
+                    lastVolume = Convert.ToInt32(extractDayVolume());
                     return deltaVolume.ToString();
                 }
             }
@@ -461,8 +462,6 @@ namespace AQM_Algo_Trading_Addin_CGR
                         newRecord.sector        == lastRecord.sector
                         &&
                         newRecord.price         == lastRecord.price
-                        &&
-                        newRecord.volume        == lastRecord.volume
                         &&
                         newRecord.high          == lastRecord.high
                         &&

@@ -811,7 +811,7 @@ namespace AQM_Algo_Trading_Addin_CGR
                                 Globals.ThisAddIn.Application.ActiveCell,
                                 dataManager.getColumnsToDraw_forOnVistaLiveStockData());
 
-            dataManager.subscribeForLiveConnection("BMW",myTable);
+            dataManager.subscribeForLiveConnection("BMW",myTable,LiveConnectors.OnVistaDummy);
         }
 
         private void button5_Click(object sender, RibbonControlEventArgs e)
@@ -998,7 +998,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             liveDataTableObject.createNewWorksheet("OnVista-Livedaten");
 
             progress.progressBar1.Value = 85;
-            dataManager.subscribeForLiveConnection("", liveDataTableObject);
+            dataManager.subscribeForLiveConnection("", liveDataTableObject, LiveConnectors.OnVistaDummy);
 
             progress.progressBar1.Value = 95;
 
@@ -1017,7 +1017,7 @@ namespace AQM_Algo_Trading_Addin_CGR
                                     Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet),
                                 Globals.ThisAddIn.Application.ActiveCell);
 
-            dataManager.subscribeForLiveConnection("", myTable);
+            dataManager.subscribeForLiveConnection("", myTable, LiveConnectors.OnVistaDummy);
             Algo algorithmus = new Algo(Globals.ThisAddIn.ac);
             Globals.ThisAddIn.SharePane.Visible = true;
 
