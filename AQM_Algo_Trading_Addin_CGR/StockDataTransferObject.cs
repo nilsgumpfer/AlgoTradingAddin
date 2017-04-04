@@ -44,7 +44,9 @@ namespace AQM_Algo_Trading_Addin_CGR
             columnList.Add(posWKN);
             columnList.Add(posSymbol);
             columnList.Add(posSector);
+            columnList.Add(posTimestampPrice);
             columnList.Add(posPrice);
+            columnList.Add(posTimestampVolume);
             columnList.Add(posVolume);
             columnList.Add(posTrendAbs);
             columnList.Add(posTrendPerc);
@@ -54,8 +56,6 @@ namespace AQM_Algo_Trading_Addin_CGR
             columnList.Add(posHigh);
             columnList.Add(posLow);
             columnList.Add(posTotalVolume);
-            columnList.Add(posTimestampPrice);
-            columnList.Add(posTimestampVolume);
             columnList.Add(posTimestampOther);
             columnList.Add(posProvider);
             columnList.Add(posTradingFloor);
@@ -99,7 +99,9 @@ namespace AQM_Algo_Trading_Addin_CGR
             headline.Add("WKN");
             headline.Add("Symbol");
             headline.Add("Sektor");
+            headline.Add("Timestamp Kurs");
             headline.Add("Kurs");
+            headline.Add("Timestamp Volumen");
             headline.Add("Volumen");
             headline.Add("Trend (abs.)");
             headline.Add("Trend (%)");
@@ -109,8 +111,6 @@ namespace AQM_Algo_Trading_Addin_CGR
             headline.Add("Hoch");
             headline.Add("Tief");
             headline.Add("Volumen gesamt");
-            headline.Add("Timestamp Kurs");
-            headline.Add("Timestamp Volumen");
             headline.Add("Timestamp");
             headline.Add("Provider");
             headline.Add("Handelsplatz");
@@ -130,7 +130,9 @@ namespace AQM_Algo_Trading_Addin_CGR
             line.Add(wkn);
             line.Add(symbol);
             line.Add(sector);
+            line.Add(timestamp_price);
             line.Add(price);
+            line.Add(timestamp_volume);
             line.Add(volume);
             line.Add(trend_abs);
             line.Add(trend_perc);
@@ -140,8 +142,6 @@ namespace AQM_Algo_Trading_Addin_CGR
             line.Add(high);
             line.Add(low);
             line.Add(total_volume);
-            line.Add(timestamp_price);
-            line.Add(timestamp_volume);
             line.Add(timestamp_otherdata);
             line.Add(provider);
             line.Add(trading_floor);
