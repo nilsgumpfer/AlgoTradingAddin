@@ -13,42 +13,13 @@ using Microsoft.Office.Tools;
 
 namespace AQM_Algo_Trading_Addin_CGR
 {
-    //public delegate void UpdateListViewItem(Aktienwert aktie);
-    public partial class AlgoTradingRibbon //: Observer<Aktienwert>
+    public partial class AlgoTradingRibbon
     {
         public int selectedOptions = 0;
-        //private List<Aktienwert> aktuelleAktienwerte;
-        //private List<Thread> workerThreads;
-        //private List<BackgroundCrawler> workerObjects;
-        //private List<MySQLStockDataConnector> dbConnections;
-        //private string alteAktiensymbole;
-        //private string[] aktienSymbole = { "" };
-
-        private Excel.Application app;
-        private Workbook wb;
-        private Worksheet ws;
-        private Excel.Range range;
         private TableObject tableObject;
 
-        MySqlConnection mySQLVerbindung;
-        MySqlCommand mySQLCommand;
-        MySqlDataReader mySQLDataReader;
-
-        /*public AlgoTradingRibbon()
-        {
-
-        }*/
-
-        //test123karle
         private void AlgoTradingRibbon_Load(object sender, RibbonUIEventArgs e)
         {
-            ////InitializeComponent();
-            //aktuelleAktienwerte = new List<Aktienwert>();
-            //workerThreads = new List<Thread>();
-            //workerObjects = new List<BackgroundCrawler>();
-            //dbConnections = new List<MySQLStockDataConnector>();
-            //alteAktiensymbole = "";
-
             //Checkboxen deaktivieren
             CB_Quelle_Onvista.Enabled = false;
             CB_Quelle_Yahoo.Enabled = false;
@@ -60,7 +31,6 @@ namespace AQM_Algo_Trading_Addin_CGR
 
             //Button deaktivieren
             BTN_Aktionen_Ausfuehren.Enabled = false;
-
         }
 
         private void CB_Typ_Live_Click(object sender, RibbonControlEventArgs e)
@@ -81,23 +51,19 @@ namespace AQM_Algo_Trading_Addin_CGR
                     CB_Quelle_Yahoo.Enabled = false;
                     CB_Quelle_Dummy.Enabled = false;
                 }
-
-               
                 else if (CB_Quelle_Dummy.Checked == true)
                 {
                     CB_Quelle_Dummy.Enabled = true;
                     CB_Quelle_Onvista.Enabled = false;
                     CB_Quelle_Yahoo.Enabled = false;
+                } 
+                else
+                {
+                    CB_Quelle_Dummy.Enabled = true;
+                    CB_Quelle_Onvista.Enabled = true;
+                    CB_Quelle_Yahoo.Enabled = false;
                 }
-                
-                
-            else {
-                CB_Quelle_Dummy.Enabled = true;
-                CB_Quelle_Onvista.Enabled = true;
-                CB_Quelle_Yahoo.Enabled = false;
-            }
-            }
-                        
+            }            
             else
             {
                 CB_Typ_Historisch.Enabled = true;
@@ -107,7 +73,6 @@ namespace AQM_Algo_Trading_Addin_CGR
                 CB_Quelle_Dummy.Enabled = false;
                 selectedOptions = selectedOptions - 1;
             }
-
         }
 
         private void CB_Ziel_NeuesTB_Click(object sender, RibbonControlEventArgs e)
@@ -118,8 +83,6 @@ namespace AQM_Algo_Trading_Addin_CGR
                 CB_Ziel_Cursor.Enabled = false;
                 BTN_Aktionen_Ausfuehren.Enabled = true;        
                 selectedOptions = selectedOptions + 1;
-
-
             }
             else
             {
@@ -127,8 +90,6 @@ namespace AQM_Algo_Trading_Addin_CGR
                 CB_Ziel_Cursor.Enabled = true;
                 BTN_Aktionen_Ausfuehren.Enabled = false;
                 selectedOptions = selectedOptions - 1;
-
-
             }
         }
 
@@ -139,33 +100,14 @@ namespace AQM_Algo_Trading_Addin_CGR
                 CB_Ziel_NeuesTB.Enabled = false;
                 CB_Ziel_Cursor.Enabled = false;
                 BTN_Aktionen_Ausfuehren.Enabled = true;
-                //if (CB_Visualisierung_Diagramm.Checked == true)
-                //{
-                //    CB_Visualisierung_Diagramm.Enabled = true;
-                //}
-                //else if (CB_Visualisierung_Tabelle.Checked == true)
-                //{
-                //    CB_Visualisierung_Tabelle.Enabled = true;
-                //}
-                //else
-                //{
-                //    CB_Visualisierung_Tabelle.Enabled = true;
-                //    CB_Visualisierung_Diagramm.Enabled = true;
-                //}
                 selectedOptions = selectedOptions + 1;
-
-
             }
             else
             {
                 CB_Ziel_NeuesTB.Enabled = true;
                 CB_Ziel_Cursor.Enabled = true;
                 BTN_Aktionen_Ausfuehren.Enabled = false;
-                //CB_Visualisierung_Tabelle.Enabled = false;
-                //CB_Visualisierung_Diagramm.Enabled = false;
                 selectedOptions = selectedOptions - 1;
-
-
             }
         }
 
@@ -200,7 +142,6 @@ namespace AQM_Algo_Trading_Addin_CGR
 
                 selectedOptions = selectedOptions + 1;
             }
-
             else
             {
                 CB_Typ_Live.Enabled = true;
@@ -245,12 +186,9 @@ namespace AQM_Algo_Trading_Addin_CGR
                 }
                 selectedOptions = selectedOptions + 1;
             }
-
             else
             {
-
                 CB_Quelle_Yahoo.Enabled = true;
-                //CB_Quelle_Onvista.Enabled = true;
                 CB_Ziel_AktuellesTB.Enabled = false;
                 CB_Ziel_NeuesTB.Enabled = false;
                 CB_Ziel_Cursor.Enabled = false;
@@ -301,7 +239,6 @@ namespace AQM_Algo_Trading_Addin_CGR
                 {
                     CB_Quelle_Lokal.Enabled = true;
                 }
-                //CB_Quelle_Lokal.Enabled = true;
                 CB_Ziel_AktuellesTB.Enabled = false;
                 CB_Ziel_NeuesTB.Enabled = false;
                 CB_Ziel_Cursor.Enabled = false;
@@ -345,8 +282,7 @@ namespace AQM_Algo_Trading_Addin_CGR
                 selectedOptions = selectedOptions + 1;
             }
             else
-            {
-                
+            {   
                 if(CB_Typ_Historisch.Checked == true)
                 {
                     CB_Quelle_Lokal.Enabled = true;
@@ -371,8 +307,6 @@ namespace AQM_Algo_Trading_Addin_CGR
                 CB_Ziel_NeuesTB.Enabled = false;
                 BTN_Aktionen_Ausfuehren.Enabled = true;
                 selectedOptions = selectedOptions + 1;
-
-
             }
             else
             {
@@ -382,8 +316,56 @@ namespace AQM_Algo_Trading_Addin_CGR
                 selectedOptions = selectedOptions - 1;
             }
         }
-
-       
+        private void CB_Quelle_Dummy_Click(object sender, RibbonControlEventArgs e)
+        {
+            if (CB_Quelle_Dummy.Checked == true)
+            {
+                CB_Quelle_Yahoo.Enabled = false;
+                CB_Quelle_Lokal.Enabled = false;
+                CB_Quelle_Onvista.Enabled = false;
+                if (CB_Ziel_AktuellesTB.Checked == true)
+                {
+                    CB_Ziel_AktuellesTB.Enabled = true;
+                    CB_Ziel_NeuesTB.Enabled = false;
+                    CB_Ziel_Cursor.Enabled = false;
+                    BTN_Aktionen_Ausfuehren.Enabled = true;
+                }
+                else if (CB_Ziel_NeuesTB.Checked == true)
+                {
+                    CB_Ziel_NeuesTB.Enabled = true;
+                    CB_Ziel_Cursor.Enabled = false;
+                    CB_Ziel_AktuellesTB.Enabled = false;
+                    BTN_Aktionen_Ausfuehren.Enabled = true;
+                }
+                else if (CB_Ziel_Cursor.Checked == true)
+                {
+                    CB_Ziel_Cursor.Enabled = true;
+                    CB_Ziel_AktuellesTB.Enabled = false;
+                    CB_Ziel_NeuesTB.Enabled = false;
+                    BTN_Aktionen_Ausfuehren.Enabled = true;
+                }
+                else
+                {
+                    CB_Ziel_AktuellesTB.Enabled = true;
+                    CB_Ziel_NeuesTB.Enabled = true;
+                    CB_Ziel_Cursor.Enabled = true;
+                }
+                selectedOptions = selectedOptions + 1;
+            }
+            else
+            {
+                CB_Quelle_Yahoo.Enabled = false;
+                CB_Quelle_Onvista.Enabled = true;
+                if (CB_Typ_Historisch.Checked == true)
+                {
+                    CB_Quelle_Lokal.Enabled = true;
+                }
+                CB_Ziel_AktuellesTB.Enabled = false;
+                CB_Ziel_NeuesTB.Enabled = false;
+                CB_Ziel_Cursor.Enabled = false;
+                selectedOptions = selectedOptions - 1;
+            }
+        }
 
         private void button2_Click(object sender, RibbonControlEventArgs e)
         {
@@ -505,409 +487,6 @@ namespace AQM_Algo_Trading_Addin_CGR
             }
         }
 
-        private void BTN_Test_Click(object sender, RibbonControlEventArgs e)
-        {
-            ws = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet);
-            //range = Globals.ThisAddIn.Application.Cells[0, 0];
-            
-            int row = Globals.ThisAddIn.Application.ActiveCell.Row;
-            int column = Globals.ThisAddIn.Application.ActiveCell.Column;
-
-
-            ////Aktive Zelle
-            //ws = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet);
-            //range = Globals.ThisAddIn.Application.ActiveCell;
-
-            ////Neues Tabellenblatt
-            //ws = Globals.ThisAddIn.Application.ActiveWorkbook.Worksheets.Add();
-            //range = Globals.ThisAddIn.Application.Cells[0, 0];
-
-
-            //writeTable(ws, range);
-
-
-            //button2_Click(sender, e);
-
-            string select_aktienwert_Query = "SELECT * FROM aqm.aktienwerte LIMIT 100";
-
-            try
-            {
-                //verbindungAufbauen("localhost", "3306", "root", "");
-                mySQLVerbindung.Open();
-
-                mySQLCommand = new MySqlCommand(select_aktienwert_Query, mySQLVerbindung);
-                //mySQLDataReader = mySQLCommand.ExecuteReader();
-
-                //int i = row  = 5;
-                //int j = column = 5;
-
-                int rowTemp = row; 
-
-                using (MySqlDataReader reader = mySQLCommand.ExecuteReader())
-                {
-                    if (reader != null)
-                    {
-
-                        while (reader.Read())
-                        {
-                            for (int i = 0;  i < reader.FieldCount; i++)
-                            {
-                                if (rowTemp == row) //Beim ersten Durchlauf Spaltenbezeichnungen setzen
-                                {
-                                    ws.Cells[row, column+i] = reader.GetName(i);
-                                }
-                                else //bei den restlichen Durchläufen Datensätze spaltenweise ausgeben
-                                {
-                                    ws.Cells[row, column+i] = reader[i].ToString();
-                                }
-                            }
-                            row++;
-                        }
-                    }
-                }
-
-                mySQLVerbindung.Close();
-            }
-
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-
-        private void BTN_Test2_Click(object sender, RibbonControlEventArgs e)
-        {
-            ws = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet);
-  
-            string select_aktienwert_Query = "SELECT * FROM aqm.aktienwerte LIMIT 100";
-
-            try
-            {
-                //verbindungAufbauen("localhost", "3306", "root", "");
-                mySQLVerbindung.Open();
-
-                mySQLCommand = new MySqlCommand(select_aktienwert_Query, mySQLVerbindung);
-
-                int i = 0;
-
-                using (MySqlDataReader reader = mySQLCommand.ExecuteReader())
-                {
-                    if (reader != null)
-                    {
-
-                        while (reader.Read())
-                        {
-                            i++;
-                            for (int j = 0; j < reader.FieldCount; j++)
-                            {
-                                if (i == 1) //Beim ersten Durchlauf Spaltenbezeichnungen setzen
-                                {
-                                    ws.Cells[i, j + 1] = reader.GetName(j);
-                                }
-                                else //bei den restlichen Durchläufen Datensätze spaltenweise ausgeben
-                                {
-                                    ws.Cells[i, j + 1] = reader[j].ToString();
-                                }
-                            }
-                        }
-                    }
-                }
-
-                mySQLVerbindung.Close();
-            }
-
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void BTN_Test3_Click(object sender, RibbonControlEventArgs e)
-        {
-            wb = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook);
-
-            String aktiensymbole_eingabe = Microsoft.VisualBasic.Interaction.InputBox("Bitte Tabellenblattnamen eingeben!", "Tabellenblattname eingeben", "");
- 
-            foreach (Excel.Worksheet sheet in wb.Worksheets)
-            {
-                if (sheet.Name.ToString() == aktiensymbole_eingabe)
-                {
-                    MessageBox.Show("Tabellenblattname bereits vorhanden! Bitte erneut ausführen!");
-                    return;
-                }
-            }
-
-            ws = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook.Worksheets.Add());
-            ws.Name = aktiensymbole_eingabe;
-
-            string select_aktienwert_Query = "SELECT * FROM aqm.aktienwerte LIMIT 100";
-
-            try
-            {
-                //verbindungAufbauen("localhost", "3306", "root", "");
-                mySQLVerbindung.Open();
-
-                mySQLCommand = new MySqlCommand(select_aktienwert_Query, mySQLVerbindung);
-
-                int i = 0;
-
-                using (MySqlDataReader reader = mySQLCommand.ExecuteReader())
-                {
-                    if (reader != null)
-                    {
-                        while (reader.Read())
-                        {
-                            i++;
-                            for (int j = 0; j < reader.FieldCount; j++)
-                            {
-                                if (i == 1) //Beim ersten Durchlauf Spaltenbezeichnungen setzen
-                                {
-                                    ws.Cells[i, j + 1] = reader.GetName(j);
-                                }
-                                else //bei den restlichen Durchläufen Datensätze spaltenweise ausgeben
-                                {
-                                    ws.Cells[i, j + 1] = reader[j].ToString();
-                                }
-                            }
-                        }
-                    }
-                }
-
-                mySQLVerbindung.Close();
-            }
-
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void TableObjektTest_Click(object sender, RibbonControlEventArgs e)
-        {
-            //List<string> headline = new List<string>();
-            //headline.Add("Wurscht");
-            //headline.Add("Stulle");
-
-            //List<List<string>> content = new List<List<string>>();
-
-            //List<string> line1 = new List<string>();
-            //line1.Add("Mortadella");
-            //line1.Add("Graubrot");
-
-            //List<string> line2 = new List<string>();
-            //line2.Add("Mettwurscht");
-            //line2.Add("Saatenbrot");
-
-            List<string> headline = new List<string>();
-            headline.Add("Obst");
-            headline.Add("Anzahl");
-
-            List<List<string>> content = new List<List<string>>();
-
-            List<string> line1 = new List<string>();
-            line1.Add("Banane");
-            line1.Add("5");
-
-            List<string> line2 = new List<string>();
-            line2.Add("Apfel");
-            line2.Add("3");
-
-            List<string> line3 = new List<string>();
-            line3.Add("Orange");
-            line3.Add("12");
-
-            List<string> line4 = new List<string>();
-            line4.Add("Mango");
-            line4.Add("1");
-
-            List<string> line5 = new List<string>();
-            line5.Add("Gurke");
-            line5.Add("7");
-
-            List<string> line6 = new List<string>();
-            line6.Add("Avocado");
-            line6.Add("5");
-
-            content.Add(line1);
-            content.Add(line2);
-            content.Add(line3);
-            content.Add(line4);
-            content.Add(line5);
-            content.Add(line6);
-
-            List<int> columns = new List<int>();
-            columns.Add(1);
-            columns.Add(2);
-
-            tableObject = new TableObject(
-                                Globals.Factory.GetVstoObject(
-                                Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet),
-                                Globals.ThisAddIn.Application.Cells, 
-                                headline, 
-                                content,
-                                columns);
-            tableObject.drawOnlyRelevantColumns();
-            //tableObject.deleteDraw();
-        }
-
-        private void button3_Click(object sender, RibbonControlEventArgs e)
-        {
-            //tableObject.deleteDraw();
-            /*tableObject.drawAtPosition(Globals.Factory.GetVstoObject(
-                                            Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet),
-                                       Globals.ThisAddIn.Application.ActiveCell);*/
-            tableObject.deleteOnlyRelevantColumns();
-            tableObject.drawRelevantColumnsAtPosition(Globals.Factory.GetVstoObject(
-                                                            Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet),
-                                                       Globals.ThisAddIn.Application.ActiveCell);
-        }
-
-        private void button4_Click(object sender, RibbonControlEventArgs e)
-        {
-            DataManager dataManager = DataManager.getInstance();
-
-            TableObject myTable = new TableObject(
-                                Globals.Factory.GetVstoObject(
-                                    Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet),
-                                Globals.ThisAddIn.Application.ActiveCell,
-                                dataManager.getColumnsToDraw_LiveStockData());
-
-            dataManager.subscribeForLiveConnection("LHA",myTable,LiveConnectors.OnVista);
-        }
-
-        private void button5_Click(object sender, RibbonControlEventArgs e)
-        {
-            Konfigurator view = new Konfigurator();
-            view.ShowDialog();
-
-            ProgressIndicator progress = new ProgressIndicator();
-            progress.progressBar1.Maximum = 100;
-            progress.progressBar1.Minimum = 0;
-            progress.progressBar1.Value = 20;
-            progress.Show();
-            progress.progressBar1.Value = 30;
-
-
-            if (view.hasBeenCancelled == false)
-            {
-                DataManager dataManager = DataManager.getInstance();
-
-                List<StockDataTransferObject> historicalRecords = dataManager.getHistoricalStockData
-                                        (
-                                            view.comboBox1.SelectedItem.ToString(),
-                                            view.dateTimePicker1.Value,
-                                            view.dateTimePicker2.Value,
-                                            YahooFinanceAPI_Resolution.Daily
-                                        );
-
-                if (historicalRecords == null)
-                {
-                    progress.Close();
-                }
-                else
-                {
-                    progress.progressBar1.Value = 40;
-
-                    TableObject myTable = new TableObject(
-                                            Globals.Factory.GetVstoObject
-                                            (
-                                                Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet
-                                            ),
-                                            Globals.ThisAddIn.Application.ActiveCell,
-                                            historicalRecords,
-                                            /*
-                                            dataManager.getLocallySavedStockData
-                                            (
-                                                view.comboBox1.SelectedItem.ToString(),
-                                                view.dateTimePicker1.Value,
-                                                view.dateTimePicker2.Value
-                                            ),*/
-                                            dataManager.getColumnsToDraw_forYahooHistoricalData()
-                                          );
-
-                    progress.progressBar1.Value = 80;
-
-                    myTable.drawOnlyRelevantColumns();
-
-                    progress.progressBar1.Value = 100;
-                    progress.Close();
-                }
-            }            
-        }
-
-        private void button6_Click(object sender, RibbonControlEventArgs e)
-        {
-            List<string> headline = new List<string>();
-            headline.Add("Obst");
-            headline.Add("Anzahl");
-
-            List<List<string>> content = new List<List<string>>();
-
-            List<string> line1 = new List<string>();
-            line1.Add("Banane");
-            line1.Add("5");
-
-            List<string> line2 = new List<string>();
-            line2.Add("Apfel");
-            line2.Add("3");
-
-            List<string> line3 = new List<string>();
-            line3.Add("Orange");
-            line3.Add("12");
-
-            List<string> line4 = new List<string>();
-            line4.Add("Mango");
-            line4.Add("1");
-
-            List<string> line5 = new List<string>();
-            line5.Add("Gurke");
-            line5.Add("7");
-
-            List<string> line6 = new List<string>();
-            line6.Add("Avocado");
-            line6.Add("5");
-
-            content.Add(line1);
-            content.Add(line2);
-            content.Add(line3);
-            content.Add(line4);
-            content.Add(line5);
-            content.Add(line6);
-
-            List<int> columns = new List<int>();
-            columns.Add(1);
-            columns.Add(2);
-
-            tableObject = new TableObject(
-                                Globals.Factory.GetVstoObject(
-                                    Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet),
-                                Globals.ThisAddIn.Application.Cells[1, 1],
-                                headline,
-                                content,
-                                columns);
-            tableObject.drawOnlyRelevantColumns();
-
-            ws = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet);
-
-            object misValue = System.Reflection.Missing.Value;   
-        
-            Excel.ChartObjects xlCharts = (Excel.ChartObjects)ws.ChartObjects(Type.Missing);
-            Excel.ChartObject myChart = (Excel.ChartObject)xlCharts.Add(10, 80, 300, 250);
-            //TODO: Location des Diagramms setzen!
-
-            //myChart.TopLeftCell.Cells[1, 3];
-
-            //Excel.ChartObject myChart = (Excel.ChartObject)xlCharts.Add(range(ws.Cells[1, columns.Count+1], ws.Cells[, 1]
-            Excel.Chart chartPage = myChart.Chart;
-
-            Excel.Range chartRange;
-            chartRange = ws.get_Range(ws.Cells[1, 1], ws.Cells[content.Count+1, columns.Count]);
-            chartPage.SetSourceData(chartRange, misValue);
-
-            chartPage.ChartType = Excel.XlChartType.xlColumnClustered;
-        }
-
         private void button7_Click(object sender, RibbonControlEventArgs e)
         {
             //Historische Daten auswählen
@@ -918,13 +497,13 @@ namespace AQM_Algo_Trading_Addin_CGR
             {
 
                 ProgressIndicator progress = new ProgressIndicator();
-            progress.progressBar1.Maximum = 100;
-            progress.progressBar1.Minimum = 0;
-            progress.progressBar1.Value = 20;
-            progress.Show();
-            progress.progressBar1.Value = 25;
+                progress.progressBar1.Maximum = 100;
+                progress.progressBar1.Minimum = 0;
+                progress.progressBar1.Value = 20;
+                progress.Show();
+                progress.progressBar1.Value = 25;
 
-            DataManager dataManager = DataManager.getInstance();
+                DataManager dataManager = DataManager.getInstance();
 
                 progress.progressBar1.Value = 30;
 
@@ -944,36 +523,29 @@ namespace AQM_Algo_Trading_Addin_CGR
                                         dataManager.getColumnsToDraw_forYahooHistoricalData()
                                       );
 
-
                 progress.progressBar1.Value = 45;
-
                 historicalDataTableObject.changeSheetName("Historische Daten");
-
                 progress.progressBar1.Value = 55;
-
                 historicalDataTableObject.drawOnlyRelevantColumns();
-
                 progress.progressBar1.Value = 60;
                 
-            
-            //Livedaten
-            TableObject liveDataTableObject = new TableObject(
-                                Globals.Factory.GetVstoObject(
-                                    Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet),
-                                Globals.ThisAddIn.Application.Cells[1, 1]);
+                //Livedaten
+                TableObject liveDataTableObject = new TableObject(
+                                    Globals.Factory.GetVstoObject(
+                                        Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet),
+                                    Globals.ThisAddIn.Application.Cells[1, 1]);
 
-            progress.progressBar1.Value = 75;
+                progress.progressBar1.Value = 75;
 
-            //liveDataTable.changeWorkbookName("OnVista-Livedaten");
-            liveDataTableObject.createNewWorksheet("OnVista-Livedaten");
+                //liveDataTable.changeWorkbookName("OnVista-Livedaten");
+                liveDataTableObject.createNewWorksheet("OnVista-Livedaten");
 
-            progress.progressBar1.Value = 80;
-            dataManager.subscribeForLiveConnection(view.comboBox1.SelectedItem.ToString(), liveDataTableObject, LiveConnectors.OnVistaDummy);
-            dataManager.pausePushWorkers(); //lege Worker schlafen
-            progress.progressBar1.Value = 85;
+                progress.progressBar1.Value = 80;
+                dataManager.subscribeForLiveConnection(view.comboBox1.SelectedItem.ToString(), liveDataTableObject, LiveConnectors.OnVistaDummy);
+                dataManager.pausePushWorkers(); //lege Worker schlafen
+                progress.progressBar1.Value = 85;
 
-            DiagramObject myDiagram = new DiagramObject(liveDataTableObject, historicalDataTableObject, view.comboBox1.SelectedItem.ToString());
-
+                DiagramObject myDiagram = new DiagramObject(liveDataTableObject, historicalDataTableObject, view.comboBox1.SelectedItem.ToString());
                 progress.progressBar1.Value = 90;
                 
                 Algo algorithmus = new Algo(Globals.ThisAddIn.ac, view.comboBox1.SelectedItem.ToString(), LiveConnectors.OnVistaDummy);
@@ -981,26 +553,10 @@ namespace AQM_Algo_Trading_Addin_CGR
 
                 progress.progressBar1.Value = 95;
                 progress.progressBar1.Value = 100;
-            progress.Close();
+                progress.Close();
 
                 dataManager.pausePushWorkers(); //wecke Worker wieder auf
-
             }
-        }
-
-        private void button8_Click(object sender, RibbonControlEventArgs e)
-        {
-            DataManager dataManager = DataManager.getInstance();
-
-            TableObject myTable = new TableObject(
-                                Globals.Factory.GetVstoObject(
-                                    Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet),
-                                Globals.ThisAddIn.Application.Cells[1, 1]);
-
-            dataManager.subscribeForLiveConnection("BMW", myTable, LiveConnectors.OnVistaDummy);
-            Algo algorithmus = new Algo(Globals.ThisAddIn.ac, "BMW", LiveConnectors.OnVistaDummy);
-            Globals.ThisAddIn.SharePane.Visible = true;
-
         }
 
         private void button9_Click(object sender, RibbonControlEventArgs e)
@@ -1028,57 +584,6 @@ namespace AQM_Algo_Trading_Addin_CGR
         {
             MasterDataDialog mdDialog = new MasterDataDialog();
             mdDialog.ShowDialog();
-        }
-
-        private void CB_Quelle_Dummy_Click(object sender, RibbonControlEventArgs e)
-        {
-            if (CB_Quelle_Dummy.Checked == true)
-            {
-                CB_Quelle_Yahoo.Enabled = false;
-                CB_Quelle_Lokal.Enabled = false;
-                CB_Quelle_Onvista.Enabled = false;
-                if (CB_Ziel_AktuellesTB.Checked == true)
-                {
-                    CB_Ziel_AktuellesTB.Enabled = true;
-                    CB_Ziel_NeuesTB.Enabled = false;
-                    CB_Ziel_Cursor.Enabled = false;
-                    BTN_Aktionen_Ausfuehren.Enabled = true;
-                }
-                else if (CB_Ziel_NeuesTB.Checked == true)
-                {
-                    CB_Ziel_NeuesTB.Enabled = true;
-                    CB_Ziel_Cursor.Enabled = false;
-                    CB_Ziel_AktuellesTB.Enabled = false;
-                    BTN_Aktionen_Ausfuehren.Enabled = true;
-                }
-                else if (CB_Ziel_Cursor.Checked == true)
-                {
-                    CB_Ziel_Cursor.Enabled = true;
-                    CB_Ziel_AktuellesTB.Enabled = false;
-                    CB_Ziel_NeuesTB.Enabled = false;
-                    BTN_Aktionen_Ausfuehren.Enabled = true;
-                }
-                else {
-                    CB_Ziel_AktuellesTB.Enabled = true;
-                    CB_Ziel_NeuesTB.Enabled = true;
-                    CB_Ziel_Cursor.Enabled = true;
-                }
-                selectedOptions = selectedOptions + 1;
-            }
-            else
-            {
-                CB_Quelle_Yahoo.Enabled = false;
-                CB_Quelle_Onvista.Enabled = true;
-                if (CB_Typ_Historisch.Checked == true)
-                {
-                    CB_Quelle_Lokal.Enabled = true;
-                }
-                //CB_Quelle_Lokal.Enabled = true;
-                CB_Ziel_AktuellesTB.Enabled = false;
-                CB_Ziel_NeuesTB.Enabled = false;
-                CB_Ziel_Cursor.Enabled = false;
-                selectedOptions = selectedOptions - 1;
-            }
         }
     }
 }

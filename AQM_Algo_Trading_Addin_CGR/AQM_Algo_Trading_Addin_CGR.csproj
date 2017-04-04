@@ -249,6 +249,7 @@
     <None Include="AQM_Algo_Trading_Addin_CGR_16_TemporaryKey.pfx" />
     <None Include="AQM_Algo_Trading_Addin_CGR_17_TemporaryKey.pfx" />
     <None Include="AQM_Algo_Trading_Addin_CGR_18_TemporaryKey.pfx" />
+    <None Include="AQM_Algo_Trading_Addin_CGR_19_TemporaryKey.pfx" />
     <None Include="AQM_Algo_Trading_Addin_CGR_1_TemporaryKey.pfx" />
     <None Include="AQM_Algo_Trading_Addin_CGR_2_TemporaryKey.pfx" />
     <None Include="AQM_Algo_Trading_Addin_CGR_3_TemporaryKey.pfx" />
@@ -287,10 +288,10 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>AQM_Algo_Trading_Addin_CGR_18_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>AQM_Algo_Trading_Addin_CGR_19_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>D59B710A420C19723E44567E37B36B272F23E021</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>207F0D25E43E4DE993DE32AA36E937929532FCDA</ManifestCertificateThumbprint>
   </PropertyGroup>
   <!-- Include the build rules for a C# project. -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
