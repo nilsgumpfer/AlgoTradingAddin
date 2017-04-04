@@ -585,6 +585,15 @@ namespace AQM_Algo_Trading_Addin_CGR
             MasterDataDialog mdDialog = new MasterDataDialog();
             mdDialog.ShowDialog();
         }
+
+        private void button3_Click(object sender, RibbonControlEventArgs e)
+        {
+            Worksheet workSheet = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet);
+            Excel.Range position = Globals.ThisAddIn.Application.Cells[1, 1];
+            position.NumberFormat = "[$-F400]h:mm:ss AM/PM";
+            //position.Value = "2017-04-02 19:23:37";
+            MessageBox.Show(position.NumberFormat);
+        }
     }
 }
  

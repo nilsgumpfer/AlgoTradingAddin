@@ -53,16 +53,17 @@
             this.CB_Ziel_Cursor = this.Factory.CreateRibbonCheckBox();
             this.group7 = this.Factory.CreateRibbonGroup();
             this.BTN_Aktionen_Ausfuehren = this.Factory.CreateRibbonButton();
-            this.group8 = this.Factory.CreateRibbonGroup();
             this.button7 = this.Factory.CreateRibbonButton();
-            this.button9 = this.Factory.CreateRibbonButton();
+            this.group8 = this.Factory.CreateRibbonGroup();
             this.onLoadPause = this.Factory.CreateRibbonButton();
             this.onStopLoad = this.Factory.CreateRibbonButton();
+            this.group5 = this.Factory.CreateRibbonGroup();
             this.button10 = this.Factory.CreateRibbonButton();
+            this.button9 = this.Factory.CreateRibbonButton();
             this.group2 = this.Factory.CreateRibbonGroup();
             this.checkBox3 = this.Factory.CreateRibbonCheckBox();
             this.BTN_Test1 = this.Factory.CreateRibbonButton();
-            this.group5 = this.Factory.CreateRibbonGroup();
+            this.button3 = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.group1.SuspendLayout();
             this.group3.SuspendLayout();
@@ -199,24 +200,18 @@
             this.BTN_Aktionen_Ausfuehren.Name = "BTN_Aktionen_Ausfuehren";
             this.BTN_Aktionen_Ausfuehren.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button2_Click);
             // 
-            // group8
-            // 
-            this.group8.Items.Add(this.onLoadPause);
-            this.group8.Items.Add(this.onStopLoad);
-            this.group8.Label = "Ladeprozess";
-            this.group8.Name = "group8";
-            // 
             // button7
             // 
             this.button7.Label = "Management-Cockpit erstellen";
             this.button7.Name = "button7";
             this.button7.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button7_Click);
             // 
-            // button9
+            // group8
             // 
-            this.button9.Label = "ShowLogs";
-            this.button9.Name = "button9";
-            this.button9.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button9_Click);
+            this.group8.Items.Add(this.onLoadPause);
+            this.group8.Items.Add(this.onStopLoad);
+            this.group8.Label = "Ladeprozess";
+            this.group8.Name = "group8";
             // 
             // onLoadPause
             // 
@@ -230,11 +225,25 @@
             this.onStopLoad.Name = "onStopLoad";
             this.onStopLoad.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.onStopLoad_Click);
             // 
+            // group5
+            // 
+            this.group5.Items.Add(this.button10);
+            this.group5.Items.Add(this.button9);
+            this.group5.Items.Add(this.button3);
+            this.group5.Label = "Sonstige Aktionen";
+            this.group5.Name = "group5";
+            // 
             // button10
             // 
             this.button10.Label = "Stammdaten laden";
             this.button10.Name = "button10";
             this.button10.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button10_Click);
+            // 
+            // button9
+            // 
+            this.button9.Label = "ShowLogs";
+            this.button9.Name = "button9";
+            this.button9.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button9_Click);
             // 
             // group2
             // 
@@ -246,12 +255,16 @@
             this.checkBox3.Label = "checkBox3";
             this.checkBox3.Name = "checkBox3";
             // 
-            // group5
+            // BTN_Test1
             // 
-            this.group5.Items.Add(this.button10);
-            this.group5.Items.Add(this.button9);
-            this.group5.Label = "Sonstige Aktionen";
-            this.group5.Name = "group5";
+            this.BTN_Test1.Label = "";
+            this.BTN_Test1.Name = "BTN_Test1";
+            // 
+            // button3
+            // 
+            this.button3.Label = "button3";
+            this.button3.Name = "button3";
+            this.button3.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button3_Click);
             // 
             // AlgoTradingRibbon
             // 
@@ -308,6 +321,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonLabel label1;
         internal Microsoft.Office.Tools.Ribbon.RibbonLabel label2;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group5;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton button3;
     }
 
     partial class ThisRibbonCollection
