@@ -137,6 +137,11 @@ namespace AQM_Algo_Trading_Addin_CGR
             string to = dateTo.ToString("yyyy-MM-dd HH:mm:ss");
 
             string query = "SELECT " +
+                                "at_isin, " +
+                                "at_wkn, " +
+                                "at_symbol, " +
+                                "at_name, " +
+                                "at_sector, " +
                                 "at_price, " +
                                 "at_volume, " +
                                 "at_trend_abs, " +
@@ -156,6 +161,12 @@ namespace AQM_Algo_Trading_Addin_CGR
                                 "at_currency " +
                             "FROM " +
                                 "aqm.tbl_stock_transactiondata " +
+                            "JOIN " +
+                                "aqm.tbl_stock_masterdata " +
+                            "ON " +
+                                "aqm.tbl_stock_transactiondata.fk_stock_id " +
+                                "= " +
+                                "aqm.tbl_stock_masterdata.pk_id " +
                             "WHERE " +
                                 "fk_stock_id " +
                                 "= '" +
@@ -179,6 +190,11 @@ namespace AQM_Algo_Trading_Addin_CGR
                 {
                     StockDataTransferObject record = new StockDataTransferObject();
 
+                    record.isin                 = mySQLDataReader.GetString("at_isin");
+                    record.wkn                  = mySQLDataReader.GetString("at_wkn");
+                    record.symbol               = mySQLDataReader.GetString("at_symbol");
+                    record.name                 = mySQLDataReader.GetString("at_name");
+                    record.sector               = mySQLDataReader.GetString("at_sector");
                     record.price                = mySQLDataReader.GetString("at_price");
                     record.volume               = mySQLDataReader.GetString("at_volume");
                     record.trend_abs            = mySQLDataReader.GetString("at_trend_abs");
