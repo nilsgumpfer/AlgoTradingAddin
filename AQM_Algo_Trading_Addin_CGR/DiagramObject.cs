@@ -51,11 +51,6 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         }
 
-        //public void setHistoricalDataTable(TableObject historicalDataTable)
-        //{
-        //    this.historicalDataTable = historicalDataTable;
-        //}
-
         public void updateMeWithNewData()
         {   
             //Update Aktienkursdiagramm
@@ -90,10 +85,11 @@ namespace AQM_Algo_Trading_Addin_CGR
             myChartAktienkurs.Chart.ChartTitle.Text = "Akienkurs der " + selectedTicker + " Aktie";
 
             //Tabellenblatt, aus welchem die Daten gezogen werden aus Table-Object auslesen
-            wsLiveData = (Excel.Worksheet)workbook.Worksheets["OnVista-Livedaten"];
+            wsLiveData = (Excel.Worksheet)workbook.Worksheets["Livedaten"];
 
             //Aktienkursdiagramm zu Beginn einmal updaten
             updateDiagram(wsLiveData, chartPageAktienkurs, foundColumnTimestamp, foundColumnKurs, tableobject.getContentCount());
+
 
 
 
@@ -118,12 +114,11 @@ namespace AQM_Algo_Trading_Addin_CGR
             myChartVolumen.Chart.HasTitle = true;
             myChartVolumen.Chart.ChartTitle.Text = "Volumen der " + selectedTicker + " Aktie";
 
-            //Tabellenblatt, aus welchem die Daten gezogen werden aus Table-Object auslesen
-            wsLiveData = (Excel.Worksheet)workbook.Worksheets["OnVista-Livedaten"];
+            //Tabellenblatt, in welches die Daten geschrieben werden
+            wsLiveData = (Excel.Worksheet)workbook.Worksheets["Livedaten"];
 
             //Volumendiagramm zu Beginn einmal updaten
             updateDiagram(wsLiveData, chartPageVolumen, foundColumnTimestamp, foundColumnVolumen, tableobject.getContentCount());
-
 
             //Historische Daten
             Microsoft.Office.Interop.Excel.Range chartRangeHistoDaten;
@@ -133,10 +128,9 @@ namespace AQM_Algo_Trading_Addin_CGR
                 (Excel.ChartObject)xlChartsHistoDaten.Add(10, 300, 1020, 270);
             Microsoft.Office.Interop.Excel.Chart chartPageHistoDaten = myChartHistoDaten.Chart;
 
-            //Excel.Worksheet wsHistoricalData = (Excel.Worksheet)historicalTableObject.getWorksheetOfTableObject();
+            //Tabellenblatt, in welches die Daten geschrieben werden
             Excel.Worksheet wsHistoricalData = (Excel.Worksheet)workbook.Worksheets["Historische Daten"];
             chartRangeHistoDaten = wsHistoricalData.Range[wsHistoricalData.Cells[1, 1], wsHistoricalData.Cells[historicalTableObject.getContentCount() + 1, historicalTableObject.getColumnsToDrawCount()]];
-
 
             chartPageHistoDaten.SetSourceData(chartRangeHistoDaten, misValue);
             chartPageHistoDaten.ChartType = Excel.XlChartType.xlLine;
@@ -144,20 +138,18 @@ namespace AQM_Algo_Trading_Addin_CGR
             //Titel das Diagramms für historische Daten setzen
                 myChartHistoDaten.Chart.HasTitle = true;
                 myChartHistoDaten.Chart.ChartTitle.Text = "Historische Daten der " + selectedTicker + " Aktie";
-         
-          
         }
 
         public void updateDiagram(Excel.Worksheet wsLiveData, Microsoft.Office.Interop.Excel.Chart chartPage, int foundColumnTimestamp, int foundColumn, int rowCount)
         {
             //StartRangeTimestamp
-            Excel.Range rng3 = (Excel.Range)wsLiveData.Cells[1, foundColumnTimestamp];
-            string startRangeTimestamp = rng3.Address.ToString();
-            rng3.EntireColumn.NumberFormat = "[$-F400]h:mm:ss AM/PM";
+            Excel.Range rngTimestamp = (Excel.Range)wsLiveData.Cells[1, foundColumnTimestamp];
+            string startRangeTimestamp = rngTimestamp.Address.ToString();
+            rngTimestamp.EntireColumn.NumberFormat = "[$-F400]h:mm:ss AM/PM";
 
             //EndRangeColumn
-            Excel.Range rng2 = (Excel.Range)wsLiveData.Cells[rowCount + 1, foundColumn];
-            string endRangeColumn = rng2.Address.ToString();
+            Excel.Range rngColumn = (Excel.Range)wsLiveData.Cells[rowCount + 1, foundColumn];
+            string endRangeColumn = rngColumn.Address.ToString();
            
             Excel.Range finalRange = wsLiveData.get_Range(startRangeTimestamp + ":" + endRangeColumn);
 

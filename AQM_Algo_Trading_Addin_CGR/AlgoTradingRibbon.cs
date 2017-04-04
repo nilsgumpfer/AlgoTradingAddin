@@ -541,7 +541,7 @@ namespace AQM_Algo_Trading_Addin_CGR
                 progress.progressBar1.Value = 75;
 
                 //liveDataTable.changeWorkbookName("OnVista-Livedaten");
-                liveDataTableObject.createNewWorksheet("OnVista-Livedaten");
+                liveDataTableObject.createNewWorksheet("Livedaten");
 
                 progress.progressBar1.Value = 80;
                 dataManager.subscribeForLiveConnection(view.comboBox1.SelectedItem.ToString(), liveDataTableObject, LiveConnectors.OnVistaDummy);
