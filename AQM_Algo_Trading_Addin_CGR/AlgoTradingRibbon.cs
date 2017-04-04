@@ -81,12 +81,7 @@ namespace AQM_Algo_Trading_Addin_CGR
                     CB_Quelle_Yahoo.Enabled = false;
                     CB_Quelle_Dummy.Enabled = false;
                 }
-                else if (CB_Quelle_Yahoo.Checked == true)
-                {
-                    CB_Quelle_Yahoo.Enabled = true;
-                    CB_Quelle_Onvista.Enabled = false;
-                    CB_Quelle_Dummy.Enabled = false;
-                }
+
                
                 else if (CB_Quelle_Dummy.Checked == true)
                 {
@@ -99,7 +94,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             else {
                 CB_Quelle_Dummy.Enabled = true;
                 CB_Quelle_Onvista.Enabled = true;
-                CB_Quelle_Yahoo.Enabled = true;
+                CB_Quelle_Yahoo.Enabled = false;
             }
             }
                         
@@ -300,7 +295,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             }
             else
             {
-                CB_Quelle_Yahoo.Enabled = true;
+                CB_Quelle_Yahoo.Enabled = false;
                 CB_Quelle_Dummy.Enabled = true;
                 if (CB_Typ_Historisch.Checked == true)
                 {
@@ -1072,7 +1067,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             }
             else
             {
-                CB_Quelle_Yahoo.Enabled = true;
+                CB_Quelle_Yahoo.Enabled = false;
                 CB_Quelle_Onvista.Enabled = true;
                 if (CB_Typ_Historisch.Checked == true)
                 {

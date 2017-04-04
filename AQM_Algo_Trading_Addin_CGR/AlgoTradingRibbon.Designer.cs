@@ -74,6 +74,8 @@
             this.group2 = this.Factory.CreateRibbonGroup();
             this.checkBox3 = this.Factory.CreateRibbonCheckBox();
             this.BTN_Test1 = this.Factory.CreateRibbonButton();
+            this.label1 = this.Factory.CreateRibbonLabel();
+            this.label2 = this.Factory.CreateRibbonLabel();
             this.tab1.SuspendLayout();
             this.group1.SuspendLayout();
             this.group3.SuspendLayout();
@@ -128,9 +130,11 @@
             // 
             // group3
             // 
+            this.group3.Items.Add(this.label1);
             this.group3.Items.Add(this.CB_Quelle_Lokal);
-            this.group3.Items.Add(this.CB_Quelle_Onvista);
             this.group3.Items.Add(this.CB_Quelle_Yahoo);
+            this.group3.Items.Add(this.label2);
+            this.group3.Items.Add(this.CB_Quelle_Onvista);
             this.group3.Items.Add(this.CB_Quelle_Dummy);
             this.group3.Label = "Datenquelle";
             this.group3.Name = "group3";
@@ -345,6 +349,16 @@
             this.BTN_Test1.Name = "BTN_Test1";
             this.BTN_Test1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.BTN_Test_Click);
             // 
+            // label1
+            // 
+            this.label1.Label = "Historische Daten";
+            this.label1.Name = "label1";
+            // 
+            // label2
+            // 
+            this.label2.Label = "Live-Daten";
+            this.label2.Name = "label2";
+            // 
             // AlgoTradingRibbon
             // 
             this.Name = "AlgoTradingRibbon";
@@ -411,6 +425,8 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton onLoadPause;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton onStopLoad;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button10;
+        internal Microsoft.Office.Tools.Ribbon.RibbonLabel label1;
+        internal Microsoft.Office.Tools.Ribbon.RibbonLabel label2;
     }
 
     partial class ThisRibbonCollection

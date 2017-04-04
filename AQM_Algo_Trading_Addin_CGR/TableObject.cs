@@ -79,13 +79,15 @@ namespace AQM_Algo_Trading_Addin_CGR
             this.worksheet = worksheet;
             this.startPosition = startPosition;
             initStartPosition();
-            if(records.Count>0)
-                this.headline = StockDataTransferObject.getHeadlineAsList();
-            else
-                this.headline = new List<string>();
+            if(records!=null)
+                if(records.Count>0)
+                    this.headline = StockDataTransferObject.getHeadlineAsList();
+                else
+                    this.headline = new List<string>();
             this.content = new List<List<string>>();
             this.columnsToDraw = columnsToDraw;
-            foreach (StockDataTransferObject record in records)
+            if (records != null)
+                foreach (StockDataTransferObject record in records)
                 content.Add(record.getLineAsList());
         }
 
