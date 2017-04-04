@@ -16,7 +16,6 @@ namespace AQM_Algo_Trading_Addin_CGR
     public partial class AlgoTradingRibbon
     {
         public int selectedOptions = 0;
-        private TableObject tableObject;
 
         private void AlgoTradingRibbon_Load(object sender, RibbonUIEventArgs e)
         {
@@ -376,6 +375,10 @@ namespace AQM_Algo_Trading_Addin_CGR
             if (selectedOptions == 3)
             {
                 Konfigurator view = new Konfigurator();
+
+                if (CB_Typ_Live.Checked)
+                    view.groupBox1.Visible = false;
+
                 view.ShowDialog();
 
                 Workbook workBook;
