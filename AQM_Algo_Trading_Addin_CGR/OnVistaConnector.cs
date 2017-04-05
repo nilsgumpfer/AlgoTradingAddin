@@ -151,8 +151,15 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         private void loadHtmlData()
         {
-            sourceHTML = webClient.DownloadString(url);
-            sourceHTML = HttpUtility.HtmlDecode(sourceHTML);
+            try
+            {
+                sourceHTML = webClient.DownloadString(url);
+                sourceHTML = HttpUtility.HtmlDecode(sourceHTML);
+            }
+            catch( Exception e )
+            {
+                ExceptionHandler.handle(e);
+            }
         }
 
         private string extractIsin()
@@ -221,14 +228,14 @@ namespace AQM_Algo_Trading_Addin_CGR
         {
             string pattern =    @"data-push=\d*:" + keyWord + @":\d{1}:\d{1}:Stock>(.?\d*[\.,\,]\d*)";
             /*
-                                @" <span data-push=         //static part
+                                @"data-push=                //static part
                                 \d*                         //0-n digits
                                 :" + keyWord + @":          //this part differs, so the caller has to hand over the relevant keyword
-                                \d*                         //0-n digits
+                                \d{1}                       //1 digit
                                 :                           //static part
-                                \d*                         //0-n digits
+                                \d{1}                       //1 digit
                                 :Stock>                     //static part
-                                (                           //this bracket initiates a "group". it specifies the relevant part which should be extracted
+                                (                           //this bracket initiates a "group". it specifies the relevant part, which should be extracted
                                 .?                          //in some cases, here we expect one blankspace - .? means: here comes exactly 0 or 1 character (inlcudes space, too)
                                 \d*                         //0-n digits
                                 [\.,\,]                     //this means: here can be either one point or one comma - nothing else

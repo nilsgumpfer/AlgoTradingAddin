@@ -496,6 +496,22 @@ namespace AQM_Algo_Trading_Addin_CGR
             Konfigurator view = new Konfigurator();
             view.ShowDialog();
 
+            LiveConnectors variant;
+            DialogResult dummyOrNot = MessageBox.Show("Möchten Sie mit echten Live-Daten (Ja) oder mit Dummy-Daten (Nein) arbeiten?", "Datentyp auswählen", MessageBoxButtons.YesNo);
+
+            switch (dummyOrNot)
+            {
+                case DialogResult.Yes:
+                    variant = LiveConnectors.OnVista;
+                    break;
+                case DialogResult.No:
+                    variant = LiveConnectors.OnVistaDummy;
+                    break;
+                default:
+                    variant = LiveConnectors.OnVistaDummy;
+                    break;
+            }
+
             if (view.hasBeenCancelled == false)
             {
 
@@ -544,14 +560,14 @@ namespace AQM_Algo_Trading_Addin_CGR
                 liveDataTableObject.createNewWorksheet("Livedaten");
 
                 progress.progressBar1.Value = 80;
-                dataManager.subscribeForLiveConnection(view.comboBox1.SelectedItem.ToString(), liveDataTableObject, LiveConnectors.OnVistaDummy);
+                dataManager.subscribeForLiveConnection(view.comboBox1.SelectedItem.ToString(), liveDataTableObject, variant);
                 dataManager.pausePushWorkers(); //lege Worker schlafen
                 progress.progressBar1.Value = 85;
 
                 DiagramObject myDiagram = new DiagramObject(liveDataTableObject, historicalDataTableObject, view.comboBox1.SelectedItem.ToString());
                 progress.progressBar1.Value = 90;
                 
-                Algo algorithmus = new Algo(Globals.ThisAddIn.ac, view.comboBox1.SelectedItem.ToString(), LiveConnectors.OnVistaDummy);
+                Algo algorithmus = new Algo(Globals.ThisAddIn.ac, view.comboBox1.SelectedItem.ToString(), variant);
                 Globals.ThisAddIn.SharePane.Visible = true;
 
                 progress.progressBar1.Value = 95;

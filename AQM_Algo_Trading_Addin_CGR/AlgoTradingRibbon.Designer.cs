@@ -239,7 +239,7 @@
             // 
             // button9
             // 
-            this.button9.Label = "ShowLogs";
+            this.button9.Label = "Logs anzeigen";
             this.button9.Name = "button9";
             this.button9.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button9_Click);
             // 

@@ -42,11 +42,11 @@
             // 
             // onklickReload
             // 
-            this.onklickReload.Location = new System.Drawing.Point(137, 519);
+            this.onklickReload.Location = new System.Drawing.Point(312, 512);
             this.onklickReload.Name = "onklickReload";
-            this.onklickReload.Size = new System.Drawing.Size(75, 23);
+            this.onklickReload.Size = new System.Drawing.Size(93, 23);
             this.onklickReload.TabIndex = 1;
-            this.onklickReload.Text = "Reload";
+            this.onklickReload.Text = "Aktualisieren";
             this.onklickReload.UseVisualStyleBackColor = true;
             this.onklickReload.Click += new System.EventHandler(this.onklickReload_Click);
             // 
@@ -54,7 +54,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(719, 554);
+            this.ClientSize = new System.Drawing.Size(719, 543);
             this.Controls.Add(this.onklickReload);
             this.Controls.Add(this.richTextBox1);
             this.Name = "LogView";

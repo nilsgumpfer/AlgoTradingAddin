@@ -16,7 +16,6 @@ namespace AQM_Algo_Trading_Addin_CGR
         private Thread thread;
         private bool doPause = false;
         public LiveConnectors variant { get; }
-        private int debugCount = 0;
 
         private PushWorker()
         {
@@ -43,6 +42,7 @@ namespace AQM_Algo_Trading_Addin_CGR
         public void subscribe(LiveConnectionSubscriber subscriber)
         {
             listOfSubscribers.Add(subscriber);
+            Logger.log("(" + symbol + ") Added Subscriber: " + subscriber.ToString().Replace("AQM_Algo_Trading_Addin_CGR.",""));
         }
 
         public void unsubscribe(LiveConnectionSubscriber subscriber)
@@ -57,11 +57,17 @@ namespace AQM_Algo_Trading_Addin_CGR
                 while (doPause)
                     Thread.Sleep(1000);
 
+                //Logger.log("(" + symbol + ") Requested Data");
+
                 StockDataTransferObject sdtObject = liveConnector.getStockData();
 
                 if (liveConnector.checkChange())
                     updateSubscribers(sdtObject);
+                /*else
+                    Logger.log("(" + symbol + ") No new Record available");*/
             }
+
+            Logger.log("(" + symbol + ") Stopped and killed PushWorker");
         }
 
         public void stopWork()
@@ -80,7 +86,7 @@ namespace AQM_Algo_Trading_Addin_CGR
                 thread = new Thread(this.doWork);
                 thread.Name = "PushWorker (" + symbol + ")";
                 thread.Start();
-                Logger.log("Started PushWorker (" + symbol + ")");
+                Logger.log("(" + symbol + ") Started PushWorker");
             }
         }
 
@@ -88,8 +94,7 @@ namespace AQM_Algo_Trading_Addin_CGR
         {
             foreach(LiveConnectionSubscriber subscriber in listOfSubscribers)
             {
-                debugCount++;
-                Logger.log("UpdateSubscribers: " + debugCount);
+                Logger.log("("+ symbol + ") Updated Subscriber: " + subscriber.ToString().Replace("AQM_Algo_Trading_Addin_CGR.", ""));
                 subscriber.updateMeWithNewData(record);
             }
         }
@@ -99,9 +104,9 @@ namespace AQM_Algo_Trading_Addin_CGR
             doPause = !doPause;
 
             if(doPause)
-                Logger.log("Paused PushWorker (" + symbol + ")");
+                Logger.log("(" + symbol + ") Paused PushWorker");
             else
-                Logger.log("Resumed PushWorker (" + symbol + ")");
+                Logger.log("(" + symbol + ") Resumed PushWorker");
         }
     }
 }
