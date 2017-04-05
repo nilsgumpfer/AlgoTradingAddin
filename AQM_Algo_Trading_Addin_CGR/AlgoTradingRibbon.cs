@@ -366,7 +366,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             }
         }
 
-        private void button2_Click(object sender, RibbonControlEventArgs e)
+        private void onClickAusfuehren(object sender, RibbonControlEventArgs e)
         {
             if (CB_Ziel_NeuesTB.Enabled == false & CB_Ziel_AktuellesTB.Enabled == false & CB_Ziel_Cursor.Enabled == false)
             {
@@ -385,7 +385,6 @@ namespace AQM_Algo_Trading_Addin_CGR
                 Worksheet workSheet = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet);
                 Excel.Range position = Globals.ThisAddIn.Application.Cells[1, 1];
 
-                //TODO: Hier vielleicht noch nachbessern :)
                 string stockSymbol = view.comboBox1.SelectedItem.ToString();
                 DateTime dateFrom = view.dateTimePicker1.Value;
                 DateTime dateTo = view.dateTimePicker2.Value;
@@ -490,15 +489,31 @@ namespace AQM_Algo_Trading_Addin_CGR
             }
         }
 
-        private void button7_Click(object sender, RibbonControlEventArgs e)
+        private void onClickManagementCockpit(object sender, RibbonControlEventArgs e)
         {
             //Historische Daten auswählen
             Konfigurator view = new Konfigurator();
             view.ShowDialog();
 
+            LiveConnectors variant;
+            DialogResult dummyOrNot = MessageBox.Show("Möchten Sie mit echten Live-Daten (Ja) oder mit Dummy-Daten (Nein) arbeiten?", "Datentyp auswählen", MessageBoxButtons.YesNo);
+
+            switch (dummyOrNot)
+            {
+                case DialogResult.Yes:
+                    variant = LiveConnectors.OnVista;
+                    break;
+                case DialogResult.No:
+                    variant = LiveConnectors.OnVistaDummy;
+                    break;
+                default:
+                    variant = LiveConnectors.OnVistaDummy;
+                    break;
+            }
+
             if (view.hasBeenCancelled == false)
             {
-
+                TableObject historicalDataTableObject = null;
                 ProgressIndicator progress = new ProgressIndicator();
                 progress.progressBar1.Maximum = 100;
                 progress.progressBar1.Minimum = 0;
@@ -510,27 +525,32 @@ namespace AQM_Algo_Trading_Addin_CGR
 
                 progress.progressBar1.Value = 30;
 
-                TableObject historicalDataTableObject = new TableObject(
-                                        Globals.Factory.GetVstoObject
-                                        (
-                                            Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet
-                                        ),
-                                        Globals.ThisAddIn.Application.Cells[1, 1],
-                                        dataManager.getHistoricalStockData
-                                        (
-                                            view.comboBox1.SelectedItem.ToString(),
-                                            view.dateTimePicker1.Value,
-                                            view.dateTimePicker2.Value,
-                                            YahooFinanceAPI_Resolution.Daily
-                                        ),
-                                        dataManager.getColumnsToDraw_forYahooHistoricalData()
-                                      );
+                List<StockDataTransferObject> historicalRecords = dataManager.getHistoricalStockData
+                                                                    (
+                                                                        view.comboBox1.SelectedItem.ToString(),
+                                                                        view.dateTimePicker1.Value,
+                                                                        view.dateTimePicker2.Value,
+                                                                        YahooFinanceAPI_Resolution.Daily
+                                                                    );
+                if (historicalRecords != null)
+                {
+                    historicalDataTableObject = new TableObject
+                                          (
+                                            Globals.Factory.GetVstoObject
+                                            (
+                                                Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet
+                                            ),
+                                            Globals.ThisAddIn.Application.Cells[1, 1],
+                                            historicalRecords,
+                                            dataManager.getColumnsToDraw_forYahooHistoricalData()
+                                          );
 
-                progress.progressBar1.Value = 45;
-                historicalDataTableObject.changeSheetName("Historische Daten");
-                progress.progressBar1.Value = 55;
-                historicalDataTableObject.drawOnlyRelevantColumns();
-                progress.progressBar1.Value = 60;
+                    progress.progressBar1.Value = 45;
+                    historicalDataTableObject.changeSheetName("Historische Daten");
+                    progress.progressBar1.Value = 55;
+                    historicalDataTableObject.drawOnlyRelevantColumns();
+                    progress.progressBar1.Value = 60;
+                }
                 
                 //Livedaten
                 TableObject liveDataTableObject = new TableObject(
@@ -544,14 +564,14 @@ namespace AQM_Algo_Trading_Addin_CGR
                 liveDataTableObject.createNewWorksheet("Livedaten");
 
                 progress.progressBar1.Value = 80;
-                dataManager.subscribeForLiveConnection(view.comboBox1.SelectedItem.ToString(), liveDataTableObject, LiveConnectors.OnVistaDummy);
+                dataManager.subscribeForLiveConnection(view.comboBox1.SelectedItem.ToString(), liveDataTableObject, variant);
                 dataManager.pausePushWorkers(); //lege Worker schlafen
                 progress.progressBar1.Value = 85;
 
                 DiagramObject myDiagram = new DiagramObject(liveDataTableObject, historicalDataTableObject, view.comboBox1.SelectedItem.ToString());
                 progress.progressBar1.Value = 90;
                 
-                Algo algorithmus = new Algo(Globals.ThisAddIn.ac, view.comboBox1.SelectedItem.ToString(), LiveConnectors.OnVistaDummy);
+                Algo algorithmus = new Algo(Globals.ThisAddIn.ac, view.comboBox1.SelectedItem.ToString(), variant);
                 Globals.ThisAddIn.SharePane.Visible = true;
 
                 progress.progressBar1.Value = 95;
@@ -562,40 +582,31 @@ namespace AQM_Algo_Trading_Addin_CGR
             }
         }
 
-        private void button9_Click(object sender, RibbonControlEventArgs e)
+        private void onClickLogs(object sender, RibbonControlEventArgs e)
         {
             LogView logView = new LogView();
             logView.Show();
         }
 
-        private void onLoadPause_Click(object sender, RibbonControlEventArgs e)
+        private void onClickPauseLoad(object sender, RibbonControlEventArgs e)
         {
             DataManager.getInstance().pausePushWorkers();
 
-            if(onLoadPause.Label == "Pausiere Laden")
-                onLoadPause.Label = "Weiter laden";
+            if(BTN_Ladeprozess_Pause.Label == "Pausiere Laden")
+                BTN_Ladeprozess_Pause.Label = "Weiter laden";
             else
-                onLoadPause.Label = "Pausiere Laden";
+                BTN_Ladeprozess_Pause.Label = "Pausiere Laden";
         }
 
-        private void onStopLoad_Click(object sender, RibbonControlEventArgs e)
+        private void onClickStopLoad(object sender, RibbonControlEventArgs e)
         {
             DataManager.getInstance().stopPushWorkers();
         }
 
-        private void button10_Click(object sender, RibbonControlEventArgs e)
+        private void onClickMasterData(object sender, RibbonControlEventArgs e)
         {
             MasterDataDialog mdDialog = new MasterDataDialog();
             mdDialog.ShowDialog();
-        }
-
-        private void button3_Click(object sender, RibbonControlEventArgs e)
-        {
-            Worksheet workSheet = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet);
-            Excel.Range position = Globals.ThisAddIn.Application.Cells[1, 1];
-            position.NumberFormat = "[$-F400]h:mm:ss AM/PM";
-            //position.Value = "2017-04-02 19:23:37";
-            MessageBox.Show(position.NumberFormat);
         }
     }
 }

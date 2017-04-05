@@ -52,9 +52,9 @@
             this.label_Kontostand.AutoSize = true;
             this.label_Kontostand.Location = new System.Drawing.Point(3, 37);
             this.label_Kontostand.Name = "label_Kontostand";
-            this.label_Kontostand.Size = new System.Drawing.Size(61, 13);
+            this.label_Kontostand.Size = new System.Drawing.Size(64, 13);
             this.label_Kontostand.TabIndex = 1;
-            this.label_Kontostand.Text = "Kontostand";
+            this.label_Kontostand.Text = "Kontostand:";
             // 
             // lblAlgoStatus
             // 
@@ -114,7 +114,7 @@
             this.lbl_EinstPreis.TabIndex = 7;
             this.lbl_EinstPreis.Text = "-";
             // 
-            // AlgoControl
+            // AlgoControlPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -126,7 +126,7 @@
             this.Controls.Add(this.lblAlgoStatus);
             this.Controls.Add(this.label_Kontostand);
             this.Controls.Add(this.label_Status);
-            this.Name = "AlgoControl";
+            this.Name = "AlgoControlPanel";
             this.Load += new System.EventHandler(this.AlgoControl_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

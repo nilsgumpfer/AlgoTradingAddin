@@ -21,7 +21,7 @@ namespace AQM_Algo_Trading_Addin_CGR
         private string urlMainPart                  = "http://www.onvista.de/aktien/";
         private string urlSuffix                    = "";
         private string timestampFormat              = "yyyy-MM-dd HH:mm:ss";
-        private string errorPlaceholder             = "N/A";
+        private string errorPlaceholder             = "0.0";
         private int lastVolume                      = 0;
         private StockDataTransferObject lastRecord  = new StockDataTransferObject();
         private StockDataTransferObject newRecord   = new StockDataTransferObject();
@@ -151,8 +151,15 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         private void loadHtmlData()
         {
-            sourceHTML = webClient.DownloadString(url);
-            sourceHTML = HttpUtility.HtmlDecode(sourceHTML);
+            try
+            {
+                sourceHTML = webClient.DownloadString(url);
+                sourceHTML = HttpUtility.HtmlDecode(sourceHTML);
+            }
+            catch( Exception e )
+            {
+                ExceptionHandler.handle(e);
+            }
         }
 
         private string extractIsin()
@@ -221,14 +228,14 @@ namespace AQM_Algo_Trading_Addin_CGR
         {
             string pattern =    @"data-push=\d*:" + keyWord + @":\d{1}:\d{1}:Stock>(.?\d*[\.,\,]\d*)";
             /*
-                                @" <span data-push=         //static part
+                                @"data-push=                //static part
                                 \d*                         //0-n digits
                                 :" + keyWord + @":          //this part differs, so the caller has to hand over the relevant keyword
-                                \d*                         //0-n digits
+                                \d{1}                       //1 digit
                                 :                           //static part
-                                \d*                         //0-n digits
+                                \d{1}                       //1 digit
                                 :Stock>                     //static part
-                                (                           //this bracket initiates a "group". it specifies the relevant part which should be extracted
+                                (                           //this bracket initiates a "group". it specifies the relevant part, which should be extracted
                                 .?                          //in some cases, here we expect one blankspace - .? means: here comes exactly 0 or 1 character (inlcudes space, too)
                                 \d*                         //0-n digits
                                 [\.,\,]                     //this means: here can be either one point or one comma - nothing else
@@ -257,6 +264,14 @@ namespace AQM_Algo_Trading_Addin_CGR
             return getItemUsingRegEx(pattern).Replace(" ", "");
         }
 
+        private string useExtractionVariant4(string keyWord)
+        {
+            string pattern = @"data-push=\d*:" + keyWord + @":\d{1}:\d{1}:Stock>.?\d*[\.,\,]\d*.?\/.?(\d*[\.,\,]\d*)";
+
+            //in some cases the returned string would contain a blankspace at its front - so we eliminate it
+            return getItemUsingRegEx(pattern).Replace(" ", "");
+        }
+
         private string extractDayHigh()
         {
             return useExtractionVariant1("high");
@@ -266,9 +281,9 @@ namespace AQM_Algo_Trading_Addin_CGR
         {
             //return useExtractionVariant1("data-push=", ":high:1:1:Stock> " + extractDayHigh() + " /", " <");
             //return useExtractionVariant2();
-
+            return useExtractionVariant4("high");
             //TODO: Extract Low-Price
-            return "LOW";
+            //return "LOW";
         }
 
         private string extractDayOpen()
@@ -363,7 +378,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             }
             catch (Exception e)
             {
-                ExceptionHandler.handle(new Exception("Tag cannot be found in HTML-source: \"" + endTag));
+                ExceptionHandler.handle("Tag cannot be found in HTML-source: \"" + endTag);
                 return errorPlaceholder;
             }
         }
