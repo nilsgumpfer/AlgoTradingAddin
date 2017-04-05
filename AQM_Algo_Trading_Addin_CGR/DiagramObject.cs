@@ -143,8 +143,10 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         public void updateDiagram(Excel.Worksheet wsLiveData, Microsoft.Office.Interop.Excel.Chart chartPage, int foundColumnTimestamp, int foundColumn, int rowCount)
         {
-            //StartRangeTimestamp
-            Excel.Range rngTimestamp = (Excel.Range)wsLiveData.Cells[1, foundColumnTimestamp];
+            try
+            {
+                //StartRangeTimestamp
+                Excel.Range rngTimestamp = (Excel.Range)wsLiveData.Cells[1, foundColumnTimestamp];
             string startRangeTimestamp = rngTimestamp.Address.ToString();
             rngTimestamp.EntireColumn.NumberFormat = "[$-F400]h:mm:ss AM/PM";
 
@@ -154,8 +156,11 @@ namespace AQM_Algo_Trading_Addin_CGR
            
             Excel.Range finalRange = wsLiveData.get_Range(startRangeTimestamp + ":" + endRangeColumn);
 
-            chartPage.SetSourceData(finalRange, misValue);
-        }
-
+                chartPage.SetSourceData(finalRange, misValue);
+            }
+            catch
+            {
+            }
     }
+}
 }

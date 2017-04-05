@@ -495,24 +495,24 @@ namespace AQM_Algo_Trading_Addin_CGR
             Konfigurator view = new Konfigurator();
             view.ShowDialog();
 
-            LiveConnectors variant;
-            DialogResult dummyOrNot = MessageBox.Show("Möchten Sie mit echten Live-Daten (Ja) oder mit Dummy-Daten (Nein) arbeiten?", "Datentyp auswählen", MessageBoxButtons.YesNo);
-
-            switch (dummyOrNot)
-            {
-                case DialogResult.Yes:
-                    variant = LiveConnectors.OnVista;
-                    break;
-                case DialogResult.No:
-                    variant = LiveConnectors.OnVistaDummy;
-                    break;
-                default:
-                    variant = LiveConnectors.OnVistaDummy;
-                    break;
-            }
-
             if (view.hasBeenCancelled == false)
             {
+                LiveConnectors variant;
+                DialogResult dummyOrNot = MessageBox.Show("Möchten Sie mit echten Live-Daten (Ja) oder mit Dummy-Daten (Nein) arbeiten?", "Datentyp auswählen", MessageBoxButtons.YesNo);
+
+                switch (dummyOrNot)
+                {
+                    case DialogResult.Yes:
+                        variant = LiveConnectors.OnVista;
+                        break;
+                    case DialogResult.No:
+                        variant = LiveConnectors.OnVistaDummy;
+                        break;
+                    default:
+                        variant = LiveConnectors.OnVistaDummy;
+                        break;
+                }
+
                 TableObject historicalDataTableObject = null;
                 ProgressIndicator progress = new ProgressIndicator();
                 progress.progressBar1.Maximum = 100;
