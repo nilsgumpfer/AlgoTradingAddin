@@ -91,8 +91,6 @@ namespace AQM_Algo_Trading_Addin_CGR
             updateDiagram(wsLiveData, chartPageAktienkurs, foundColumnTimestamp, foundColumnKurs, tableobject.getContentCount());
 
 
-
-
             //Volumen
 
             //Spalte Aktienkurs setzen
@@ -121,23 +119,26 @@ namespace AQM_Algo_Trading_Addin_CGR
             updateDiagram(wsLiveData, chartPageVolumen, foundColumnTimestamp, foundColumnVolumen, tableobject.getContentCount());
 
             //Historische Daten
-            Microsoft.Office.Interop.Excel.Range chartRangeHistoDaten;
-            Microsoft.Office.Interop.Excel.ChartObjects xlChartsHistoDaten =
-                (Excel.ChartObjects)worksheet.ChartObjects(Type.Missing);
-            Microsoft.Office.Interop.Excel.ChartObject myChartHistoDaten =
-                (Excel.ChartObject)xlChartsHistoDaten.Add(10, 300, 1020, 270);
-            Microsoft.Office.Interop.Excel.Chart chartPageHistoDaten = myChartHistoDaten.Chart;
+            if (historicalTableObject != null)
+            {
+                Microsoft.Office.Interop.Excel.Range chartRangeHistoDaten;
+                Microsoft.Office.Interop.Excel.ChartObjects xlChartsHistoDaten =
+                    (Excel.ChartObjects)worksheet.ChartObjects(Type.Missing);
+                Microsoft.Office.Interop.Excel.ChartObject myChartHistoDaten =
+                    (Excel.ChartObject)xlChartsHistoDaten.Add(10, 300, 1020, 270);
+                Microsoft.Office.Interop.Excel.Chart chartPageHistoDaten = myChartHistoDaten.Chart;
 
-            //Tabellenblatt, in welches die Daten geschrieben werden
-            Excel.Worksheet wsHistoricalData = (Excel.Worksheet)workbook.Worksheets["Historische Daten"];
-            chartRangeHistoDaten = wsHistoricalData.Range[wsHistoricalData.Cells[1, 1], wsHistoricalData.Cells[historicalTableObject.getContentCount() + 1, historicalTableObject.getColumnsToDrawCount()]];
+                //Tabellenblatt, in welches die Daten geschrieben werden
+                Excel.Worksheet wsHistoricalData = (Excel.Worksheet)workbook.Worksheets["Historische Daten"];
+                chartRangeHistoDaten = wsHistoricalData.Range[wsHistoricalData.Cells[1, 1], wsHistoricalData.Cells[historicalTableObject.getContentCount() + 1, historicalTableObject.getColumnsToDrawCount()]];
 
-            chartPageHistoDaten.SetSourceData(chartRangeHistoDaten, misValue);
-            chartPageHistoDaten.ChartType = Excel.XlChartType.xlLine;
+                chartPageHistoDaten.SetSourceData(chartRangeHistoDaten, misValue);
+                chartPageHistoDaten.ChartType = Excel.XlChartType.xlLine;
 
-            //Titel das Diagramms für historische Daten setzen
+                //Titel das Diagramms für historische Daten setzen
                 myChartHistoDaten.Chart.HasTitle = true;
                 myChartHistoDaten.Chart.ChartTitle.Text = "Historische Daten der " + selectedTicker + " Aktie";
+            }
         }
 
         public void updateDiagram(Excel.Worksheet wsLiveData, Microsoft.Office.Interop.Excel.Chart chartPage, int foundColumnTimestamp, int foundColumn, int rowCount)
