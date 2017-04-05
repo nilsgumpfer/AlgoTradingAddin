@@ -21,7 +21,7 @@ namespace AQM_Algo_Trading_Addin_CGR
         private string urlMainPart                  = "http://www.onvista.de/aktien/";
         private string urlSuffix                    = "";
         private string timestampFormat              = "yyyy-MM-dd HH:mm:ss";
-        private string errorPlaceholder             = "N/A";
+        private string errorPlaceholder             = "0.0";
         private int lastVolume                      = 0;
         private StockDataTransferObject lastRecord  = new StockDataTransferObject();
         private StockDataTransferObject newRecord   = new StockDataTransferObject();
