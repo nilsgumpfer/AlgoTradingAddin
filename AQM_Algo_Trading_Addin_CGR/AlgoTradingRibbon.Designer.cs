@@ -63,7 +63,6 @@
             this.group2 = this.Factory.CreateRibbonGroup();
             this.checkBox3 = this.Factory.CreateRibbonCheckBox();
             this.BTN_Test1 = this.Factory.CreateRibbonButton();
-            this.button3 = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.group1.SuspendLayout();
             this.group3.SuspendLayout();
@@ -229,7 +228,6 @@
             // 
             this.group5.Items.Add(this.button10);
             this.group5.Items.Add(this.button9);
-            this.group5.Items.Add(this.button3);
             this.group5.Label = "Sonstige Aktionen";
             this.group5.Name = "group5";
             // 
@@ -259,12 +257,6 @@
             // 
             this.BTN_Test1.Label = "";
             this.BTN_Test1.Name = "BTN_Test1";
-            // 
-            // button3
-            // 
-            this.button3.Label = "button3";
-            this.button3.Name = "button3";
-            this.button3.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button3_Click);
             // 
             // AlgoTradingRibbon
             // 
@@ -321,7 +313,6 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonLabel label1;
         internal Microsoft.Office.Tools.Ribbon.RibbonLabel label2;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group5;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton button3;
     }
 
     partial class ThisRibbonCollection
