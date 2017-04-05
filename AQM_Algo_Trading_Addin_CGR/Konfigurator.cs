@@ -24,7 +24,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             }
             catch (Exception e)
             {
-                ExceptionHandler.handle(e);
+                ExceptionHandler.handle("Stammdaten konnten nicht geladen werden! Bitte überprüfen Sie die Verbindung zu Ihrer MySQL-Datenbank.");
                 this.Close();
             }
         }

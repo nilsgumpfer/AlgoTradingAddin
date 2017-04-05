@@ -58,7 +58,8 @@
             this.Controls.Add(this.onklickReload);
             this.Controls.Add(this.richTextBox1);
             this.Name = "LogView";
-            this.Text = "LogView";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "AlgoTradingAddin Logs";
             this.ResumeLayout(false);
 
         }

@@ -14,13 +14,18 @@ namespace AQM_Algo_Trading_Addin_CGR
 
         public static void handle(Exception e)
         {
-            ExceptionHandler.getInstance().showMessageInMessageBox(e);
+            ExceptionHandler.getInstance().showMessageInMessageBox(e.Message);
         }
 
-        private void showMessageInMessageBox(Exception e)
+        public static void handle(string message)
         {
-            thrownMessages.Add(e.Message);
-            MessageBox.Show(e.Message);
+            ExceptionHandler.getInstance().showMessageInMessageBox(message);
+        }
+
+        private void showMessageInMessageBox(string message)
+        {
+            thrownMessages.Add(message);
+            MessageBox.Show(message);
         }
 
         private ExceptionHandler()

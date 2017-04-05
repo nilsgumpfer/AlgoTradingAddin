@@ -264,6 +264,14 @@ namespace AQM_Algo_Trading_Addin_CGR
             return getItemUsingRegEx(pattern).Replace(" ", "");
         }
 
+        private string useExtractionVariant4(string keyWord)
+        {
+            string pattern = @"data-push=\d*:" + keyWord + @":\d{1}:\d{1}:Stock>.?\d*[\.,\,]\d*.?\/.?(\d*[\.,\,]\d*)";
+
+            //in some cases the returned string would contain a blankspace at its front - so we eliminate it
+            return getItemUsingRegEx(pattern).Replace(" ", "");
+        }
+
         private string extractDayHigh()
         {
             return useExtractionVariant1("high");
@@ -273,9 +281,9 @@ namespace AQM_Algo_Trading_Addin_CGR
         {
             //return useExtractionVariant1("data-push=", ":high:1:1:Stock> " + extractDayHigh() + " /", " <");
             //return useExtractionVariant2();
-
+            return useExtractionVariant4("high");
             //TODO: Extract Low-Price
-            return "LOW";
+            //return "LOW";
         }
 
         private string extractDayOpen()
@@ -370,7 +378,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             }
             catch (Exception e)
             {
-                ExceptionHandler.handle(new Exception("Tag cannot be found in HTML-source: \"" + endTag));
+                ExceptionHandler.handle("Tag cannot be found in HTML-source: \"" + endTag);
                 return errorPlaceholder;
             }
         }

@@ -53,13 +53,13 @@
             this.CB_Ziel_Cursor = this.Factory.CreateRibbonCheckBox();
             this.group7 = this.Factory.CreateRibbonGroup();
             this.BTN_Aktionen_Ausfuehren = this.Factory.CreateRibbonButton();
-            this.button7 = this.Factory.CreateRibbonButton();
+            this.BTN_Aktionen_MgmtCockpit = this.Factory.CreateRibbonButton();
             this.group8 = this.Factory.CreateRibbonGroup();
-            this.onLoadPause = this.Factory.CreateRibbonButton();
-            this.onStopLoad = this.Factory.CreateRibbonButton();
+            this.BTN_Ladeprozess_Pause = this.Factory.CreateRibbonButton();
+            this.BTN_Ladeprozess_Stop = this.Factory.CreateRibbonButton();
             this.group5 = this.Factory.CreateRibbonGroup();
-            this.button10 = this.Factory.CreateRibbonButton();
-            this.button9 = this.Factory.CreateRibbonButton();
+            this.BTN_Sonstiges_Stammdaten = this.Factory.CreateRibbonButton();
+            this.BTN_Sonstiges_Logs = this.Factory.CreateRibbonButton();
             this.group2 = this.Factory.CreateRibbonGroup();
             this.checkBox3 = this.Factory.CreateRibbonCheckBox();
             this.BTN_Test1 = this.Factory.CreateRibbonButton();
@@ -189,7 +189,7 @@
             // group7
             // 
             this.group7.Items.Add(this.BTN_Aktionen_Ausfuehren);
-            this.group7.Items.Add(this.button7);
+            this.group7.Items.Add(this.BTN_Aktionen_MgmtCockpit);
             this.group7.Label = "Aktionen";
             this.group7.Name = "group7";
             // 
@@ -197,51 +197,51 @@
             // 
             this.BTN_Aktionen_Ausfuehren.Label = "Ausführen";
             this.BTN_Aktionen_Ausfuehren.Name = "BTN_Aktionen_Ausfuehren";
-            this.BTN_Aktionen_Ausfuehren.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button2_Click);
+            this.BTN_Aktionen_Ausfuehren.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.onClickAusfuehren);
             // 
-            // button7
+            // BTN_Aktionen_MgmtCockpit
             // 
-            this.button7.Label = "Management-Cockpit erstellen";
-            this.button7.Name = "button7";
-            this.button7.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button7_Click);
+            this.BTN_Aktionen_MgmtCockpit.Label = "Management-Cockpit erstellen";
+            this.BTN_Aktionen_MgmtCockpit.Name = "BTN_Aktionen_MgmtCockpit";
+            this.BTN_Aktionen_MgmtCockpit.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.onClickManagementCockpit);
             // 
             // group8
             // 
-            this.group8.Items.Add(this.onLoadPause);
-            this.group8.Items.Add(this.onStopLoad);
+            this.group8.Items.Add(this.BTN_Ladeprozess_Pause);
+            this.group8.Items.Add(this.BTN_Ladeprozess_Stop);
             this.group8.Label = "Ladeprozess";
             this.group8.Name = "group8";
             // 
-            // onLoadPause
+            // BTN_Ladeprozess_Pause
             // 
-            this.onLoadPause.Label = "Pausiere Laden";
-            this.onLoadPause.Name = "onLoadPause";
-            this.onLoadPause.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.onLoadPause_Click);
+            this.BTN_Ladeprozess_Pause.Label = "Pausiere Laden";
+            this.BTN_Ladeprozess_Pause.Name = "BTN_Ladeprozess_Pause";
+            this.BTN_Ladeprozess_Pause.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.onClickPauseLoad);
             // 
-            // onStopLoad
+            // BTN_Ladeprozess_Stop
             // 
-            this.onStopLoad.Label = "Stoppe Laden";
-            this.onStopLoad.Name = "onStopLoad";
-            this.onStopLoad.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.onStopLoad_Click);
+            this.BTN_Ladeprozess_Stop.Label = "Stoppe Laden";
+            this.BTN_Ladeprozess_Stop.Name = "BTN_Ladeprozess_Stop";
+            this.BTN_Ladeprozess_Stop.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.onClickStopLoad);
             // 
             // group5
             // 
-            this.group5.Items.Add(this.button10);
-            this.group5.Items.Add(this.button9);
+            this.group5.Items.Add(this.BTN_Sonstiges_Stammdaten);
+            this.group5.Items.Add(this.BTN_Sonstiges_Logs);
             this.group5.Label = "Sonstige Aktionen";
             this.group5.Name = "group5";
             // 
-            // button10
+            // BTN_Sonstiges_Stammdaten
             // 
-            this.button10.Label = "Stammdaten laden";
-            this.button10.Name = "button10";
-            this.button10.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button10_Click);
+            this.BTN_Sonstiges_Stammdaten.Label = "Stammdaten laden";
+            this.BTN_Sonstiges_Stammdaten.Name = "BTN_Sonstiges_Stammdaten";
+            this.BTN_Sonstiges_Stammdaten.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.onClickMasterData);
             // 
-            // button9
+            // BTN_Sonstiges_Logs
             // 
-            this.button9.Label = "Logs anzeigen";
-            this.button9.Name = "button9";
-            this.button9.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button9_Click);
+            this.BTN_Sonstiges_Logs.Label = "Logs anzeigen";
+            this.BTN_Sonstiges_Logs.Name = "BTN_Sonstiges_Logs";
+            this.BTN_Sonstiges_Logs.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.onClickLogs);
             // 
             // group2
             // 
@@ -304,12 +304,12 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton BTN_Test1;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button1;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button2;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton button7;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton button9;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton BTN_Aktionen_MgmtCockpit;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton BTN_Sonstiges_Logs;
         internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox CB_Quelle_Dummy;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton onLoadPause;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton onStopLoad;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton button10;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton BTN_Ladeprozess_Pause;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton BTN_Ladeprozess_Stop;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton BTN_Sonstiges_Stammdaten;
         internal Microsoft.Office.Tools.Ribbon.RibbonLabel label1;
         internal Microsoft.Office.Tools.Ribbon.RibbonLabel label2;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group5;

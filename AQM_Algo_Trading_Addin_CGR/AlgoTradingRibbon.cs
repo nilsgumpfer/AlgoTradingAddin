@@ -366,7 +366,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             }
         }
 
-        private void button2_Click(object sender, RibbonControlEventArgs e)
+        private void onClickAusfuehren(object sender, RibbonControlEventArgs e)
         {
             if (CB_Ziel_NeuesTB.Enabled == false & CB_Ziel_AktuellesTB.Enabled == false & CB_Ziel_Cursor.Enabled == false)
             {
@@ -385,7 +385,6 @@ namespace AQM_Algo_Trading_Addin_CGR
                 Worksheet workSheet = Globals.Factory.GetVstoObject(Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet);
                 Excel.Range position = Globals.ThisAddIn.Application.Cells[1, 1];
 
-                //TODO: Hier vielleicht noch nachbessern :)
                 string stockSymbol = view.comboBox1.SelectedItem.ToString();
                 DateTime dateFrom = view.dateTimePicker1.Value;
                 DateTime dateTo = view.dateTimePicker2.Value;
@@ -490,7 +489,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             }
         }
 
-        private void button7_Click(object sender, RibbonControlEventArgs e)
+        private void onClickManagementCockpit(object sender, RibbonControlEventArgs e)
         {
             //Historische Daten auswählen
             Konfigurator view = new Konfigurator();
@@ -578,28 +577,28 @@ namespace AQM_Algo_Trading_Addin_CGR
             }
         }
 
-        private void button9_Click(object sender, RibbonControlEventArgs e)
+        private void onClickLogs(object sender, RibbonControlEventArgs e)
         {
             LogView logView = new LogView();
             logView.Show();
         }
 
-        private void onLoadPause_Click(object sender, RibbonControlEventArgs e)
+        private void onClickPauseLoad(object sender, RibbonControlEventArgs e)
         {
             DataManager.getInstance().pausePushWorkers();
 
-            if(onLoadPause.Label == "Pausiere Laden")
-                onLoadPause.Label = "Weiter laden";
+            if(BTN_Ladeprozess_Pause.Label == "Pausiere Laden")
+                BTN_Ladeprozess_Pause.Label = "Weiter laden";
             else
-                onLoadPause.Label = "Pausiere Laden";
+                BTN_Ladeprozess_Pause.Label = "Pausiere Laden";
         }
 
-        private void onStopLoad_Click(object sender, RibbonControlEventArgs e)
+        private void onClickStopLoad(object sender, RibbonControlEventArgs e)
         {
             DataManager.getInstance().stopPushWorkers();
         }
 
-        private void button10_Click(object sender, RibbonControlEventArgs e)
+        private void onClickMasterData(object sender, RibbonControlEventArgs e)
         {
             MasterDataDialog mdDialog = new MasterDataDialog();
             mdDialog.ShowDialog();

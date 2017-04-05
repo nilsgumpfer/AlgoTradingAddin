@@ -143,7 +143,7 @@ namespace AQM_Algo_Trading_Addin_CGR
             }
             catch(Exception e)
             {
-                ExceptionHandler.handle(new Exception("Die YahooFinanceAPI lieferte für Anfrage keine Ergebnisse. Bitte versuchen Sie es erneut mit anderen Werten."));
+                ExceptionHandler.handle("Die YahooFinanceAPI lieferte für Anfrage keine Ergebnisse. Bitte versuchen Sie es erneut mit anderen Werten.");
                 return null;
             }
 
