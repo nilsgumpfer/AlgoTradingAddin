@@ -48,10 +48,9 @@ namespace AQM_Algo_Trading_Addin_CGR
                     kontostand = kontostand + (aktuelleraktienwert - startaktienwert);
                     status = "Behalten";
                     setDataInRibbon(gewinn, kontostand,System.Drawing.Color.DarkOrange);
-
                 }
             }
-
+       
             if (letzterwert != 0 && aktuelleraktienwert < letzterwert)
             {
                 if (initStart >= 2)
@@ -73,14 +72,10 @@ namespace AQM_Algo_Trading_Addin_CGR
                         zahlVerlust = 0;
                         startaktienwert = 0;
                         setDataInRibbon(gewinn, kontostand, System.Drawing.Color.Black);
-                    }
-                                     
+                    }              
                 }
                 else
-                {
                     initStart = 0;
-                }
-
             }
         }
 
