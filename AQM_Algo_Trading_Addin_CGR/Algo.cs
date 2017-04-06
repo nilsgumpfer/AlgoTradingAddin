@@ -65,6 +65,14 @@ namespace AQM_Algo_Trading_Addin_CGR
                     {
                         status = "Verkaufen";
                         setDataInRibbon(gewinn, kontostand,System.Drawing.Color.Red);
+
+                        status = "Verkauft";
+                        gewinn = 0;
+                        initStart = 0;
+                        kontostand = kontostand + aktuelleraktienwert;
+                        zahlVerlust = 0;
+                        startaktienwert = 0;
+                        setDataInRibbon(gewinn, kontostand, System.Drawing.Color.Black);
                     }
                                      
                 }
